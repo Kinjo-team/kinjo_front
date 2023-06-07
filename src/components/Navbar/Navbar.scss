@@ -1,0 +1,26 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    background-color: transparent;
+    
+    .title {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: bold;
+        color: white;
+    }
+
+    .btn-grp {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: clamp(10rem, 20vw, 20rem);
+        font-size: clamp(1rem, 2vw, 1.5rem);
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+    }
+}
