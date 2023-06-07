@@ -1,12 +1,13 @@
-import React from "react";
-import Map from "./components/Map";
+import Navbar from "./components/Navbar/Navbar"
+import Landing from "./components/Landing/Landing"
 
 const App = () => {
   return (
-    <div>
-      <Map />
-    </div>
-  );
-};
+    <>
+      <Navbar />
+      <Landing />
+    </>
+  )
+}
 
 export default App;
