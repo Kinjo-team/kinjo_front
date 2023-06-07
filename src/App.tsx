@@ -1,9 +1,12 @@
-
+import React from "react";
+import Map from "./components/Map";
 
 const App = () => {
   return (
-    <div>App</div>
-  )
-}
+    <div>
+      <Map />
+    </div>
+  );
+};
 
-export default App
+export default App;
