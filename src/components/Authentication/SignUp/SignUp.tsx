@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './SignUp.scss'
 
 const SignUp = () => {
@@ -10,6 +10,7 @@ const SignUp = () => {
     const { signup } = useAuth()
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
+    const navigate = useNavigate()
 
     async function handleSubmit(e : any) {
         e.preventDefault()
@@ -21,6 +22,8 @@ const SignUp = () => {
             setError("")
             setLoading(true)
             await signup(emailRef.current?.value, passwordRef.current?.value)
+            navigate("/login")
+            alert("Thank you for signing up!")
         } catch {
             setError("Failed to create an account")
         }

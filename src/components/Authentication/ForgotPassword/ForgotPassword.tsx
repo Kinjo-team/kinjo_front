@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import { Link } from 'react-router-dom'
+import './ForgotPassword.scss'
 
 const ForgotPassword = () => {
     const emailRef = useRef<HTMLInputElement>(null)
@@ -30,7 +31,7 @@ const ForgotPassword = () => {
             <h2 className="title">Password Reset</h2>
             {error && <div className="error">{error}</div>}
             {message && <div className="success">{message}</div>}
-            <form onSubmit={handleSubmit}>
+            <form className='forgotpassword--form' onSubmit={handleSubmit}>
                 <div>
                     <label>Email</label>
                     <input type="email" ref={emailRef} required></input>

@@ -17,7 +17,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 const App = () => {
 
-// This baby protects the routes
+// This baby protects the routes will use later down the line
 const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
   const { currentUser } = useAuth()
   return currentUser ? children : <Navigate to="/login" replace />;

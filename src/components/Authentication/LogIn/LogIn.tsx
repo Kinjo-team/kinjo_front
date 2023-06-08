@@ -6,7 +6,7 @@ import './LogIn.scss'
 const LogIn = () => {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
-    const { login } = useAuth()
+    const { login, currentUser } = useAuth()
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const navigate = useNavigate()
@@ -18,6 +18,7 @@ const LogIn = () => {
             setLoading(true)
             await login(emailRef.current?.value, passwordRef.current?.value);
             navigate("/")
+            alert("Welcome back, " + currentUser?.email + "!")
         } catch {
             setError("Failed to sign in")
         }
