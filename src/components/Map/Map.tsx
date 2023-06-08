@@ -8,6 +8,7 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
+import "./Map.scss";
 
 interface Location {
   id: number;
