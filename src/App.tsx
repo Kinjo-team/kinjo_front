@@ -1,4 +1,3 @@
-import CreateItinerary from "./components/CreateItinerary/CreateItinerary"
 
 const App = () => {
   return (
