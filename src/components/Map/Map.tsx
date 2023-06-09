@@ -1,4 +1,4 @@
-// position keys
+// // position keys
 
 import { useState } from "react";
 import {
@@ -12,20 +12,20 @@ import "./Map.scss";
 
 interface Location {
   id: number;
-  position: [number, number];
-  name: string;
-  description: string;
-  tags: string[];
+  loc_coords: [number, number];
+  loc_name: string;
+  loc_descr_en: string;
+  loc_tags: string[];
 }
 
 const defaultPosition: [number, number] = [35.664035, 139.698212]; // this is Tokyo
 
 const initialLocation: Location = {
   id: 0,
-  position: [0, 0],
-  name: "",
-  description: "",
-  tags: [],
+  loc_coords: [0, 0],
+  loc_name: "",
+  loc_descr_en: "",
+  loc_tags: [],
 };
 
 const Map: React.FC = () => {
@@ -36,7 +36,7 @@ const Map: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "tags") {
+    if (name === "loc_tags") {
       const tagsArray = value.split(",").map((tag) => tag.trim());
       setNewLocationData((prevData) => ({
         ...prevData,
@@ -52,15 +52,16 @@ const Map: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const { id, position, name, description, tags } = newLocationData;
+    const { id, loc_coords, loc_name, loc_descr_en, loc_tags } =
+      newLocationData;
 
-    if (name.trim() !== "") {
+    if (loc_name.trim() !== "") {
       const newLocation: Location = {
         id,
-        position,
-        name,
-        description,
-        tags,
+        loc_coords,
+        loc_name,
+        loc_descr_en,
+        loc_tags,
       };
       setLocations((prevLocations) => [...prevLocations, newLocation]);
       resetNewLocationData();
@@ -82,20 +83,20 @@ const Map: React.FC = () => {
 
         const newLocation: Location = {
           id: locations.length + 1,
-          position: [latitude, longitude],
-          name: newLocationData.name,
-          description: newLocationData.description,
-          tags: newLocationData.tags,
+          loc_coords: [latitude, longitude],
+          loc_name: newLocationData.loc_name,
+          loc_descr_en: newLocationData.loc_descr_en,
+          loc_tags: newLocationData.loc_tags,
         };
 
         console.log("New location:", newLocation);
 
         setNewLocationData((prevData) => ({
           id: locations.length + 1,
-          position: [latitude, longitude],
-          name: "",
-          description: "",
-          tags: [],
+          loc_coords: [latitude, longitude],
+          loc_name: "",
+          loc_descr_en: "",
+          loc_tags: [],
         }));
         setShowPopup(true);
       },
@@ -112,24 +113,24 @@ const Map: React.FC = () => {
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <AddMarkerToMap />
       {locations.map((location) => (
-        <Marker key={location.id} position={location.position}>
+        <Marker key={location.id} position={location.loc_coords}>
           <Popup>
-            <h3>{location.name}</h3>
-            <p>{location.description}</p>
-            <p>Tags: {location.tags.join(", ")}</p>
+            <h3>{location.loc_name}</h3>
+            <p>{location.loc_descr_en}</p>
+            <p>Tags: {location.loc_tags.join(", ")}</p>
           </Popup>
         </Marker>
       ))}
-      <Marker position={newLocationData.position} interactive={false} />
+      <Marker position={newLocationData.loc_coords} interactive={false} />
       {showPopup && (
-        <Popup position={newLocationData.position} closeOnClick={false}>
+        <Popup position={newLocationData.loc_coords} closeOnClick={false}>
           <form onSubmit={handleSubmit}>
             <label>
               Name:
               <input
                 type="text"
-                name="name"
-                value={newLocationData.name}
+                name="loc_name"
+                value={newLocationData.loc_name}
                 onChange={handleInputChange}
                 required
               />
@@ -138,8 +139,8 @@ const Map: React.FC = () => {
               Description:
               <input
                 type="text"
-                name="description"
-                value={newLocationData.description}
+                name="loc_descr_en"
+                value={newLocationData.loc_descr_en}
                 onChange={handleInputChange}
               />
             </label>
@@ -147,8 +148,8 @@ const Map: React.FC = () => {
               Tags:
               <input
                 type="text"
-                name="tags"
-                value={newLocationData.tags}
+                name="loc_tags"
+                value={newLocationData.loc_tags}
                 onChange={handleInputChange}
               />
             </label>
