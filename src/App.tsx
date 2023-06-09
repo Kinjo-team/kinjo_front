@@ -7,9 +7,6 @@ import LanguageToggle from "./components/LanguageToggle";
 // Authentication use
 import { useAuth } from "./contexts/AuthContext"
 import { AuthProvider } from "./contexts/AuthContext"
-import SignUp from "./components/Authentication/SignUp/SignUp"
-import LogIn from "./components/Authentication/LogIn/LogIn"
-import ForgotPassword from "./components/Authentication/ForgotPassword/ForgotPassword"
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
@@ -26,18 +23,15 @@ const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
   return (
     <>
       <I18nextProvider i18n={i18n}>
-      <AuthProvider value>
-        <Navbar />
-        <BrowserRouter>
-          <Routes>
+        <AuthProvider value>
+          <Navbar />
+          <BrowserRouter>
+            <Routes>
               <Route path="/" element={<Landing />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<LogIn />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
-      <LanguageToggle />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+        <LanguageToggle />
       </I18nextProvider>
     </>
   );

@@ -1,10 +1,13 @@
 .login--container {
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 90vh;
-    background-color: #ecebea;
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+    background-color: rgba($color: #000000, $alpha: 0.5);
 
     .login {
         display: flex;
@@ -44,4 +47,10 @@
             }
         }
     }
+
+    .auth--link {
+        cursor: pointer;
+        color: blue;
+    }
+    
 }
