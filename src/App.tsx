@@ -29,9 +29,6 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Landing />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/login" element={<LogIn />} />
-              <Route path="/forgotpassword" element={<ForgotPassword />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

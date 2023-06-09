@@ -1,16 +1,20 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
-import { Link, useNavigate } from 'react-router-dom'
 import './SignUp.scss'
 
-const SignUp = () => {
+type SignUpProps = {
+    toggleSignUp: () => void
+    toggleLogin: () => void
+    closeAll: () => void
+}
+
+const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const passwordConfirmRef = useRef<HTMLInputElement>(null)
     const { signup } = useAuth()
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
-    const navigate = useNavigate()
 
     async function handleSubmit(e : any) {
         e.preventDefault()
@@ -22,16 +26,21 @@ const SignUp = () => {
             setError("")
             setLoading(true)
             await signup(emailRef.current?.value, passwordRef.current?.value)
-            navigate("/login")
             alert("Thank you for signing up!")
         } catch {
             setError("Failed to create an account")
         }
         setLoading(false)
     }
+
+    function stopBubbling(e : any) {
+        e.stopPropagation()
+    }
+
+
   return (
-    <main className='signup--container'>
-        <section className='signup'>
+    <main onClick={toggleSignUp} className='signup--container'>
+        <section onClick={stopBubbling} className='signup'>
             <h2 className='title'>Sign Up</h2>
             {error && <div className="error">{error}</div>}
             <form className='signup--form' onSubmit={handleSubmit}>
@@ -54,7 +63,7 @@ const SignUp = () => {
                 <button type="submit" disabled={loading}>Sign Up</button>
             </form>
             <div className='auth--login-msg'>
-                Already have an account? <Link to="/login">Log In</Link>
+                Already have an account? <span className='auth--link' onClick={toggleLogin}>Log In</span>
             </div>
         </section>
     </main>
