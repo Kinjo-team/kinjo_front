@@ -14,7 +14,6 @@ import ForgotPassword from "./components/Authentication/ForgotPassword/ForgotPas
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 
-
 const App = () => {
 
 // This baby protects the routes will use later down the line
@@ -25,6 +24,7 @@ const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
 
   return (
     <>
+<<<<<<< HEAD
       <I18nextProvider i18n={i18n}>
       <AuthProvider value>
         <Navbar />
@@ -44,3 +44,11 @@ const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
 };
 
 export default App;
+=======
+      <div>App</div>
+    </>
+  )
+}
+
+export default App
+>>>>>>> ec6ad61a46860864c9a09e317b7c1caab3db36fd
