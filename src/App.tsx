@@ -10,7 +10,6 @@ import { AuthProvider } from "./contexts/AuthContext";
 import SignUp from "./components/Authentication/SignUp/SignUp";
 import LogIn from "./components/Authentication/LogIn/LogIn";
 import ForgotPassword from "./components/Authentication/ForgotPassword/ForgotPassword";
-import Map from "./components/Map/Map";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
@@ -34,7 +33,6 @@ const App = () => {
         </AuthProvider>
         <LanguageToggle />
       </I18nextProvider>
-      <Map />
     </>
   );
 };

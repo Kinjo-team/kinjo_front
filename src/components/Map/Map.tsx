@@ -18,6 +18,10 @@ interface Location {
   loc_tags: string[];
 }
 
+interface MapProps {
+  handleLocationData: (locationData: Location) => void;
+}
+
 const defaultPosition: [number, number] = [35.664035, 139.698212]; // this is Tokyo
 
 const initialLocation: Location = {
@@ -28,7 +32,7 @@ const initialLocation: Location = {
   loc_tags: [],
 };
 
-const Map: React.FC = () => {
+const Map: React.FC<MapProps> = ({ handleLocationData }) => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [newLocationData, setNewLocationData] =
     useState<Location>(initialLocation);
@@ -37,7 +41,7 @@ const Map: React.FC = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "loc_tags") {
-      const tagsArray = value.split(",").map((tag) => tag.trim());
+      const tagsArray = value.split(" ").map((tag) => tag.trim());
       setNewLocationData((prevData) => ({
         ...prevData,
         [name]: tagsArray,
@@ -49,6 +53,8 @@ const Map: React.FC = () => {
       }));
     }
   };
+  // console.log("newLocations", newLocationData);
+  // console.log("locations", locations);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +71,7 @@ const Map: React.FC = () => {
       };
       setLocations((prevLocations) => [...prevLocations, newLocation]);
       resetNewLocationData();
+      handleLocationData(newLocation);
     }
   };
 
@@ -79,7 +86,7 @@ const Map: React.FC = () => {
         const latitude = e.latlng.lat;
         const longitude = e.latlng.lng;
 
-        console.log("Location coordinates on click:", latitude, longitude);
+        // console.log("Location coordinates on click:", latitude, longitude);
 
         const newLocation: Location = {
           id: locations.length + 1,
@@ -89,7 +96,7 @@ const Map: React.FC = () => {
           loc_tags: newLocationData.loc_tags,
         };
 
-        console.log("New location:", newLocation);
+        // console.log("New location:", newLocation);
 
         setNewLocationData((prevData) => ({
           id: locations.length + 1,
@@ -105,59 +112,61 @@ const Map: React.FC = () => {
   };
 
   return (
-    <MapContainer
-      center={defaultPosition}
-      zoom={13}
-      style={{ height: "500px", width: "100%" }}
-    >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <AddMarkerToMap />
-      {locations.map((location) => (
-        <Marker key={location.id} position={location.loc_coords}>
-          <Popup>
-            <h3>{location.loc_name}</h3>
-            <p>{location.loc_descr_en}</p>
-            <p>Tags: {location.loc_tags.join(", ")}</p>
+    <div className="map-container">
+      <MapContainer
+        center={defaultPosition}
+        zoom={13}
+        style={{ height: "500px", width: "100%" }}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <AddMarkerToMap />
+        {locations.map((location) => (
+          <Marker key={location.id} position={location.loc_coords}>
+            <Popup>
+              <h3>{location.loc_name}</h3>
+              <p>{location.loc_descr_en}</p>
+              <p>Tags: {location.loc_tags.join(" ")}</p>
+            </Popup>
+          </Marker>
+        ))}
+        <Marker position={newLocationData.loc_coords} interactive={false} />
+        {showPopup && (
+          <Popup position={newLocationData.loc_coords} closeOnClick={false}>
+            <form onSubmit={handleSubmit}>
+              <label>
+                Name:
+                <input
+                  type="text"
+                  name="loc_name"
+                  value={newLocationData.loc_name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </label>
+              <label>
+                Description:
+                <input
+                  type="text"
+                  name="loc_descr_en"
+                  value={newLocationData.loc_descr_en}
+                  onChange={handleInputChange}
+                />
+              </label>
+              <label>
+                Tags:
+                <input
+                  type="text"
+                  name="loc_tags"
+                  value={newLocationData.loc_tags}
+                  onChange={handleInputChange}
+                />
+              </label>
+              <button type="submit">Add Location</button>
+            </form>
           </Popup>
-        </Marker>
-      ))}
-      <Marker position={newLocationData.loc_coords} interactive={false} />
-      {showPopup && (
-        <Popup position={newLocationData.loc_coords} closeOnClick={false}>
-          <form onSubmit={handleSubmit}>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="loc_name"
-                value={newLocationData.loc_name}
-                onChange={handleInputChange}
-                required
-              />
-            </label>
-            <label>
-              Description:
-              <input
-                type="text"
-                name="loc_descr_en"
-                value={newLocationData.loc_descr_en}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Tags:
-              <input
-                type="text"
-                name="loc_tags"
-                value={newLocationData.loc_tags}
-                onChange={handleInputChange}
-              />
-            </label>
-            <button type="submit">Add Location</button>
-          </form>
-        </Popup>
-      )}
-    </MapContainer>
+        )}
+      </MapContainer>
+    </div>
   );
 };
 
