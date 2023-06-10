@@ -9,6 +9,7 @@ nav {
     background-color: #4b3b3b;
     
     .title {
+        cursor: pointer;
         font-size: clamp(1.5rem, 3vw, 2rem);
         font-weight: bold;
         color: white;
@@ -16,10 +17,9 @@ nav {
 
     .btn-grp {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: clamp(15rem, 20vw, 20rem);
-        font-size: clamp(1rem, 2vw, 1.5rem);
+        justify-content: flex-end;
+        gap: clamp(1rem, 2vw, 2rem);
+        font-size: clamp(0.7rem, 2vw, 1.5rem);
 
         a {
             text-decoration: none;
@@ -37,7 +37,7 @@ nav {
             background-color: transparent;
             color: white;
             cursor: pointer;
-            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-size: clamp(0.7rem, 2vw, 1.5rem);
         }
     }
 }
