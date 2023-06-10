@@ -7,9 +7,6 @@ import LanguageToggle from "./components/LanguageToggle";
 // Authentication use
 import { useAuth } from "./contexts/AuthContext";
 import { AuthProvider } from "./contexts/AuthContext";
-import SignUp from "./components/Authentication/SignUp/SignUp";
-import LogIn from "./components/Authentication/LogIn/LogIn";
-import ForgotPassword from "./components/Authentication/ForgotPassword/ForgotPassword";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 

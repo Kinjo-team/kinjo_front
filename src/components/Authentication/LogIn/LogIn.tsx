@@ -8,7 +8,7 @@ type LogInProps = {
     closeAll: () => void
 }
 
-const LogIn = ({toggleLogin, toggleSignUp} : LogInProps) => {
+const LogIn = ({toggleLogin, toggleSignUp, closeAll} : LogInProps) => {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const { login, currentUser } = useAuth()
@@ -21,6 +21,7 @@ const LogIn = ({toggleLogin, toggleSignUp} : LogInProps) => {
             setError("")
             setLoading(true)
             await login(emailRef.current?.value, passwordRef.current?.value);
+            closeAll()
             alert("Welcome back, " + currentUser?.email + "!")
         } catch {
             setError("Failed to sign in")
