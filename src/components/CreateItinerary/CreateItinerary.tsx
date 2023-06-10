@@ -4,6 +4,10 @@ import Sidebar from "../Sidebar/Sidebar";
 
 import "./CreateItinerary.scss";
 
+type CreateItineraryProps = {
+  toggleCreateItinerary: () => void;
+};
+
 interface CreateItineraryData {
   itineraryName: string;
   itineraryDescription: string;
@@ -16,7 +20,7 @@ interface CreateItineraryData {
   };
 }
 
-const CreateItinerary = () => {
+const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
   const [formData, setFormData] = useState<CreateItineraryData>({
     itineraryName: "",
     itineraryDescription: "",
@@ -133,10 +137,17 @@ const CreateItinerary = () => {
     ]);
   };
 
+  // This function is the form from closing when user clicks on elements
+  function stopBubblingUp(event: React.MouseEvent<HTMLElement, MouseEvent>) {
+    event.stopPropagation();
+  }
+
   return (
-    <>
-      <Sidebar locationCards={locationCards} />
-      <div className="createItinerary--container">
+    <main onClick={toggleCreateItinerary} className="overlay--container">
+      <div onClick={stopBubblingUp} className="createItinerary--container">
+        <div>
+          <Sidebar locationCards={locationCards} />
+        </div>
         <header>
           <h2>Create an Itinerary</h2>
         </header>
@@ -191,11 +202,11 @@ const CreateItinerary = () => {
           </form>
           <button>Add Location</button>
         </form>
+        <div className="map--container">
+          <Map handleLocationData={handleLocationData} />
+        </div>
       </div>
-      <div>
-        <Map handleLocationData={handleLocationData} />
-      </div>
-    </>
+    </main>
   );
 };
 

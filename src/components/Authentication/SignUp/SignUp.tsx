@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import {auth } from '../../../auth/firebase'
+import { Navigate } from 'react-router-dom'
 import './SignUp.scss'
 
 type SignUpProps = {
@@ -30,8 +31,8 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
             // NEED A CHECK TO SEE IF USERNAME ALREADY EXISTS
             await signup(emailRef.current?.value, passwordRef.current?.value);
             await postUser()
-            alert("Thank you for signing up!")
             toggleSignUp();
+            navigateToMain();
         } catch(error) {
             console.error(error)
             setError("Failed to create an account")
@@ -58,6 +59,10 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         })
         const data = await resp.json()
         console.log(data)
+    }
+
+    function navigateToMain() {
+        window.location.href = '/main'
     }
 
 
