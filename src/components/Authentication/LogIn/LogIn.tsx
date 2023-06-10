@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
+import { Navigate } from 'react-router-dom'
 import './LogIn.scss'
 
 type LogInProps = {
@@ -11,7 +12,7 @@ type LogInProps = {
 const LogIn = ({toggleLogin, toggleSignUp, closeAll} : LogInProps) => {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
-    const { login, currentUser } = useAuth()
+    const { login } = useAuth()
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -21,8 +22,8 @@ const LogIn = ({toggleLogin, toggleSignUp, closeAll} : LogInProps) => {
             setError("")
             setLoading(true)
             await login(emailRef.current?.value, passwordRef.current?.value);
-            closeAll()
-            alert("Welcome back, " + currentUser?.email + "!")
+            navigateToMain();
+            toggleLogin();
         } catch {
             setError("Failed to sign in")
         }
@@ -31,6 +32,10 @@ const LogIn = ({toggleLogin, toggleSignUp, closeAll} : LogInProps) => {
 
     function stopBubbling(e : any) {
         e.stopPropagation()
+    }
+
+    function navigateToMain() {
+        window.location.href = '/main';
     }
     
 
