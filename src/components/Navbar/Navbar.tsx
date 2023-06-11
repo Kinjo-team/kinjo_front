@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import LogIn from "../Authentication/LogIn/LogIn";
 import SignUp from "../Authentication/SignUp/SignUp";
 import LanguageToggle from "../LanguageToggle/LanguageToggle";
+import UserDropDown from "../UserDropDown/UserDropDown";
 
 type NavbarProps = {
   appToggleLogin: () => void;
@@ -15,11 +16,11 @@ const Navbar = ({appShowLogin, appToggleLogin} : NavbarProps) => {
   const { t } = useTranslation();
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const [showSignUp, setShowSignUp] = useState<boolean>(false);
-  const {logout } = useAuth();
+  const [username, setUsername] = useState<string>("");
+  const { currentUser } = useAuth();
 
-  const user = useAuth().currentUser;
 
-  
+  // This is for the app to be able to open the login modal *used for the landing page*
   useEffect(() => {
     if (appShowLogin) {
       setShowLogin(true);
@@ -27,6 +28,16 @@ const Navbar = ({appShowLogin, appToggleLogin} : NavbarProps) => {
     }
   }
   , [appShowLogin]);
+  
+  useEffect(() => {
+    if (currentUser) {
+      fetchUsername();
+    }
+    return () => {
+      setUsername("");
+    }
+  }
+  , [currentUser]);
   
   
   // HANDLERS
@@ -44,6 +55,16 @@ const Navbar = ({appShowLogin, appToggleLogin} : NavbarProps) => {
     setShowSignUp(false);
   }
 
+  // FUNCTIONS
+
+  async function fetchUsername() {
+    const resp = await fetch(`http://localhost:8000/users/${currentUser?.uid}`);
+    const data = await resp.json();
+    console.log(data)
+    setUsername(data.username);
+  }
+    
+
   function navigateToLanding() {
     window.location.href = "/";
   }
@@ -57,7 +78,7 @@ const Navbar = ({appShowLogin, appToggleLogin} : NavbarProps) => {
         <LanguageToggle />
         <div className="btn-grp">
           <a href="/">{t("landingPageHeaderHome")}</a>
-          {user ? <button onClick={logout}>Log Out</button>
+          {currentUser ? <UserDropDown username={username} />
           :
           (
             <>

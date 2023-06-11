@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
-import { Navigate } from 'react-router-dom'
 import './LogIn.scss'
 
 type LogInProps = {

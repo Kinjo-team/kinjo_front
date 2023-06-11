@@ -6,13 +6,14 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 2rem;
-    background-color: #4b3b3b;
+    background-color: transparent;
+    color: black;
     
     .title {
         cursor: pointer;
         font-size: clamp(1.5rem, 3vw, 2rem);
         font-weight: bold;
-        color: white;
+        color: inherit;
     }
 
     .btn-grp {
@@ -24,18 +25,18 @@ nav {
         a {
             text-decoration: none;
             padding: 0.5rem;
-            border: 1px solid white;
+            border: 1px solid black;
             border-radius: 0.5rem;
             background-color: transparent;
-            color: white;
+            color: inherit;
             cursor: pointer;
         }
         button {
             padding: 0.5rem;
-            border: 1px solid white;
+            border: 1px solid black;
             border-radius: 0.5rem;
             background-color: transparent;
-            color: white;
+            color: inherit;
             cursor: pointer;
             font-size: clamp(0.7rem, 2vw, 1.5rem);
         }
