@@ -9,11 +9,12 @@ type CreateItineraryProps = {
 };
 
 interface CreateItineraryData {
-  itineraryName: string;
-  itineraryDescription: string;
-  itineraryTags: string[];
+  itinerary_name: string;
+  itinerary_descr: string;
+  itinerary_tags: string[];
   enteredTag: string;
   locationData: {
+    loc_coords: [number, number];
     loc_name: string;
     loc_descr_en: string;
     loc_tags: string[];
@@ -22,11 +23,12 @@ interface CreateItineraryData {
 
 const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
   const [formData, setFormData] = useState<CreateItineraryData>({
-    itineraryName: "",
-    itineraryDescription: "",
-    itineraryTags: [],
+    itinerary_name: "",
+    itinerary_descr: "",
+    itinerary_tags: [],
     enteredTag: "",
     locationData: {
+      loc_coords: [0, 0],
       loc_name: "",
       loc_descr_en: "",
       loc_tags: [],
@@ -35,6 +37,7 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
 
   const [locationCards, setLocationCards] = useState<
     {
+      loc_coords: [number, number];
       loc_name: string;
       loc_descr_en: string;
       loc_tags: string[];
@@ -51,7 +54,7 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
   ) => {
     const { name, value } = event.target;
 
-    if (name === "itineraryTags") {
+    if (name === "itinerary_tags") {
       // const tags = event.target.value.split(' ');
 
       setFormData((prevFormData) => ({
@@ -73,21 +76,21 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
       event.preventDefault();
       const { name, value } = event.currentTarget;
 
-      if (name === "itineraryName") {
+      if (name === "itinerary_name") {
         descriptionRef.current?.focus();
-      } else if (name === "itineraryDescription") {
+      } else if (name === "itinerary_descr") {
         tagsRef.current?.focus();
-      } else if (name === "itineraryTags") {
+      } else if (name === "itinerary_tags") {
         const tag = value.trim();
         if (tag !== "") {
           setFormData((prevFormData) => {
-            const newTags = [...prevFormData.itineraryTags, tag];
+            const newTags = [...prevFormData.itinerary_tags, tag];
             if (newTags.length > 5) {
               newTags.shift();
             }
             return {
               ...prevFormData,
-              itineraryTags: newTags,
+              itinerary_tags: newTags,
               enteredTag: "",
             };
           });
@@ -101,8 +104,7 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
     event.preventDefault();
 
     try {
-      const response = await fetch("/api/create-itinerary", {
-        // need to update endpoints
+      const response = await fetch("http://localhost:8000/itineraries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,10 +112,24 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
         body: JSON.stringify(formData),
       });
 
-      console.log("formData:", formData);
-
       if (response.ok) {
         const data = await response.json();
+        console.log("Successfully created itinerary:", data);
+        // Reset the form data
+        setFormData({
+          itinerary_name: "",
+          itinerary_descr: "",
+          itinerary_tags: [],
+          enteredTag: "",
+          locationData: {
+            loc_coords: [0, 0],
+            loc_name: "",
+            loc_descr_en: "",
+            loc_tags: [],
+          },
+        });
+        // Clear the location cards
+        setLocationCards([]);
       } else {
         throw new Error("Failed to create itinerary");
       }
@@ -123,6 +139,7 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
   };
 
   const handleLocationData = (locationData: {
+    loc_coords: [number, number];
     loc_name: string;
     loc_descr_en: string;
     loc_tags: string[];
@@ -153,24 +170,24 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
         </header>
         <form className="createItinerary-form" onSubmit={handleSubmit}>
           <section className="input-form">
-            <label htmlFor="itineraryName">Itinerary Name</label>
+            <label htmlFor="itinerary_name">Itinerary Name</label>
             <input
               type="text"
-              name="itineraryName"
-              id="itineraryName"
+              name="itinerary_name"
+              id="itinerary_name"
               placeholder="Enter name"
-              value={formData.itineraryName}
+              value={formData.itinerary_name}
               onChange={handleInputChange}
               onKeyDown={handleEnterKey}
             />
           </section>
           <section className="input-form">
-            <label htmlFor="itineraryDescription">Description</label>
+            <label htmlFor="itinerary_descr">Description</label>
             <textarea
-              name="itineraryDescription"
-              id="itineraryDescription"
+              name="itinerary_descr"
+              id="itinerary_descr"
               placeholder="Enter Description"
-              value={formData.itineraryDescription}
+              value={formData.itinerary_descr}
               onChange={handleInputChange}
               onKeyDown={handleEnterKey}
               ref={descriptionRef}
@@ -179,11 +196,11 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
           <form>
             <section className="label-container">
               <div className="input-form">
-                <label htmlFor="itineraryTags">Tags</label>
+                <label htmlFor="itinerary_tags">Tags</label>
                 <input
                   type="text"
-                  name="itineraryTags"
-                  id="itineraryTags"
+                  name="itinerary_tags"
+                  id="itinerary_tags"
                   placeholder="Enter tags (max 5)"
                   value={formData.enteredTag}
                   onChange={handleInputChange}
@@ -192,7 +209,7 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
                 />
               </div>
               <div className="tag-container">
-                {formData.itineraryTags.map((tag, index) => (
+                {formData.itinerary_tags.map((tag, index) => (
                   <div key={index} className="tag">
                     {tag}
                   </div>
