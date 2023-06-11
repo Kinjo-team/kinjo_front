@@ -8,31 +8,28 @@ type CreateItineraryProps = {
   toggleCreateItinerary: () => void;
 };
 
+interface LocationData {
+  loc_coords: [number, number];
+  loc_name: string;
+  loc_descr_en: string;
+  loc_tags: string[];
+}
+
 interface CreateItineraryData {
   itinerary_name: string;
   itinerary_descr: string;
   itinerary_tags: string[];
   enteredTag: string;
-  locationData: {
-    loc_coords: [number, number];
-    loc_name: string;
-    loc_descr_en: string;
-    loc_tags: string[];
-  };
+  locationData: LocationData[];
 }
 
-const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
+const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
   const [formData, setFormData] = useState<CreateItineraryData>({
     itinerary_name: "",
     itinerary_descr: "",
     itinerary_tags: [],
     enteredTag: "",
-    locationData: {
-      loc_coords: [0, 0],
-      loc_name: "",
-      loc_descr_en: "",
-      loc_tags: [],
-    },
+    locationData: [],
   });
 
   const [locationCards, setLocationCards] = useState<
@@ -121,12 +118,7 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
           itinerary_descr: "",
           itinerary_tags: [],
           enteredTag: "",
-          locationData: {
-            loc_coords: [0, 0],
-            loc_name: "",
-            loc_descr_en: "",
-            loc_tags: [],
-          },
+          locationData: [],
         });
         // Clear the location cards
         setLocationCards([]);
@@ -138,15 +130,10 @@ const CreateItinerary = ({toggleCreateItinerary} : CreateItineraryProps) => {
     }
   };
 
-  const handleLocationData = (locationData: {
-    loc_coords: [number, number];
-    loc_name: string;
-    loc_descr_en: string;
-    loc_tags: string[];
-  }) => {
+  const handleLocationData = (locationData: LocationData) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      locationData: locationData,
+      locationData: [...prevFormData.locationData, locationData],
     }));
     setLocationCards((prevLocationCards) => [
       ...prevLocationCards,

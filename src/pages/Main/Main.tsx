@@ -1,18 +1,20 @@
-import CreateItinerary from "../../components/CreateItinerary/CreateItinerary"
-import { useState } from "react"
-import "./Main.scss"
+import CreateItinerary from "../../components/CreateItinerary/CreateItinerary";
+import { useState } from "react";
+import "./Main.scss";
 
 const Main = () => {
-  const [showCreateItinerary, setShowCreateItinerary] = useState<boolean>(false)
-
+  const [showCreateItinerary, setShowCreateItinerary] =
+    useState<boolean>(false);
 
   function toggleCreateItinerary() {
-    setShowCreateItinerary(!showCreateItinerary)
+    setShowCreateItinerary(!showCreateItinerary);
   }
 
   return (
     <>
-      {showCreateItinerary && <CreateItinerary toggleCreateItinerary={toggleCreateItinerary} />}
+      {showCreateItinerary && (
+        <CreateItinerary toggleCreateItinerary={toggleCreateItinerary} />
+      )}
       <main className="main--container">
         <section className="search--container">
           <h2 className="title">K I N J O</h2>
@@ -20,7 +22,9 @@ const Main = () => {
             <input type="search" placeholder="Search for a place" />
             <button>Search</button>
           </form>
-          <button onClick={toggleCreateItinerary}>Create Your Own Itinerary</button>
+          <button onClick={toggleCreateItinerary}>
+            Create Your Own Itinerary
+          </button>
           <p>"Exploration made for you, by you"</p>
         </section>
         <section className="recommend--container">
@@ -31,7 +35,7 @@ const Main = () => {
         </section>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;

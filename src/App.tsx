@@ -16,7 +16,6 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 const App = () => {
-
   const [showLogin, setShowLogin] = useState<boolean>(false);
   // This baby protects the routes will use later down the line
   const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
@@ -28,18 +27,27 @@ const App = () => {
     setShowLogin(!showLogin);
   }
 
-  console.log(showLogin)
-
+  console.log(showLogin);
 
   return (
     <>
       <I18nextProvider i18n={i18n}>
         <AuthProvider value>
-          <Navbar appToggleLogin={toggleLogin} appShowLogin={showLogin}  />
+          <Navbar appToggleLogin={toggleLogin} appShowLogin={showLogin} />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Landing appShowLogin={toggleLogin}/>} />
-              <Route path="main" element={<PrivateWrapper><Main /></PrivateWrapper>} />
+              <Route
+                path="/"
+                element={<Landing appShowLogin={toggleLogin} />}
+              />
+              <Route
+                path="main"
+                element={
+                  <PrivateWrapper>
+                    <Main />
+                  </PrivateWrapper>
+                }
+              />
             </Routes>
           </BrowserRouter>
           <Footer text={"Kinjo v1.0.0"} />
