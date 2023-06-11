@@ -12,7 +12,6 @@ const Landing = ({appShowLogin} : LandingProps) => {
   const navigate = useNavigate();
   const {currentUser} = useAuth();
 
-
   function handleClick() {
     if (currentUser !== null)
       navigate("/main");

@@ -27,7 +27,7 @@ const App = () => {
     setShowLogin(!showLogin);
   }
 
-  console.log(showLogin);
+
 
   return (
     <>
