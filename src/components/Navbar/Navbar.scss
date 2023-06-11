@@ -30,6 +30,7 @@ nav {
             background-color: transparent;
             color: inherit;
             cursor: pointer;
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
         }
         button {
             padding: 0.5rem;
@@ -39,6 +40,13 @@ nav {
             color: inherit;
             cursor: pointer;
             font-size: clamp(0.7rem, 2vw, 1.5rem);
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+        }
+
+        // CHANGE THIS LATER
+        a:hover, button:hover {
+            background-color: black;
+            color: white;
         }
     }
 }
