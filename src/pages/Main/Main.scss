@@ -1,0 +1,30 @@
+.main--container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-color: #ecebea;
+
+    .search--container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(1rem, 2vw, 2rem);
+    }
+
+    .recommend--container {
+        display: grid;
+        align-self: self-start;
+        grid-template-rows: 50px 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: "title title title"
+                             "recommend1 recommend2 recommend3";
+        
+        h1 {
+            grid-area: title;
+            justify-self: center;
+        }              
+    }
+}

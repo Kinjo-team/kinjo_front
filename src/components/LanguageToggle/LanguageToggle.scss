@@ -1,0 +1,20 @@
+.toggle--container {
+    // POSITIONING
+    position: fixed;
+    top: 0;
+    right: 2rem;
+    // POSITIONING
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+
+    button {
+        padding: 0.2rem;
+        border: 1px solid white;
+        border-radius: 0.5rem;
+        background-color: transparent;
+        color: white;
+        cursor: pointer;
+        font-size: 10px;
+    }
+}
