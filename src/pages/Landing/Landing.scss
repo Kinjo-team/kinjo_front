@@ -4,18 +4,26 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: clamp(5rem, 10vw, 2rem);
     color: black;
 
+    .title {
+        // REVERSED
+        margin-left: clamp(1rem, 10vw, 7rem);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1rem, 5vw, 3rem);
+    }
+
     h1 {
-        font-size: clamp(3rem, 10vw, 7rem);
+        font-size: clamp(3rem, 10vw, 10rem);
         user-select: none;
         color: inherit;
     }
     p {
         color: inherit;
         font-style: italic;
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
     }
     button {
         padding: 1rem 2rem;
@@ -28,9 +36,71 @@
         font-weight: bold;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
+        width: clamp(10rem, 20vw, 20rem);
     }
     button:hover {
         background: rgba(255, 255, 255, 1);
         transform: scale(1.1);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .landing--container {
+        align-items: center;
+    }
+    .title {
+        align-items: center;
+        // REVERSED
+        margin-right: clamp(1rem, 10vw, 7rem);
+    }
+    
+}
+
+.landing--info--container {
+    padding-top: 7rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas: "landingtitle landingpic"
+                         "landinginfo landingpic";
+    width: 100vw;
+    height: 100vh;
+
+    h2 {
+        grid-area: landingtitle;
+        font-size: clamp(1.5rem, 2.5vw, 3rem);
+        margin-left:auto;
+        padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 20vw, 10rem);
+    }
+    .info--section {
+        grid-area: landinginfo;
+        margin-left:auto;
+        margin-top: clamp(1rem, 2vw, 2rem);
+        padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 20vw, 10rem);
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        line-height: clamp(1.5rem, 2vw, 2rem);
+    }
+    .img--container {
+        display: flex;
+        grid-area: landingpic;
+
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .info--container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 50px 1fr 1fr;
+        grid-template-areas: "title"
+                             "info"
+                             "pic";
+    }
+    .info--section {
+        margin-left: 0;
+        padding: clamp(1rem, 2vw, 2rem);
+    }
+    img {
+        width: 100%;
+        height: 100%;
     }
 }

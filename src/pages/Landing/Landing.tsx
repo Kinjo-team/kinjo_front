@@ -23,9 +23,22 @@ const Landing = ({appShowLogin} : LandingProps) => {
   return (
     <>
       <main className="landing--container">
-        <h1>K I N J O</h1>
-        <p>{t("landingPageSubText")}</p>
-        <button onClick={handleClick}>{t("landingPageButton")}</button>
+        <div className="title">
+          <h1>K I N J O</h1>
+          <p>{t("landingPageSubText")}</p>
+          <button onClick={handleClick}>{t("landingPageButton")}</button>
+        </div>
+      </main>
+      <main className="landing--info--container">
+        <h2>Find hidden gems in Japan</h2>
+        <p className="info--section">
+            Discover places off the beaten path, recommended by locals! 
+            <br></br>
+            This is Japan that you have never experienced before.
+        </p>
+        <div className="img--container">
+          <img src="" alt="Places Collage" />
+        </div>
       </main>
     </>
   );
