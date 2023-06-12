@@ -1,0 +1,14 @@
+.itinpicturecard--container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: clamp(1rem, 2vw, 2rem);
+    border-radius: 5px;
+    
+    h2 {
+        font-size: clamp(1.5rem, 2.5vw, 3rem);
+        margin-bottom: 1rem;
+    }
+}

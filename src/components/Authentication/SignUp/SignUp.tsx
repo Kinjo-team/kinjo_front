@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import {auth } from '../../../auth/firebase'
-import { Navigate } from 'react-router-dom'
 import './SignUp.scss'
 
 type SignUpProps = {
@@ -30,6 +29,9 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
             setLoading(true)
             // NEED A CHECK TO SEE IF USERNAME ALREADY EXISTS
             await signup(emailRef.current?.value, passwordRef.current?.value);
+            auth.currentUser?.updateProfile({
+                displayName: usernameRef.current?.value
+            })
             await postUser()
             toggleSignUp();
             navigateToMain();

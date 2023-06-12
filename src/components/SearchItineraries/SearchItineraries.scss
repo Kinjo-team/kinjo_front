@@ -1,0 +1,38 @@
+.search-itineraries {
+    display: flex;
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    width: 100px;
+    // border: 2px solid red;
+    background-color: #fff;
+}
+
+.dropbtn {
+    width: 100px;
+}
+
+.dropdown-section {
+    display: flex;
+    flex-direction: column;
+}
+  
+.dropdown-content.show {
+    display: block;
+}
+
+.dropdown-content .search-option:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+  }
+
+.dropdown-section:hover .dropdown-content {
+    transform: scale(1);
+    transition: transform 0.3s ease;
+  }

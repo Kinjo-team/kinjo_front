@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
-import { Link } from 'react-router-dom'
 import './ForgotPassword.scss'
 
 const ForgotPassword = () => {
@@ -39,10 +38,10 @@ const ForgotPassword = () => {
                 <button type="submit" disabled={loading}>Reset Password</button>
             </form>
             <div>
-                <Link to="/login">Log In</Link>
+                {/* <Link to="/login">Log In</Link> */}
             </div>
             <div>
-                Don't have an account? <Link to="/signup">Sign Up!</Link>
+                {/* Don't have an account? <Link to="/signup">Sign Up!</Link> */}
             </div>
         </section>
     </main>
