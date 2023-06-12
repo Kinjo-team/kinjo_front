@@ -2,6 +2,7 @@ import CreateItinerary from "../../components/CreateItinerary/CreateItinerary";
 import ItinPictureCard from "../../components/ItinPictureCard/ItinPictureCard";
 import { getRandomItineraries } from "./helperFunctions";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Main.scss";
 
 const Main = () => {
@@ -46,7 +47,9 @@ const Main = () => {
         <section className="recommend--container">
           <h1>Popular spots:</h1>
           {filteredItineraries.map((itinerary: any) => (
-            <ItinPictureCard key={itinerary.itinerary_id} itinerary={itinerary} />
+            <Link to={`/itinerary/${itinerary.itinerary_id}`} key={itinerary.itinerary_id}>
+              <ItinPictureCard itinerary={itinerary} />
+            </Link>
           ))}
         </section>
       </main>
