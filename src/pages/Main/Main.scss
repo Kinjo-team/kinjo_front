@@ -20,7 +20,8 @@
         grid-template-rows: 50px 1fr;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-areas: "title title title"
-                             "recommend1 recommend2 recommend3";
+                             "recommend recommend recommend";
+        gap: clamp(1rem, 2vw, 2rem);
         
         h1 {
             grid-area: title;

@@ -1,0 +1,19 @@
+.card--container {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: clamp(1rem, 2vw, 2rem);
+    border-radius: 5px;
+    // CHANGE??
+    height: 100%;
+
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        scale: 1.1;
+    }
+    h2 {
+        font-size: clamp(1.5rem, 2.5vw, 3rem);
+        margin-bottom: 1rem;
+    }
+}

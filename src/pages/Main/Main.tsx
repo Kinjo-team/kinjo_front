@@ -1,12 +1,29 @@
 import CreateItinerary from "../../components/CreateItinerary/CreateItinerary";
-import { useState } from "react";
+import ItinPictureCard from "../../components/ItinPictureCard/ItinPictureCard";
+import { getRandomItineraries } from "./helperFunctions";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Main.scss";
 
 const Main = () => {
-  const [showCreateItinerary, setShowCreateItinerary] =
-    useState<boolean>(false);
+  const [showCreateItinerary, setShowCreateItinerary] = useState<boolean>(false);
+  const [itineraries, setItineraries] = useState<any[]>([]);
+  
+  useEffect(() => {
+    const fetchItineraries = async () => {
+      const response = await fetch(`http://localhost:8000/itineraries`);
+      const data = await response.json();
+      setItineraries(data);
+    };
 
-  function toggleCreateItinerary() {
+    fetchItineraries();
+  }, [])
+
+ 
+  const filteredItineraries = getRandomItineraries(itineraries, 3);
+
+
+  function toggleCreateItinerary(): void {
     setShowCreateItinerary(!showCreateItinerary);
   }
 
@@ -29,9 +46,11 @@ const Main = () => {
         </section>
         <section className="recommend--container">
           <h1>Popular spots:</h1>
-          <div className="placeholder">PLACE</div>
-          <div className="placeholder">PLACE</div>
-          <div className="placeholder">PLACE</div>
+          {filteredItineraries.map((itinerary: any) => (
+            <Link to={`/itinerary/${itinerary.itinerary_id}`} key={itinerary.itinerary_id}>
+              <ItinPictureCard itinerary={itinerary} />
+            </Link>
+          ))}
         </section>
       </main>
     </>

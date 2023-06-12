@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar/Navbar";
-import Landing from "./components/Landing/Landing";
+import Landing from "./pages/Landing/Landing";
 import Main from "./pages/Main/Main";
+import ItineraryView from "./pages/ItineraryView/ItineraryView";
 import Footer from "./components/Footer/Footer";
 
 import { useState } from "react";
@@ -27,7 +28,9 @@ const App = () => {
     setShowLogin(!showLogin);
   }
 
-  console.log(showLogin);
+  console.log(i18n.language)
+
+
 
   return (
     <>
@@ -48,6 +51,7 @@ const App = () => {
                   </PrivateWrapper>
                 }
               />
+              <Route path="/itinerary/:id" element={<ItineraryView />} />
             </Routes>
           </BrowserRouter>
           <Footer text={"Kinjo v1.0.0"} />
