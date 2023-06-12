@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import Map from "../Map/Map";
-import Sidebar from "../Sidebar/Sidebar";
 
 import "./CreateItinerary.scss";
 
@@ -150,7 +149,6 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
     <main onClick={toggleCreateItinerary} className="overlay--container">
       <div onClick={stopBubblingUp} className="createItinerary--container">
         <div>
-          <Sidebar locationCards={locationCards} />
         </div>
         <header>
           <h2>Create an Itinerary</h2>
