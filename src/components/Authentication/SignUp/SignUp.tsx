@@ -1,16 +1,23 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
-import { Link, useNavigate } from 'react-router-dom'
+import {auth } from '../../../auth/firebase'
+import { Navigate } from 'react-router-dom'
 import './SignUp.scss'
 
-const SignUp = () => {
+type SignUpProps = {
+    toggleSignUp: () => void
+    toggleLogin: () => void
+    closeAll: () => void
+}
+
+const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
+    const usernameRef = useRef<HTMLInputElement>(null)
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const passwordConfirmRef = useRef<HTMLInputElement>(null)
     const { signup } = useAuth()
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
-    const navigate = useNavigate()
 
     async function handleSubmit(e : any) {
         e.preventDefault()
@@ -21,23 +28,54 @@ const SignUp = () => {
         try {
             setError("")
             setLoading(true)
-            await signup(emailRef.current?.value, passwordRef.current?.value)
-            navigate("/login")
-            alert("Thank you for signing up!")
-        } catch {
+            // NEED A CHECK TO SEE IF USERNAME ALREADY EXISTS
+            await signup(emailRef.current?.value, passwordRef.current?.value);
+            await postUser()
+            toggleSignUp();
+            navigateToMain();
+        } catch(error) {
+            console.error(error)
             setError("Failed to create an account")
         }
         setLoading(false)
     }
+
+    function stopBubbling(e : any) {
+        e.stopPropagation()
+    }
+
+    async function postUser() {
+        const uid = auth.currentUser?.uid
+        const resp = await fetch(`http://localhost:8000/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: usernameRef.current?.value,
+                    user_email: emailRef.current?.value,
+                    uid: uid
+                    })
+        })
+        const data = await resp.json()
+        console.log(data)
+    }
+
+    function navigateToMain() {
+        window.location.href = '/main'
+    }
+
+
+
   return (
-    <main className='signup--container'>
-        <section className='signup'>
+    <main onClick={toggleSignUp} className='signup--container'>
+        <section onClick={stopBubbling} className='signup'>
             <h2 className='title'>Sign Up</h2>
             {error && <div className="error">{error}</div>}
             <form className='signup--form' onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor='username'>Username: </label>
-                    <input type="text" id="username" required />
+                    <input type="text" id="username" ref={usernameRef} required />
                 </div>
                 <div>
                     <label htmlFor='email'>Email: </label>
@@ -54,7 +92,7 @@ const SignUp = () => {
                 <button type="submit" disabled={loading}>Sign Up</button>
             </form>
             <div className='auth--login-msg'>
-                Already have an account? <Link to="/login">Log In</Link>
+                Already have an account? <span className='auth--link' onClick={toggleLogin}>Log In</span>
             </div>
         </section>
     </main>

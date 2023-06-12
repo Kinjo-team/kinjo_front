@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import "./LanguageToggle.scss"
 
 const LanguageToggle = () => {
   const { i18n } = useTranslation();
@@ -8,9 +9,9 @@ const LanguageToggle = () => {
   };
 
   return (
-    <div>
-      <button onClick={() => changeLanguage("en")}>English</button>
-      <button onClick={() => changeLanguage("ja")}>Japanese</button>
+    <div className="toggle--container">
+      <button onClick={() => changeLanguage("en")}>EN</button>
+      <button onClick={() => changeLanguage("ja")}>JP</button>
     </div>
   );
 };

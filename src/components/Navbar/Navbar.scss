@@ -1,4 +1,7 @@
 nav {
+    position: fixed;
+    width: 100vw;
+    top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -6,6 +9,7 @@ nav {
     background-color: #4b3b3b;
     
     .title {
+        cursor: pointer;
         font-size: clamp(1.5rem, 3vw, 2rem);
         font-weight: bold;
         color: white;
@@ -13,14 +17,27 @@ nav {
 
     .btn-grp {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: clamp(10rem, 20vw, 20rem);
-        font-size: clamp(1rem, 2vw, 1.5rem);
+        justify-content: flex-end;
+        gap: clamp(1rem, 2vw, 2rem);
+        font-size: clamp(0.7rem, 2vw, 1.5rem);
 
         a {
             text-decoration: none;
+            padding: 0.5rem;
+            border: 1px solid white;
+            border-radius: 0.5rem;
+            background-color: transparent;
             color: white;
+            cursor: pointer;
+        }
+        button {
+            padding: 0.5rem;
+            border: 1px solid white;
+            border-radius: 0.5rem;
+            background-color: transparent;
+            color: white;
+            cursor: pointer;
+            font-size: clamp(0.7rem, 2vw, 1.5rem);
         }
     }
 }
