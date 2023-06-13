@@ -148,14 +148,14 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
   return (
     <main onClick={toggleCreateItinerary} className="overlay--container">
       <div onClick={stopBubblingUp} className="createItinerary--container">
-        <form className="createItinerary-form" onSubmit={handleSubmit}>
+        <form className="createItinerary--form" onSubmit={handleSubmit}>
           <section className="input-form">
             <label htmlFor="itinerary_name">Name</label>
             <input
               type="text"
               name="itinerary_name"
               id="itinerary_name"
-              placeholder="Enter name"
+              placeholder="e.g. My First Itinerary"
               value={formData.itinerary_name}
               onChange={handleInputChange}
               onKeyDown={handleEnterKey}
@@ -166,7 +166,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
             <textarea
               name="itinerary_descr"
               id="itinerary_descr"
-              placeholder="Enter Description"
+              placeholder="Add description"
               value={formData.itinerary_descr}
               onChange={handleInputChange}
               onKeyDown={handleEnterKey}
@@ -181,7 +181,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
                   type="text"
                   name="itinerary_tags"
                   id="itinerary_tags"
-                  placeholder="Enter tags (max 5)"
+                  placeholder="Add tags(max 5) e.g. coffee"
                   value={formData.enteredTag}
                   onChange={handleInputChange}
                   onKeyDown={handleEnterKey}
@@ -197,7 +197,8 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
               </div>
             </section>
           </form>
-          <button className="itinerary-submit-btn">Add Location</button>
+          <button className="itinerary-submit-btn">Submit & Review</button>
+          <button className="itinerary-cancel-btn" onClick={toggleCreateItinerary}>Cancel</button>
         </form>
         <div className="map--container">
           <Map handleLocationData={handleLocationData} />

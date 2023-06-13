@@ -51,6 +51,7 @@ const ItineraryView = () => {
           <article>
             <h1>{itinerary.itinerary_name}</h1>
             <p>{itinerary.itinerary_descr}</p>
+                    
           </article>
           <ReadOnlyMap locations={itinerary} />
         </section>
