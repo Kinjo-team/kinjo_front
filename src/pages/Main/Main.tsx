@@ -4,6 +4,7 @@ import { getRandomItineraries } from "./helperFunctions";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Main.scss";
+import SearchItineraries from "../../components/SearchItineraries/SearchItineraries";
 
 const Main = () => {
   const [showCreateItinerary, setShowCreateItinerary] = useState<boolean>(false);
@@ -35,10 +36,7 @@ const Main = () => {
       <main className="main--container">
         <section className="search--container">
           <h2 className="title">K I N J O</h2>
-          <form className="search--form">
-            <input type="search" placeholder="Search for a place" />
-            <button>Search</button>
-          </form>
+          <SearchItineraries />
           <button onClick={toggleCreateItinerary}>
             Create Your Own Itinerary
           </button>
