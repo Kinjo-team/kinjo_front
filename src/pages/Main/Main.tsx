@@ -49,10 +49,9 @@ const Main = () => {
           <p className="main--tag">"Exploration made for you, by you"</p>
         </section>
         <section className="recommend--container">
-          <h1>Popular spots:</h1>
-          {filteredItineraries.map((itinerary: any) => (
+          {filteredItineraries.map((itinerary: any, index: number) => (
             <Link to={`/itinerary/${itinerary.itinerary_id}`} key={itinerary.itinerary_id}>
-              <ItinPictureCard itinerary={itinerary} />
+              <ItinPictureCard itinerary={itinerary} index={index} />
             </Link>
           ))}
         </section>

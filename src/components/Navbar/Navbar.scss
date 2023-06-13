@@ -54,15 +54,3 @@ nav {
         }
     }
 }
-
-.not--landing {
-    color: black;
-
-    a, button {
-        border: 1px solid black;
-    }
-    a:hover, button:hover {
-        background-color: black;
-        color: white;
-    }
-}

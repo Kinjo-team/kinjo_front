@@ -8,6 +8,7 @@
     background-color: white;
     color: white;
     place-items: center;
+    overflow: auto;
 
     .search--container {
         display: flex;
@@ -62,15 +63,8 @@
     .recommend--container {
         display: grid;
         align-self: self-start;
-        grid-template-rows: 50px 1fr;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-areas: "title title title"
-                             "recommend recommend recommend";
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: clamp(1rem, 2vw, 2rem);
-        
-        h1 {
-            grid-area: title;
-            justify-self: center;
-        }              
+        animation: fade-in 1s ease-in-out;;       
     }
 }
