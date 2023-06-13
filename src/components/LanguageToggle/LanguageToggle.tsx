@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import "./LanguageToggle.scss"
+import "./LanguageToggle.scss";
 
 const LanguageToggle = () => {
   const { i18n } = useTranslation();
