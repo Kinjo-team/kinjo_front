@@ -5,27 +5,66 @@
     width: 100vw;
     justify-content: center;
     align-items: center;
-    background-color: #ecebea;
+    background-color: white;
+    color: white;
+    place-items: center;
+    overflow: auto;
 
     .search--container {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
+        background-color: white;
+        background-image: url("../../assets/images/searchbarimages/nightstreet.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: clamp(3rem, 5vw, 5rem);
+        border-radius: 25px;
+        width: 80vw;
         gap: clamp(1rem, 2vw, 2rem);
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+        animation: fade-in 1s ease-in-out;
+
+        .main--title {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            margin-bottom: 1rem;
+            white-space: nowrap;
+        }
+
+        .main--tag {
+            text-align: center;
+            font-style: italic;
+        }
+
+        .create-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba($color: #ffffff, $alpha: 0.8);
+            color: black;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: none;
+            width: 60%;
+            font-size: clamp(0.9rem, 1.5vw, 1.3rem);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+
+            &:hover {
+                background-color: black;
+                color: white;
+            }
+        }
     }
 
     .recommend--container {
         display: grid;
         align-self: self-start;
-        grid-template-rows: 50px 1fr;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-areas: "title title title"
-                             "recommend recommend recommend";
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: clamp(1rem, 2vw, 2rem);
-        
-        h1 {
-            grid-area: title;
-            justify-self: center;
-        }              
+        animation: fade-in 1s ease-in-out;;       
     }
 }

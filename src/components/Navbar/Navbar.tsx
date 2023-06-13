@@ -8,11 +8,11 @@ import LanguageToggle from "../LanguageToggle/LanguageToggle";
 import UserDropDown from "../UserDropDown/UserDropDown";
 
 type NavbarProps = {
-  appToggleLogin: () => void;
-  appShowLogin: boolean;
+  landingShowLogin?: boolean;
+  landingToggleLogin?: () => void;
 };
 
-const Navbar = ({ appShowLogin, appToggleLogin }: NavbarProps) => {
+const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
   const { t } = useTranslation();
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const [showSignUp, setShowSignUp] = useState<boolean>(false);
@@ -21,12 +21,13 @@ const Navbar = ({ appShowLogin, appToggleLogin }: NavbarProps) => {
 
   // This is for the app to be able to open the login modal *used for the landing page*
   useEffect(() => {
-    if (appShowLogin) {
+    if (landingShowLogin) {
       setShowLogin(true);
-      appToggleLogin();
+      landingToggleLogin?.();
     }
-  }, [appShowLogin]);
-
+  }
+  , [landingShowLogin]);
+  
   useEffect(() => {
     if (currentUser) {
       fetchUsername();

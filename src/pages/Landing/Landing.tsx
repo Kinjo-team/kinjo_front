@@ -1,45 +1,67 @@
-import "./Landing.scss";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { useState } from "react";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 
-type LandingProps = {
-  appShowLogin: () => void;
-};
+import "./Landing.scss";
+// VIDEO
+import {Parallax, ParallaxLayer} from '@react-spring/parallax'
+const landingVideo = require("../../assets/videos/landing.mp4");
+// PICTURE
+const landingInfoPic = require("../../assets/images/landinginfopic.png");
 
-const Landing = ({appShowLogin} : LandingProps) => {
+
+const Landing = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const {currentUser} = useAuth();
-
-  function handleClick() {
+  const [showLogin, setShowLogin] = useState<boolean>(false);
+  
+  // HANDLERS
+  function handleClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     if (currentUser !== null)
       navigate("/main");
     else {
-      appShowLogin();
+      landingToggleLogin();
     } 
+  }
+
+  function landingToggleLogin() {
+    setShowLogin(!showLogin);
   }
 
   return (
     <>
       <main className="landing--container">
-        <div className="title">
-          <h1>K I N J O</h1>
-          <p>{t("landingPageSubText")}</p>
-          <button onClick={handleClick}>{t("landingPageButton")}</button>
-        </div>
+        <Parallax pages={1}>
+            <ParallaxLayer offset={0} speed={2}>
+              <video src={landingVideo} autoPlay loop muted />
+            </ParallaxLayer>
+            <ParallaxLayer offset={0} speed={0.5}>
+              <div className="title">
+                <h1>K I N J O</h1>
+                <p>{t("landingPageSubText")}</p>
+                <button onClick={handleClick}>{t("landingPageButton")}</button>
+              </div>
+            </ParallaxLayer>
+        </Parallax>
       </main>
+      <Navbar landingShowLogin={showLogin} landingToggleLogin={landingToggleLogin} />
       <main className="landing--info--container">
-        <h2>Find hidden gems in Japan</h2>
         <p className="info--section">
-            Discover places off the beaten path, recommended by locals! 
-            <br></br>
-            This is Japan that you have never experienced before.
+            <h2>Find hidden gems in Japan</h2>
+            <p>Discover places off the beaten path, recommended by locals! 
+              <br></br>
+               This is Japan that you have never experienced before.
+            </p>
         </p>
         <div className="img--container">
-          <img src="" alt="Places Collage" />
+          <img src={landingInfoPic} alt="Places Collage" />
         </div>
       </main>
+      <Footer text={"Kinjo v1.0.0"} />
     </>
   );
 };

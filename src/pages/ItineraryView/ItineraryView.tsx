@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LocationCard from "../../components/LocationCard/LocationCard";
 import LocationPopUp from "../../components/LocationPopUp/LocationPopUp";
+import Navbar from "../../components/Navbar/Navbar";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
 import i18n from "../../i18n";
 
@@ -42,13 +43,15 @@ const ItineraryView = () => {
   }
 
   return (
-    <>
+      <>  
+      <Navbar />
       <main className="itineraryview--container">
         <button onClick={goBack}>Back</button>
         <section className="info--container">
           <article>
             <h1>{itinerary.itinerary_name}</h1>
             <p>{itinerary.itinerary_descr}</p>
+                    
           </article>
           <ReadOnlyMap locations={itinerary} />
         </section>
