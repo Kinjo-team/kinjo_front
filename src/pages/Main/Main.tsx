@@ -1,6 +1,7 @@
 import CreateItinerary from "../../components/CreateItinerary/CreateItinerary";
 import ItinPictureCard from "../../components/ItinPictureCard/ItinPictureCard";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 import { getRandomItineraries } from "./helperFunctions";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -37,12 +38,15 @@ const Main = () => {
       <Navbar />
       <main className="main--container">
         <section className="search--container">
-          <h2 className="title">K I N J O</h2>
-          <SearchItineraries />
-          <button onClick={toggleCreateItinerary}>
+          <h2 className="main--title">K I N J O</h2>
+          <form className="search--form">
+            <input type="search" placeholder="Search for a place" />
+            <button>Search</button>
+          </form>
+          <button className="create-btn" onClick={toggleCreateItinerary}>
             Create Your Own Itinerary
           </button>
-          <p>"Exploration made for you, by you"</p>
+          <p className="main--tag">"Exploration made for you, by you"</p>
         </section>
         <section className="recommend--container">
           <h1>Popular spots:</h1>
@@ -53,6 +57,7 @@ const Main = () => {
           ))}
         </section>
       </main>
+      <Footer text={"kinjo"} />
     </>
   );
 };

@@ -148,13 +148,9 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
   return (
     <main onClick={toggleCreateItinerary} className="overlay--container">
       <div onClick={stopBubblingUp} className="createItinerary--container">
-        <div></div>
-        <header>
-          <h2>Create an Itinerary</h2>
-        </header>
         <form className="createItinerary-form" onSubmit={handleSubmit}>
           <section className="input-form">
-            <label htmlFor="itinerary_name">Itinerary Name</label>
+            <label htmlFor="itinerary_name">Name</label>
             <input
               type="text"
               name="itinerary_name"
@@ -201,7 +197,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
               </div>
             </section>
           </form>
-          <button>Add Location</button>
+          <button className="itinerary-submit-btn">Add Location</button>
         </form>
         <div className="map--container">
           <Map handleLocationData={handleLocationData} />
