@@ -148,8 +148,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
   return (
     <main onClick={toggleCreateItinerary} className="overlay--container">
       <div onClick={stopBubblingUp} className="createItinerary--container">
-        <div>
-        </div>
+        <div></div>
         <header>
           <h2>Create an Itinerary</h2>
         </header>
