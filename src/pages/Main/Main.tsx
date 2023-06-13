@@ -1,5 +1,6 @@
 import CreateItinerary from "../../components/CreateItinerary/CreateItinerary";
 import ItinPictureCard from "../../components/ItinPictureCard/ItinPictureCard";
+import Navbar from "../../components/Navbar/Navbar";
 import { getRandomItineraries } from "./helperFunctions";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -33,6 +34,7 @@ const Main = () => {
       {showCreateItinerary && (
         <CreateItinerary toggleCreateItinerary={toggleCreateItinerary} />
       )}
+      <Navbar />
       <main className="main--container">
         <section className="search--container">
           <h2 className="title">K I N J O</h2>
