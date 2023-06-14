@@ -72,26 +72,26 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
   return (
     <main onClick={toggleSignUp} className='signup--container'>
         <section onClick={stopBubbling} className='signup'>
-            <h2 className='title'>Sign Up</h2>
+            <h2 className='signup--title'>Explore your KINJO</h2>
             {error && <div className="error">{error}</div>}
             <form className='signup--form' onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor='username'>Username: </label>
+                    <label htmlFor='username'>USERNAME</label>
                     <input type="text" id="username" ref={usernameRef} required />
                 </div>
                 <div>
-                    <label htmlFor='email'>Email: </label>
+                    <label htmlFor='email'>EMAIL ADDRESS</label>
                     <input type="email" id="email" ref={emailRef} required />
                 </div>
                 <div>
-                    <label htmlFor='password'>Password: </label>
+                    <label htmlFor='password'>PASSWORD</label>
                     <input id="password" type="password" ref={passwordRef} placeholder='At least 6 characters' required />
                 </div>
                 <div>
-                    <label htmlFor='confirmpassword'>Confirm Password: </label>
+                    <label htmlFor='confirmpassword'>CONFIRM PASSWORD</label>
                     <input id='confirmpassword' type="password" ref={passwordConfirmRef} required></input>
                 </div>
-                <button type="submit" disabled={loading}>Sign Up</button>
+                <button className='signup--form--submit-btn' type="submit" disabled={loading}>Sign Up</button>
             </form>
             <div className='auth--login-msg'>
                 Already have an account? <span className='auth--link' onClick={toggleLogin}>Log In</span>

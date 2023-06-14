@@ -37,11 +37,12 @@
             flex-direction: column;
 
             label {
-                font-size: clamp(1rem, 1.5vw, 1rem);
+                font-size: clamp(0.7rem, 1.5vw, 1rem);
                 position: absolute;
                 top: 14px;
                 left: 5px;
                 background-color: white;
+                letter-spacing: 0.1rem;
             }
     
             input {
@@ -72,7 +73,7 @@
         }
 
         .itinerary-submit-btn {
-            background-color: #434f59;
+            background-color: #47a570;
             color: white;
             &:hover {
                 background-color: #5c6b77;
@@ -80,7 +81,7 @@
         }
 
         .itinerary-cancel-btn {
-            background-color: black;
+            background-color: #0e7eb9;
             color: white;
             &:hover {
                 background-color: white;
@@ -113,14 +114,4 @@
         grid-template-columns: 1fr;
         max-height: 85vh;
     }
-}
-
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-    
 }

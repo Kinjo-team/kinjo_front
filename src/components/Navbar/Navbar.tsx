@@ -92,10 +92,10 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
             <UserDropDown username={username} />
           ) : (
             <>
-              <button onClick={toggleLogin}>
+              <button className="nav-btn" onClick={toggleLogin}>
                 {t("landingPageHeaderLogin")}
               </button>
-              <button onClick={toggleSignUp}>
+              <button className="nav-btn" onClick={toggleSignUp}>
                 {t("landingPageHeaderSignUp")}
               </button>
             </>
