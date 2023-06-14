@@ -39,30 +39,24 @@ const LogIn = ({ toggleLogin, toggleSignUp, closeAll }: LogInProps) => {
   }
 
   return (
-    <main onClick={toggleLogin} className='login--container'>
-        <section onClick={stopBubbling} className='login'>
-            <h2 className="login-title">Log in to KINJO</h2>
-            {error && <div className="error">{error}</div>}
-            <form className='login--form' onSubmit={handleSubmit}>
-                <div className='login--form--section'>
-                    <label htmlFor='Email'>EMAIL ADDRESS</label>
-                    <input type="email" ref={emailRef} required></input>
-                </div>
-                <div className='login--form--section'>
-                    <label htmlFor='password'>PASSWORD</label>
-                    <input type="password" ref={passwordRef} required />
-                </div>
-                <button className='login--form--submit-btn' type="submit" disabled={loading}>Log In</button>
-            </form>
-          <div>
-            <label htmlFor="Email">Email</label>
+    <main onClick={toggleLogin} className="login--container">
+      <section onClick={stopBubbling} className="login">
+        <h2 className="login-title">Log in to KINJO</h2>
+        {error && <div className="error">{error}</div>}
+        <form className="login--form" onSubmit={handleSubmit}>
+          <div className="login--form--section">
+            <label htmlFor="Email">EMAIL ADDRESS</label>
             <input type="email" ref={emailRef} required></input>
           </div>
-          <div>
-            <label htmlFor="password">Password</label>
+          <div className="login--form--section">
+            <label htmlFor="password">PASSWORD</label>
             <input type="password" ref={passwordRef} required />
           </div>
-          <button type="submit" disabled={loading}>
+          <button
+            className="login--form--submit-btn"
+            type="submit"
+            disabled={loading}
+          >
             Log In
           </button>
         </form>
