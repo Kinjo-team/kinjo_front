@@ -8,26 +8,25 @@ import LanguageToggle from "../LanguageToggle/LanguageToggle";
 import UserDropDown from "../UserDropDown/UserDropDown";
 
 type NavbarProps = {
-  appToggleLogin: () => void;
-  appShowLogin: boolean;
+  landingShowLogin?: boolean;
+  landingToggleLogin?: () => void;
 };
 
-const Navbar = ({appShowLogin, appToggleLogin} : NavbarProps) => {
+const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
   const { t } = useTranslation();
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const [showSignUp, setShowSignUp] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const { currentUser } = useAuth();
 
-
   // This is for the app to be able to open the login modal *used for the landing page*
   useEffect(() => {
-    if (appShowLogin) {
+    if (landingShowLogin) {
       setShowLogin(true);
-      appToggleLogin();
+      landingToggleLogin?.();
     }
   }
-  , [appShowLogin]);
+  , [landingShowLogin]);
   
   useEffect(() => {
     if (currentUser) {
@@ -35,11 +34,9 @@ const Navbar = ({appShowLogin, appToggleLogin} : NavbarProps) => {
     }
     return () => {
       setUsername("");
-    }
-  }
-  , [currentUser]);
-  
-  
+    };
+  }, [currentUser]);
+
   // HANDLERS
   function toggleLogin() {
     setShowLogin(!showLogin);
@@ -60,10 +57,9 @@ const Navbar = ({appShowLogin, appToggleLogin} : NavbarProps) => {
   async function fetchUsername() {
     const resp = await fetch(`http://localhost:8000/users/${currentUser?.uid}`);
     const data = await resp.json();
-    console.log(data)
+    console.log(data);
     setUsername(data.username);
   }
-    
 
   function navigateToLanding() {
     window.location.href = "/";
@@ -71,22 +67,39 @@ const Navbar = ({appShowLogin, appToggleLogin} : NavbarProps) => {
 
   return (
     <>
-      {showLogin && <LogIn toggleLogin={toggleLogin} toggleSignUp={toggleSignUp} closeAll={closeAll} />}
-      {showSignUp && <SignUp toggleSignUp={toggleSignUp} toggleLogin={toggleLogin} closeAll={closeAll} />}
+      {showLogin && (
+        <LogIn
+          toggleLogin={toggleLogin}
+          toggleSignUp={toggleSignUp}
+          closeAll={closeAll}
+        />
+      )}
+      {showSignUp && (
+        <SignUp
+          toggleSignUp={toggleSignUp}
+          toggleLogin={toggleLogin}
+          closeAll={closeAll}
+        />
+      )}
       <nav>
-        <h1 className="title" onClick={navigateToLanding}>K I N J O</h1>
+        <h1 className="title" onClick={navigateToLanding}>
+          K I N J O
+        </h1>
         <LanguageToggle />
         <div className="btn-grp">
           <a href="/">{t("landingPageHeaderHome")}</a>
-          {currentUser ? <UserDropDown username={username} />
-          :
-          (
+          {currentUser ? (
+            <UserDropDown username={username} />
+          ) : (
             <>
-              <button onClick={toggleLogin}>{t("landingPageHeaderLogin")}</button>
-              <button onClick={toggleSignUp}>{t("landingPageHeaderSignUp")}</button>
+              <button onClick={toggleLogin}>
+                {t("landingPageHeaderLogin")}
+              </button>
+              <button onClick={toggleSignUp}>
+                {t("landingPageHeaderSignUp")}
+              </button>
             </>
-          )
-          }
+          )}
         </div>
       </nav>
     </>

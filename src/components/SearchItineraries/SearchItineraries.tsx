@@ -1,10 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './SearchItineraries.scss';
+import DisplayItineraries from '../DisplayItineraries/DisplayItineraries';
 
 const SearchItineraries = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [searchOption, setSearchOption] = useState('');
   const [searchValue, setSearchValue] = useState('');
+  const [showResults, setShowResults] = useState(false);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const dropdownButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -41,8 +45,10 @@ const SearchItineraries = () => {
           }
         });
         if (response.ok) {
-          const data = await response.json();
-          console.log("This is the data from handle search:", data);
+          const searchData = await response.json();
+          setSearchResults(searchData);
+          console.log("This is the data from handle search:", searchData);
+          setShowResults(true);
         } else {
           console.error('Search request failed');
         }
@@ -60,29 +66,32 @@ const SearchItineraries = () => {
       }, []);
     
       return (
-        <form className="search-itineraries">
-          <section 
-            className="dropdown-section" 
-            onMouseEnter={handleDropdownClick} 
-            onMouseLeave={handleDropdownClick}>
-            <button className="dropbtn">{searchOption ? searchOption : "Search Options"}</button>
-            <div className={`dropdown-content${showOptions ? ' show' : ''}`} ref={dropdownRef}>
-              <p className='search-option' onClick={() => handleSearchOption('Name')}>Name</p>
-              <p className='search-option' onClick={() => handleSearchOption('Tag')}>Tag</p>
-              <p className='search-option' onClick={() => handleSearchOption('User')}>User</p>
-            </div>
-          </section>
-          <section>
-            <input
-                type="text"
-                placeholder="Choose search option"
-                onChange={handleSearchValue}
-            />
-            <button type="button" onClick={handleSubmit}>
-                Search
-            </button>
-          </section>
-        </form>
+        <>
+          <form className="search-itineraries">
+            <section 
+              className="dropdown-section" 
+              onMouseEnter={handleDropdownClick} 
+              onMouseLeave={handleDropdownClick}>
+              <button className="dropbtn">{searchOption ? searchOption : "Search Options"}</button>
+              <div className={`dropdown-content${showOptions ? ' show' : ''}`} ref={dropdownRef}>
+                <p className='search-option' onClick={() => handleSearchOption('Name')}>Name</p>
+                <p className='search-option' onClick={() => handleSearchOption('Tag')}>Tag</p>
+                <p className='search-option' onClick={() => handleSearchOption('User')}>User</p>
+              </div>
+            </section>
+            <section>
+              <input
+                  type="text"
+                  placeholder="Choose search option"
+                  onChange={handleSearchValue}
+              />
+              <button type="button" onClick={handleSubmit}>
+                  Search
+              </button>
+            </section>
+            {showResults && <DisplayItineraries itineraries={searchResults} />}
+          </form>
+        </>
       );
 };
     
