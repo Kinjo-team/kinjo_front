@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import LocationCard from "../../components/LocationCard/LocationCard";
 import LocationPopUp from "../../components/LocationPopUp/LocationPopUp";
+import Navbar from "../../components/Navbar/Navbar";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
 import i18n from "../../i18n";
 
@@ -94,7 +95,8 @@ const ItineraryView = () => {
   };
 
   return (
-    <>
+      <>  
+      <Navbar />
       <main className="itineraryview--container">
         <button onClick={goBack}>Back</button>
         <section className="info--container">

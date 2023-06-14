@@ -1,0 +1,20 @@
+.display-itineraries--container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(220, 220, 220, 0.95);
+  }
+  
+  .display-itineraries--card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    padding: 30px;
+    background-color: whitesmoke;
+    margin-bottom: 20px;
+  }
+  
