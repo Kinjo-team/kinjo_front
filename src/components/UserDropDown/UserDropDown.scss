@@ -17,15 +17,22 @@
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 999;
   
-      a,
-      button {
+      .menu-items {
         color: white;
         float: none;
-        padding: 12px 16px;
+        padding: clamp(0.5rem, 1vw, 1rem);
+        font-size: clamp(0.7rem, 1.5vw, 1rem);
         text-decoration: none;
         display: block;
         text-align: left;
         border: none;
+        background-color: black;
+        width: 100%;
+        cursor: pointer;
+        &:hover {
+          background-color: white;
+            color: black;
+        }
       }
     }
   

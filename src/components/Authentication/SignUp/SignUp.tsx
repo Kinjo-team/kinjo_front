@@ -27,7 +27,12 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         try {
             setError("")
             setLoading(true)
-            // NEED A CHECK TO SEE IF USERNAME ALREADY EXISTS
+            const userExists = await checkIfUsernameExists()
+            if (!userExists) {
+                setError("Username already exists")
+                setLoading(false)
+                return
+            }
             await signup(emailRef.current?.value, passwordRef.current?.value);
             auth.currentUser?.updateProfile({
                 displayName: usernameRef.current?.value
@@ -41,6 +46,8 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         }
         setLoading(false)
     }
+
+    // FUNCTIONS
 
     function stopBubbling(e : any) {
         e.stopPropagation()
@@ -63,6 +70,17 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         console.log(data)
     }
 
+    async function checkIfUsernameExists() {
+        try {
+            const res = await fetch(`http://localhost:8000/users/username/${usernameRef.current?.value}`)
+            const data = await res.json()
+            console.log(data)
+            return !data;
+        } catch(error) {
+            console.error(error)
+        }
+    }
+
     function navigateToMain() {
         window.location.href = '/main'
     }
@@ -72,26 +90,26 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
   return (
     <main onClick={toggleSignUp} className='signup--container'>
         <section onClick={stopBubbling} className='signup'>
-            <h2 className='title'>Sign Up</h2>
+            <h2 className='signup--title'>Explore your KINJO</h2>
             {error && <div className="error">{error}</div>}
             <form className='signup--form' onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor='username'>Username: </label>
+                    <label htmlFor='username'>USERNAME</label>
                     <input type="text" id="username" ref={usernameRef} required />
                 </div>
                 <div>
-                    <label htmlFor='email'>Email: </label>
+                    <label htmlFor='email'>EMAIL ADDRESS</label>
                     <input type="email" id="email" ref={emailRef} required />
                 </div>
                 <div>
-                    <label htmlFor='password'>Password: </label>
+                    <label htmlFor='password'>PASSWORD</label>
                     <input id="password" type="password" ref={passwordRef} placeholder='At least 6 characters' required />
                 </div>
                 <div>
-                    <label htmlFor='confirmpassword'>Confirm Password: </label>
+                    <label htmlFor='confirmpassword'>CONFIRM PASSWORD</label>
                     <input id='confirmpassword' type="password" ref={passwordConfirmRef} required></input>
                 </div>
-                <button type="submit" disabled={loading}>Sign Up</button>
+                <button className='signup--form--submit-btn' type="submit" disabled={loading}>Sign Up</button>
             </form>
             <div className='auth--login-msg'>
                 Already have an account? <span className='auth--link' onClick={toggleLogin}>Log In</span>

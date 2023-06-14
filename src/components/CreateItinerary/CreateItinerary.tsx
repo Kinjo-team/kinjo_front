@@ -377,7 +377,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
       <div onClick={stopBubblingUp} className="createItinerary--container">
         <form className="createItinerary--form" onSubmit={handleSubmit}>
           <section className="input-form">
-            <label htmlFor="itinerary_name">Name</label>
+            <label htmlFor="itinerary_name">NAME</label>
             <input
               type="text"
               name="itinerary_name"
@@ -389,7 +389,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
             />
           </section>
           <section className="input-form">
-            <label htmlFor="itinerary_descr">Description</label>
+            <label htmlFor="itinerary_descr">DESCRIPTION</label>
             <textarea
               name="itinerary_descr"
               id="itinerary_descr"
@@ -403,7 +403,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
           <form>
             <section className="label-container">
               <div className="input-form">
-                <label htmlFor="itinerary_tags">Tags</label>
+                <label htmlFor="itinerary_tags">TAGS</label>
                 <input
                   type="text"
                   name="itinerary_tags"
