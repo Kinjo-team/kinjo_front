@@ -55,10 +55,14 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
   // FUNCTIONS
 
   async function fetchUsername() {
-    const resp = await fetch(`http://localhost:8000/users/${currentUser?.uid}`);
-    const data = await resp.json();
-    console.log(data);
-    setUsername(data.username);
+    try {
+      const resp = await fetch(`http://localhost:8000/users/${currentUser?.uid}`);
+      const data = await resp.json();
+      console.log(data);
+      setUsername(data.username);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function navigateToLanding() {

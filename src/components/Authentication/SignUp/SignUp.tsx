@@ -27,7 +27,12 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         try {
             setError("")
             setLoading(true)
-            // NEED A CHECK TO SEE IF USERNAME ALREADY EXISTS
+            const userExists = await checkIfUsernameExists()
+            if (!userExists) {
+                setError("Username already exists")
+                setLoading(false)
+                return
+            }
             await signup(emailRef.current?.value, passwordRef.current?.value);
             auth.currentUser?.updateProfile({
                 displayName: usernameRef.current?.value
@@ -41,6 +46,8 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         }
         setLoading(false)
     }
+
+    // FUNCTIONS
 
     function stopBubbling(e : any) {
         e.stopPropagation()
@@ -61,6 +68,17 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         })
         const data = await resp.json()
         console.log(data)
+    }
+
+    async function checkIfUsernameExists() {
+        try {
+            const res = await fetch(`http://localhost:8000/users/username/${usernameRef.current?.value}`)
+            const data = await res.json()
+            console.log(data)
+            return !data;
+        } catch(error) {
+            console.error(error)
+        }
     }
 
     function navigateToMain() {
