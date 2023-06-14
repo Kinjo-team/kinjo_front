@@ -1,6 +1,8 @@
+import React from "react";
 import Landing from "./pages/Landing/Landing";
 import Main from "./pages/Main/Main";
 import ItineraryView from "./pages/ItineraryView/ItineraryView";
+import SubmitAndReview from "./pages/SubmitAndReview/SubmitAndReview";
 
 // Language use
 import { I18nextProvider } from "react-i18next";
@@ -25,7 +27,6 @@ const App = () => {
   //   setShowLogin(!showLogin);
   // }
 
-
   return (
     <>
       <I18nextProvider i18n={i18n}>
@@ -33,10 +34,7 @@ const App = () => {
           {/* <Navbar  appToggleLogin={toggleLogin} appShowLogin={showLogin} /> */}
           <BrowserRouter>
             <Routes>
-              <Route
-                path="/"
-                element={<Landing />}
-              />
+              <Route path="/" element={<Landing />} />
               <Route
                 path="main"
                 element={
@@ -46,6 +44,7 @@ const App = () => {
                 }
               />
               <Route path="/itinerary/:id" element={<ItineraryView />} />
+              <Route path="/submit" element={<SubmitAndReview />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

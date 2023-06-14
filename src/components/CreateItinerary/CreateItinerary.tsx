@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import Map from "../Map/Map";
+import { useNavigate } from "react-router-dom";
 
 import "./CreateItinerary.scss";
 
@@ -112,36 +113,14 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:8000/itineraries", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Successfully created itinerary:", data);
-        // Reset the form data
-        setFormData({
-          firebase_uuid: "",
-          itinerary_name: "",
-          itinerary_descr: "",
-          itinerary_tags: [],
-          enteredTag: "",
-          locationData: [],
-        });
-        // Clear the location cards
-        setLocationCards([]);
-      } else {
-        throw new Error("Failed to create itinerary");
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    setFormData({
+      firebase_uuid: "",
+      itinerary_name: "",
+      itinerary_descr: "",
+      itinerary_tags: [],
+      enteredTag: "",
+      locationData: [],
+    });
   };
 
   const handleLocationData = (locationData: LocationData) => {
@@ -153,6 +132,12 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
       ...prevLocationCards,
       locationData,
     ]);
+  };
+
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    navigate("/submit", { state: { formData: formData } });
   };
 
   // This function is the form from closing when user clicks on elements
@@ -212,8 +197,17 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
               </div>
             </section>
           </form>
-          <button className="itinerary-submit-btn">Submit & Review</button>
-          <button className="itinerary-cancel-btn" onClick={toggleCreateItinerary}>Cancel</button>
+          <div>
+            <button className="itinerary-submit-btn" onClick={handleNavigation}>
+              Submit & Review
+            </button>
+          </div>
+          <button
+            className="itinerary-cancel-btn"
+            onClick={toggleCreateItinerary}
+          >
+            Cancel
+          </button>
         </form>
         <div className="map--container">
           <Map handleLocationData={handleLocationData} />
