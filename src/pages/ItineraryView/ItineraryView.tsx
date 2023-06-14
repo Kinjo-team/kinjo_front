@@ -1,3 +1,4 @@
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
@@ -95,7 +96,7 @@ const ItineraryView = () => {
   };
 
   return (
-      <>  
+    <>
       <Navbar />
       <main className="itineraryview--container">
         <button onClick={goBack}>Back</button>
