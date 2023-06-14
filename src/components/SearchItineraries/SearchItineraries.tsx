@@ -3,7 +3,7 @@ import './SearchItineraries.scss';
 import DisplayItineraries from '../DisplayItineraries/DisplayItineraries';
 
 const SearchItineraries = () => {
-  const [searchOption, setSearchOption] = useState('');
+  const [searchOption, setSearchOption] = useState('Name');
   const [searchValue, setSearchValue] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -16,11 +16,12 @@ const SearchItineraries = () => {
     setSearchValue(event.target.value);
   };
 
+  // encodeURIComponent
   const handleSubmit = async (event : FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (searchOption === 'Name' || searchOption === 'Tag' || searchOption === 'User') {
       try {
-        const response = await fetch(`http://localhost:8000/search?option=${encodeURIComponent(searchOption)}&value=${encodeURIComponent(searchValue)}`, {
+        const response = await fetch(`http://localhost:8000/search?option=${searchOption}&value=${searchValue}`, {
           headers: {
             'Accept': 'application/json'
           }
@@ -39,11 +40,15 @@ const SearchItineraries = () => {
     }
   };
 
+  function toggleShowResults() {
+    setShowResults(!showResults);
+  }
+
     
       return (
         <>
           <form className="search-itineraries" onSubmit={handleSubmit}>
-              <select name='search-option' id='search-option' onChange={(event) => handleSearchOption(event.target.value)}>
+              <select name='search-option' id='search-option' defaultValue="Itinerary" onChange={(event) => handleSearchOption(event.target.value)}>
                 <option value='Name'>Itinerary</option>
                 <option value='Tag'>Tag</option>
                 <option value='User'>User</option>
@@ -56,7 +61,7 @@ const SearchItineraries = () => {
               <button type="submit">
                   Search
               </button>
-            {showResults && <DisplayItineraries itineraries={searchResults} />}
+            {showResults && <DisplayItineraries itineraries={searchResults} toggleShowResults={toggleShowResults} />}
           </form>
         </>
       );

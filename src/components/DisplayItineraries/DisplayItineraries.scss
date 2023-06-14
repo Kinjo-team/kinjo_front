@@ -1,20 +1,42 @@
-.display-itineraries--container {
+.display-itineraries--overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(220, 220, 220, 0.95);
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    z-index: 999;
+
+    .display-itineraries--container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      height: 50%;
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+
+      .display-itineraries-close-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.5rem;
+        cursor: pointer;
+      }
+      .display-itineraries--card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: clamp(1rem, 2vw, 2rem);
+        background-color: whitesmoke;
+        margin-bottom: 20px;
+      }
+    }
   }
   
-  .display-itineraries--card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-    padding: 30px;
-    background-color: whitesmoke;
-    margin-bottom: 20px;
-  }
   
