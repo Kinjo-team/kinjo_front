@@ -9,22 +9,22 @@ import "./Main.scss";
 import SearchItineraries from "../../components/SearchItineraries/SearchItineraries";
 
 const Main = () => {
-  const [showCreateItinerary, setShowCreateItinerary] = useState<boolean>(false);
+  const [showCreateItinerary, setShowCreateItinerary] =
+    useState<boolean>(false);
   const [itineraries, setItineraries] = useState<any[]>([]);
-  
+
   useEffect(() => {
     const fetchItineraries = async () => {
       const response = await fetch(`http://localhost:8000/itineraries`);
       const data = await response.json();
+      console.log(data);
       setItineraries(data);
     };
 
     fetchItineraries();
-  }, [])
+  }, []);
 
- 
   const filteredItineraries = getRandomItineraries(itineraries, 3);
-
 
   function toggleCreateItinerary(): void {
     setShowCreateItinerary(!showCreateItinerary);
