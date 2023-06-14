@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import Map from "../Map/Map";
 
 import "./CreateItinerary.scss";
@@ -15,6 +16,7 @@ interface LocationData {
 }
 
 interface CreateItineraryData {
+  firebase_uuid: string;
   itinerary_name: string;
   itinerary_descr: string;
   itinerary_tags: string[];
@@ -23,7 +25,10 @@ interface CreateItineraryData {
 }
 
 const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
+  const { currentUser } = useAuth();
+
   const [formData, setFormData] = useState<CreateItineraryData>({
+    firebase_uuid: "",
     itinerary_name: "",
     itinerary_descr: "",
     itinerary_tags: [],
@@ -42,6 +47,15 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
 
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (currentUser) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        firebase_uuid: currentUser.uid,
+      }));
+    }
+  }, [currentUser]);
 
   const handleInputChange = (
     event:
@@ -113,6 +127,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
         console.log("Successfully created itinerary:", data);
         // Reset the form data
         setFormData({
+          firebase_uuid: "",
           itinerary_name: "",
           itinerary_descr: "",
           itinerary_tags: [],

@@ -6,22 +6,22 @@ import { Link } from "react-router-dom";
 import "./Main.scss";
 
 const Main = () => {
-  const [showCreateItinerary, setShowCreateItinerary] = useState<boolean>(false);
+  const [showCreateItinerary, setShowCreateItinerary] =
+    useState<boolean>(false);
   const [itineraries, setItineraries] = useState<any[]>([]);
-  
+
   useEffect(() => {
     const fetchItineraries = async () => {
       const response = await fetch(`http://localhost:8000/itineraries`);
       const data = await response.json();
+      console.log(data);
       setItineraries(data);
     };
 
     fetchItineraries();
-  }, [])
+  }, []);
 
- 
   const filteredItineraries = getRandomItineraries(itineraries, 3);
-
 
   function toggleCreateItinerary(): void {
     setShowCreateItinerary(!showCreateItinerary);
@@ -47,7 +47,10 @@ const Main = () => {
         <section className="recommend--container">
           <h1>Popular spots:</h1>
           {filteredItineraries.map((itinerary: any) => (
-            <Link to={`/itinerary/${itinerary.itinerary_id}`} key={itinerary.itinerary_id}>
+            <Link
+              to={`/itinerary/${itinerary.itinerary_id}`}
+              key={itinerary.itinerary_id}
+            >
               <ItinPictureCard itinerary={itinerary} />
             </Link>
           ))}
