@@ -55,10 +55,14 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
   // FUNCTIONS
 
   async function fetchUsername() {
-    const resp = await fetch(`http://localhost:8000/users/${currentUser?.uid}`);
-    const data = await resp.json();
-    console.log(data);
-    setUsername(data.username);
+    try {
+      const resp = await fetch(`http://localhost:8000/users/${currentUser?.uid}`);
+      const data = await resp.json();
+      console.log(data);
+      setUsername(data.username);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function navigateToLanding() {
@@ -92,10 +96,10 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
             <UserDropDown username={username} />
           ) : (
             <>
-              <button onClick={toggleLogin}>
+              <button className="nav-btn" onClick={toggleLogin}>
                 {t("landingPageHeaderLogin")}
               </button>
-              <button onClick={toggleSignUp}>
+              <button className="nav-btn" onClick={toggleSignUp}>
                 {t("landingPageHeaderSignUp")}
               </button>
             </>
