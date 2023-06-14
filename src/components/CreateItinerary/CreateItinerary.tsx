@@ -4,32 +4,38 @@ import Map from "../Map/Map";
 import { useNavigate } from "react-router-dom";
 
 import "./CreateItinerary.scss";
+import { LocationData, CreateItineraryData} from '../../../globals.d';
+
 
 type CreateItineraryProps = {
   toggleCreateItinerary: () => void;
 };
 
-interface LocationData {
-  loc_coords: [number, number];
-  loc_name: string;
-  loc_descr_en: string;
-  loc_tags: string[];
-}
+// interface LocationData {
+//   loc_coords: [number, number];
+//   creator_id?: string | undefined;
+//   itinerary_id?: number | undefined;
+//   loc_name: string;
+//   loc_descr_en: string;
+//   loc_tags: string[];
+// }
 
-interface CreateItineraryData {
-  firebase_uuid: string;
-  itinerary_name: string;
-  itinerary_descr: string;
-  itinerary_tags: string[];
-  enteredTag: string;
-  locationData: LocationData[];
-}
+// interface CreateItineraryData {
+//   itinerary_name: string;
+//   creator_id: string | undefined;
+//   itinerary_id: number;
+//   itinerary_descr: string;
+//   itinerary_tags: string[];
+//   enteredTag: string;
+//   locationData: LocationData[];
+// }
 
 const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
   const { currentUser } = useAuth();
 
   const [formData, setFormData] = useState<CreateItineraryData>({
-    firebase_uuid: "",
+    creator_id: currentUser?.uid,
+    itinerary_id: Math.floor(Date.now() * Math.random()),
     itinerary_name: "",
     itinerary_descr: "",
     itinerary_tags: [],
@@ -114,7 +120,8 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormData({
-      firebase_uuid: "",
+      creator_id: currentUser?.uid,
+      itinerary_id: Math.floor(Date.now() * Math.random()),
       itinerary_name: "",
       itinerary_descr: "",
       itinerary_tags: [],
