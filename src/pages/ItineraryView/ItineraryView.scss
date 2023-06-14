@@ -43,7 +43,7 @@
 
 @media screen and (max-width: 768px) {
     .itineraryview--container {
-        grid-template-rows: 20px 1fr;
+        grid-template-rows: 20px 1fr 1fr;
         grid-template-columns: 1fr;
         grid-template-areas: "buttons"
                              "info"

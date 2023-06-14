@@ -1,45 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, FormEvent, ChangeEvent} from 'react';
 import './SearchItineraries.scss';
 import DisplayItineraries from '../DisplayItineraries/DisplayItineraries';
 
 const SearchItineraries = () => {
-  const [showOptions, setShowOptions] = useState(false);
-  const [searchOption, setSearchOption] = useState('');
+  const [searchOption, setSearchOption] = useState('Name');
   const [searchValue, setSearchValue] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const dropdownButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  const handleDropdownClick = () => {
-    setShowOptions(!showOptions);
-  };
-
-  const handleChoiceClick = (event: MouseEvent) => {
-    const isDropdownClick = dropdownButtonRef.current?.contains(event.target as Node);
-    const isOptionClick = dropdownRef.current?.contains(event.target as Node);
-
-    if (isDropdownClick || isOptionClick) {
-      setShowOptions(!showOptions);
-    } else {
-      setShowOptions(false);
-    }
-  };
-
   const handleSearchOption = (option: string) => {
     setSearchOption(option);
-    setShowOptions(false);
   };
 
-  const handleSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
-  const handleSubmit = async () => {
+  // encodeURIComponent
+  const handleSubmit = async (event : FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (searchOption === 'Name' || searchOption === 'Tag' || searchOption === 'User') {
       try {
-        const response = await fetch(`http://localhost:8000/search?option=${encodeURIComponent(searchOption)}&value=${encodeURIComponent(searchValue)}`, {
+        const response = await fetch(`http://localhost:8000/search?option=${searchOption}&value=${searchValue}`, {
           headers: {
             'Accept': 'application/json'
           }
@@ -58,38 +40,28 @@ const SearchItineraries = () => {
     }
   };
 
-    useEffect(() => {
-        document.addEventListener('mousedown', handleChoiceClick);
-        return () => {
-          document.removeEventListener('mousedown', handleChoiceClick);
-        };
-      }, []);
+  function toggleShowResults() {
+    setShowResults(!showResults);
+  }
+
     
       return (
         <>
-          <form className="search-itineraries">
-            <section 
-              className="dropdown-section" 
-              onMouseEnter={handleDropdownClick} 
-              onMouseLeave={handleDropdownClick}>
-              <button className="dropbtn">{searchOption ? searchOption : "Search Options"}</button>
-              <div className={`dropdown-content${showOptions ? ' show' : ''}`} ref={dropdownRef}>
-                <p className='search-option' onClick={() => handleSearchOption('Name')}>Name</p>
-                <p className='search-option' onClick={() => handleSearchOption('Tag')}>Tag</p>
-                <p className='search-option' onClick={() => handleSearchOption('User')}>User</p>
-              </div>
-            </section>
-            <section>
+          <form className="search-itineraries" onSubmit={handleSubmit}>
+              <select name='search-option' id='search-option' defaultValue="Itinerary" onChange={(event) => handleSearchOption(event.target.value)}>
+                <option value='Name'>Itinerary</option>
+                <option value='Tag'>Tag</option>
+                <option value='User'>User</option>
+              </select>
               <input
                   type="text"
                   placeholder="Choose search option"
                   onChange={handleSearchValue}
               />
-              <button type="button" onClick={handleSubmit}>
+              <button type="submit">
                   Search
               </button>
-            </section>
-            {showResults && <DisplayItineraries itineraries={searchResults} />}
+            {showResults && <DisplayItineraries itineraries={searchResults} toggleShowResults={toggleShowResults} />}
           </form>
         </>
       );

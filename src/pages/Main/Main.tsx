@@ -1,12 +1,12 @@
 import CreateItinerary from "../../components/CreateItinerary/CreateItinerary";
 import ItinPictureCard from "../../components/ItinPictureCard/ItinPictureCard";
 import Navbar from "../../components/Navbar/Navbar";
+import SearchItineraries from "../../components/SearchItineraries/SearchItineraries";
 import Footer from "../../components/Footer/Footer";
 import { getRandomItineraries } from "./helperFunctions";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Main.scss";
-import SearchItineraries from "../../components/SearchItineraries/SearchItineraries";
 
 const Main = () => {
   const [showCreateItinerary, setShowCreateItinerary] =
@@ -39,10 +39,7 @@ const Main = () => {
       <main className="main--container">
         <section className="search--container">
           <h2 className="main--title">K I N J O</h2>
-          <form className="search--form">
-            <input type="search" placeholder="Search for a place" />
-            <button>Search</button>
-          </form>
+          <SearchItineraries />
           <button className="create-btn" onClick={toggleCreateItinerary}>
             Create Your Own Itinerary
           </button>
