@@ -26,18 +26,10 @@ nav {
         gap: clamp(1rem, 2vw, 2rem);
         font-size: clamp(0.7rem, 2vw, 1.5rem);
 
-        a {
-            text-decoration: none;
-            padding: 0.5rem;
-            border: 1px solid black;
-            border-radius: 5px;
-            background-color: transparent;
-            color: inherit;
-            cursor: pointer;
-            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
-        }
+        
         .nav-btn {
             padding: 0.5rem;
+            text-decoration: none;
             border: 1px solid black;
             border-radius: 5px;
             background-color: transparent;
@@ -45,12 +37,12 @@ nav {
             cursor: pointer;
             font-size: clamp(0.7rem, 2vw, 1.5rem);
             transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+            // CHANGE THIS LATER
+             &:hover {
+                background-color: black;
+                color: white;
+            }
+        }
         }
 
-        // CHANGE THIS LATER
-        a:hover, button:hover {
-            background-color: black;
-            color: white;
-        }
-    }
 }

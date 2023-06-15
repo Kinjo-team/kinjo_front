@@ -11,6 +11,8 @@
     overflow: auto;
 
     .search--container {
+        margin-top: clamp(1rem, 2vw, 2rem);
+        margin-bottom: clamp(1rem, 2vw, 2rem);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -26,6 +28,7 @@
         gap: clamp(1rem, 2vw, 2rem);
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
         animation: fade-in 1s ease-in-out;
+        animation: 75s ease 0s normal none infinite running zoomin;
 
         .main--title {
             font-size: clamp(2.5rem, 5vw, 5rem);
@@ -67,4 +70,13 @@
         gap: clamp(1rem, 2vw, 2rem);
         animation: fade-in 1s ease-in-out;;       
     }
+}
+
+@media screen and (max-width: 768px) {
+    .main--container {
+        .search--container {
+            animation: 75s ease 0s normal none infinite running mobile-zoomin;
+        }
+    }
+    
 }

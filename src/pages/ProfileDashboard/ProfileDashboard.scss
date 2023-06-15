@@ -1,0 +1,26 @@
+.profiledashboard--container {
+    padding: clamp(2.5rem, 5vw, 10rem);
+    height: 80vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: "profile map"
+                         "profile itineraries";
+    gap: clamp(1rem, 2vw, 2rem);
+    
+    .dprofile--container {
+        grid-area: profile;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .profiledashboard--container {
+        grid-template-rows: 2fr 1fr 1fr;
+        grid-template-columns: 1fr;
+        grid-template-areas: "profile"
+                             "map"
+                             "itineraries";
+    }
+}
