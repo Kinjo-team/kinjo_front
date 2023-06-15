@@ -1,3 +1,4 @@
+import React from "react";
 import CreateItinerary from "../../components/CreateItinerary/CreateItinerary";
 import ItinPictureCard from "../../components/ItinPictureCard/ItinPictureCard";
 import Navbar from "../../components/Navbar/Navbar";
@@ -48,7 +49,10 @@ const Main = () => {
         </section>
         <section className="recommend--container">
           {filteredItineraries.map((itinerary: any, index: number) => (
-            <Link to={`/itinerary/${itinerary.itinerary_id}`} key={itinerary.itinerary_id}>
+            <Link
+              to={`/itinerary/${itinerary.itinerary_id}`}
+              key={itinerary.itinerary_id}
+            >
               <ItinPictureCard itinerary={itinerary} index={index} />
             </Link>
           ))}

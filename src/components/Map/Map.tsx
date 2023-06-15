@@ -1,3 +1,5 @@
+import React from "react";
+import { LatLngTuple, LatLngBounds } from "leaflet";
 import { useState, useRef } from "react";
 import {
   MapContainer,
@@ -22,7 +24,15 @@ interface MapProps {
   handleLocationData: (locationData: Location) => void;
 }
 
-const defaultPosition: [number, number] = [35.664035, 139.698212]; // this is Tokyo
+//default position for Tokyo
+const defaultPosition: [number, number] = [35.664035, 139.698212];
+
+//setting zoomout limit to Japan
+const japanBounds: [LatLngTuple, LatLngTuple] = [
+  [20.214581, 122.71447] as LatLngTuple, // Southwest coordinates
+  [45.55783, 154.00259] as LatLngTuple, // Northeast coordinates
+];
+const japanLatLngBounds = new LatLngBounds(japanBounds);
 
 const initialLocation: Location = {
   id: 0,
@@ -197,10 +207,13 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
         center={defaultPosition}
         zoom={13}
         style={{ height: "500px", width: "100%" }}
+        maxBounds={japanBounds}
+        minZoom={5}
       >
         <TileLayer
           url={mapboxTileUrl}
           attribution='&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'
+          bounds={japanLatLngBounds}
         />
         <AddMarkerToMap />
         {locations.map((location) => (

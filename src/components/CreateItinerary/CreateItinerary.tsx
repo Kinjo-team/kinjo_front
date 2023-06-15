@@ -37,6 +37,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
       loc_tags: string[];
     }[]
   >([]);
+
   // LOGIC FOR CHANGING POPUPS
   const [pageTransition, setPageTransition] = useState<number>(1);
 

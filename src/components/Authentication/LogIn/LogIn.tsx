@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react'
-import { useAuth } from '../../../contexts/AuthContext'
-import './LogIn.scss'
+import React from "react";
+import { useRef, useState } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+import "./LogIn.scss";
 
 type LogInProps = {
     toggleLogin: () => void
@@ -16,30 +17,30 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
 
-    async function handleSubmit(e : any) {
-        e.preventDefault()
-        try {
-            setError("")
-            setLoading(true)
-            await login(emailRef.current?.value, passwordRef.current?.value);
-            navigateToMain();
-            toggleLogin();
-        } catch {
-            setError("Failed to sign in")
-        }
-        setLoading(false)
-    }
 
-    function stopBubbling(e : any) {
-        e.stopPropagation()
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    try {
+      setError("");
+      setLoading(true);
+      await login(emailRef.current?.value, passwordRef.current?.value);
+      navigateToMain();
+      toggleLogin();
+    } catch {
+      setError("Failed to sign in");
     }
+    setLoading(false);
+  }
 
-    function navigateToMain() {
-        window.location.href = '/main';
-    }
-    
+  function stopBubbling(e: any) {
+    e.stopPropagation();
+  }
 
-  return (
+  function navigateToMain() {
+    window.location.href = "/main";
+  }
+
+    return (
     <main onClick={toggleLogin} className='login--container'>
         <section onClick={stopBubbling} className='login'>
             <h2 className="login-title">Log in to KINJO</h2>
@@ -66,4 +67,4 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
     )
 }
 
-export default LogIn
+export default LogIn;
