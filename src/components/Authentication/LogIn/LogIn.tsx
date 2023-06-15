@@ -5,10 +5,11 @@ import './LogIn.scss'
 type LogInProps = {
     toggleLogin: () => void
     toggleSignUp: () => void
+    toggleForgotPassword: () => void
     closeAll: () => void
 }
 
-const LogIn = ({toggleLogin, toggleSignUp, closeAll} : LogInProps) => {
+const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : LogInProps) => {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const { login } = useAuth()
@@ -55,7 +56,7 @@ const LogIn = ({toggleLogin, toggleSignUp, closeAll} : LogInProps) => {
                 <button className='login--form--submit-btn' type="submit" disabled={loading}>Log In</button>
             </form>
           <div>
-              <span>Forgot Password?</span>
+              <span className='auth--link' onClick={toggleForgotPassword}>Forgot Password?</span>
           </div>
           <div>
               <span>Don't have an account? <span className='auth--link' onClick={toggleSignUp}>Sign Up!</span></span>

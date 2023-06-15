@@ -5,6 +5,7 @@ import DProfile from '../../components/DashboardCompos/DProfile/DProfile'
 import Footer from '../../components/Footer/Footer'
 
 import './ProfileDashboard.scss'
+import DKinjoViewer from '../../components/DashboardCompos/DKinjoViewer/DKinjoViewer'
 
 const ProfileDashboard = () => {
     const {currentUser} = useAuth()
@@ -44,11 +45,7 @@ const ProfileDashboard = () => {
         {/* OWN COMPONENT */}
         <div>PLACEHOLDER MAP</div>
         {/* OWN COMPONENT */}
-        <div className="profiledashboard--itineraries--container">
-            <div className="profiledashboard--itineraries-cards">
-                PLACEHOLDER CARDS
-            </div>
-        </div>
+        <DKinjoViewer />
     </div>
     <Footer text='Kinjo' />
    </>

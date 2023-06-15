@@ -5,6 +5,7 @@ import "./SubmitKinjo.scss"
 type SubmitKinjoProps = {
     forwardTransition: () => void
     backwardTransition: () => void
+    toggleCreateItinerary: () => void
 }
 
 interface LocationData {
@@ -23,7 +24,7 @@ interface LocationData {
     locationData: LocationData[];
   }
 
-const SubmitKinjo = ({forwardTransition, backwardTransition} : SubmitKinjoProps) => {
+const SubmitKinjo = ({forwardTransition, backwardTransition, toggleCreateItinerary} : SubmitKinjoProps) => {
     // STATES
     const [formData, setFormData] = useState<CreateItineraryData>({
         firebase_uuid: "",
@@ -103,7 +104,8 @@ const SubmitKinjo = ({forwardTransition, backwardTransition} : SubmitKinjoProps)
   };
 
   return (
-    <div className='setkinjo--container'>
+    <div className='create-kinjo--container'>
+        <button className='create-kinjo-close-btn' onClick={toggleCreateItinerary}><span className="material-symbols-outlined">cancel</span></button>
         <h1>3. Add information</h1>
         <p>You're almost there! fill in the information below to describe your Kinjo!</p>
         <form onSubmit={forwardTransition} className="submitkinjo--form">

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import LogIn from "../Authentication/LogIn/LogIn";
 import SignUp from "../Authentication/SignUp/SignUp";
+import ForgotPassword from "../Authentication/ForgotPassword/ForgotPassword";
 import LanguageToggle from "../LanguageToggle/LanguageToggle";
 import UserDropDown from "../UserDropDown/UserDropDown";
 
@@ -16,6 +17,7 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
   const { t } = useTranslation();
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const [showSignUp, setShowSignUp] = useState<boolean>(false);
+  const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const { currentUser } = useAuth();
 
@@ -41,12 +43,20 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
   function toggleLogin() {
     setShowLogin(!showLogin);
     setShowSignUp(false);
+    setShowForgotPassword(false);
   }
 
   function toggleSignUp() {
     setShowSignUp(!showSignUp);
     setShowLogin(false);
+    setShowForgotPassword(false);
   }
+
+  function toggleForgotPassword() {
+    setShowForgotPassword(!showForgotPassword);
+    setShowLogin(false);
+  }
+
   function closeAll() {
     setShowLogin(false);
     setShowSignUp(false);
@@ -75,6 +85,7 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
         <LogIn
           toggleLogin={toggleLogin}
           toggleSignUp={toggleSignUp}
+          toggleForgotPassword={toggleForgotPassword}
           closeAll={closeAll}
         />
       )}
@@ -82,6 +93,14 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
         <SignUp
           toggleSignUp={toggleSignUp}
           toggleLogin={toggleLogin}
+          closeAll={closeAll}
+        />
+      )}
+      {showForgotPassword && (
+        <ForgotPassword 
+          toggleForgotPassword={toggleForgotPassword}
+          toggleLogin={toggleLogin}
+          toggleSignUp={toggleSignUp}
           closeAll={closeAll}
         />
       )}

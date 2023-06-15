@@ -4,9 +4,10 @@ import "./SetYourKinjo.scss"
 
 type SetYourKinjoProps = {
     forwardTransition: () => void
+    toggleCreateItinerary: () => void
 }
 
-const SetYourKinjo = ({forwardTransition} : SetYourKinjoProps) => {
+const SetYourKinjo = ({forwardTransition, toggleCreateItinerary} : SetYourKinjoProps) => {
     const {kinjo, changeKinjo} = useKinjo();
     useEffect(() => {
         changeKinjo({
@@ -20,7 +21,8 @@ const SetYourKinjo = ({forwardTransition} : SetYourKinjoProps) => {
     console.log(kinjo)
 
   return (
-    <div className='setkinjo--container'>
+    <div className='create-kinjo--container'>
+        <button className='create-kinjo-close-btn' onClick={toggleCreateItinerary}><span className="material-symbols-outlined">cancel</span></button>
         <h1>1. Set Your Kinjo</h1>
         <p>Click on the map, and drag to set the confines of your Kinjo!</p>
         <div className='setkinjo-map-container'>

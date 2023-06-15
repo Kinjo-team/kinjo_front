@@ -5,12 +5,14 @@ import "./ChooseLocations.scss"
 type ChooseLocationsoProps = {
     forwardTransition: () => void
     backwardTransition: () => void
+    toggleCreateItinerary: () => void
 }
 
-const ChooseLocations = ({forwardTransition, backwardTransition} : ChooseLocationsoProps) => {
+const ChooseLocations = ({forwardTransition, backwardTransition, toggleCreateItinerary} : ChooseLocationsoProps) => {
 
   return (
-    <div className='setkinjo--container'>
+    <div className='create-kinjo--container'>
+        <button className='create-kinjo-close-btn' onClick={toggleCreateItinerary}><span className="material-symbols-outlined">cancel</span></button>
         <h1>2. Populate your Kinjo!</h1>
         <p>Find the areas you want to show and add the information.</p>
         <div className='setkinjo-map-container'>

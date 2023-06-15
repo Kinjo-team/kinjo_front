@@ -103,9 +103,9 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
     <>
       <main className="overlay--container">
         <KinjoProvider value>
-          {pageTransition === 1 && <SetYourKinjo forwardTransition={forwardTransition} />}
-          {pageTransition === 2 && <ChooseLocations forwardTransition={forwardTransition} backwardTransition={backwardTransition} />}
-          {pageTransition === 3 && <SubmitKinjo forwardTransition={forwardTransition} backwardTransition={backwardTransition} />}
+          {pageTransition === 1 && <SetYourKinjo forwardTransition={forwardTransition} toggleCreateItinerary={toggleCreateItinerary} />}
+          {pageTransition === 2 && <ChooseLocations forwardTransition={forwardTransition} backwardTransition={backwardTransition} toggleCreateItinerary={toggleCreateItinerary} />}
+          {pageTransition === 3 && <SubmitKinjo forwardTransition={forwardTransition} backwardTransition={backwardTransition} toggleCreateItinerary={toggleCreateItinerary} />}
           {pageTransition === 4 && <ThankYouSubmit toggleCreateItinerary={toggleCreateItinerary} />}
         </KinjoProvider>
       </main>
