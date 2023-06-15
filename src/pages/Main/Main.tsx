@@ -3,6 +3,7 @@ import ItinPictureCard from "../../components/ItinPictureCard/ItinPictureCard";
 import Navbar from "../../components/Navbar/Navbar";
 import SearchItineraries from "../../components/SearchItineraries/SearchItineraries";
 import Footer from "../../components/Footer/Footer";
+import { KinjoProvider } from "../../contexts/KinjoContext";
 import { getRandomItineraries } from "./helperFunctions";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -52,8 +53,8 @@ const Main = () => {
             </Link>
           ))}
         </section>
-      </main>
       <Footer text={"kinjo"} />
+      </main>
     </>
   );
 };

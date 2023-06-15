@@ -91,7 +91,7 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
         </h1>
         <LanguageToggle />
         <div className="btn-grp">
-          <a href="/">{t("landingPageHeaderHome")}</a>
+          <a className="nav-btn" href="/">{t("landingPageHeaderHome")}</a>
           {currentUser ? (
             <UserDropDown username={username} />
           ) : (

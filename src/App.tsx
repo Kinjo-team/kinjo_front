@@ -1,6 +1,7 @@
 import Landing from "./pages/Landing/Landing";
 import Main from "./pages/Main/Main";
 import ItineraryView from "./pages/ItineraryView/ItineraryView";
+import ProfileDashboard from "./pages/ProfileDashboard/ProfileDashboard";
 
 // Language use
 import { I18nextProvider } from "react-i18next";
@@ -13,7 +14,6 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 const App = () => {
-  // const [showLogin, setShowLogin] = useState<boolean>(false);
 
   // This baby protects the routes will use later down the line
   const PrivateWrapper = ({ children }: { children: JSX.Element }) => {
@@ -21,16 +21,12 @@ const App = () => {
     return currentUser ? children : <Navigate to="/" replace />;
   };
 
-  // function toggleLogin() {
-  //   setShowLogin(!showLogin);
-  // }
 
 
   return (
     <>
       <I18nextProvider i18n={i18n}>
         <AuthProvider value>
-          {/* <Navbar  appToggleLogin={toggleLogin} appShowLogin={showLogin} /> */}
           <BrowserRouter>
             <Routes>
               <Route
@@ -46,6 +42,14 @@ const App = () => {
                 }
               />
               <Route path="/itinerary/:id" element={<ItineraryView />} />
+
+              <Route 
+                  path="/profile" 
+                  element={
+                    <PrivateWrapper>
+                      <ProfileDashboard />
+                    </PrivateWrapper>
+                  } />
             </Routes>
           </BrowserRouter>
         </AuthProvider>
