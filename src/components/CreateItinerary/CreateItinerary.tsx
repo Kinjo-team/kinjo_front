@@ -11,25 +11,6 @@ type CreateItineraryProps = {
   toggleCreateItinerary: () => void;
 };
 
-// interface LocationData {
-//   loc_coords: [number, number];
-//   creator_id?: string | undefined;
-//   itinerary_id?: number | undefined;
-//   loc_name: string;
-//   loc_descr_en: string;
-//   loc_tags: string[];
-// }
-
-// interface CreateItineraryData {
-//   itinerary_name: string;
-//   creator_id: string | undefined;
-//   itinerary_id: number;
-//   itinerary_descr: string;
-//   itinerary_tags: string[];
-//   enteredTag: string;
-//   locationData: LocationData[];
-// }
-
 const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
   const { currentUser } = useAuth();
 
@@ -37,7 +18,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
     creator_id: currentUser?.uid,
     itinerary_id: Math.floor(Date.now() * Math.random()),
     itinerary_name: "",
-    itinerary_descr: "",
+    itinerary_descr_en: "",
     itinerary_tags: [],
     enteredTag: "",
     locationData: [],
@@ -59,7 +40,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
     if (currentUser) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        firebase_uuid: currentUser.uid,
+        creator_id: currentUser.uid,
       }));
     }
   }, [currentUser]);
@@ -123,7 +104,7 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
       creator_id: currentUser?.uid,
       itinerary_id: Math.floor(Date.now() * Math.random()),
       itinerary_name: "",
-      itinerary_descr: "",
+      itinerary_descr_en: "",
       itinerary_tags: [],
       enteredTag: "",
       locationData: [],
@@ -169,12 +150,12 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
             />
           </section>
           <section className="input-form">
-            <label htmlFor="itinerary_descr">DESCRIPTION</label>
+            <label htmlFor="itinerary_descr_en">DESCRIPTION</label>
             <textarea
-              name="itinerary_descr"
+              name="itinerary_descr_en"
               id="itinerary_descr"
               placeholder="Add description"
-              value={formData.itinerary_descr}
+              value={formData.itinerary_descr_en}
               onChange={handleInputChange}
               onKeyDown={handleEnterKey}
               ref={descriptionRef}

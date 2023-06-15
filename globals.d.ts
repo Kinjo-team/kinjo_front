@@ -11,7 +11,8 @@ export interface CreateItineraryData {
     itinerary_name: string;
     creator_id: string | undefined;
     itinerary_id: number;
-    itinerary_descr: string;
+    itinerary_descr_en: string;
+    itinerary_descr_jp?: string;
     itinerary_tags: string[];
     enteredTag: string;
     locationData: LocationData[];

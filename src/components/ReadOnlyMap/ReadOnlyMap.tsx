@@ -5,10 +5,11 @@ import MapUpdater from "./MapUpdater";
 import "./ReadOnlyMap.scss";
 
 interface Location {
-  id: number;
+  loc_id: number;
   location: {
     loc_coords: [number, number];
   };
+  loc_coords: [number, number];
   loc_name: string;
   loc_descr_en: string;
 }
@@ -44,8 +45,8 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
 
   if (itinerary_locations && itinerary_locations.length > 0) {
     for (const location of itinerary_locations) {
-      avgLat += location.location.loc_coords[0];
-      avgLng += location.location.loc_coords[1];
+      avgLat += location.loc_coords[0];
+      avgLng += location.loc_coords[1];
     }
 
     avgLat /= itinerary_locations.length;
@@ -74,8 +75,8 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
         {itinerary_locations &&
           itinerary_locations.map((location: any) => (
             <Marker
-              key={location.id}
-              position={location.location.loc_coords}
+              key={location.loc_id}
+              position={location.loc_coords}
               eventHandlers={{
                 click: () => {
                   handleMarkerClick(location);
@@ -84,10 +85,10 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
             >
               <Popup>
                 {activeLocationRef.current &&
-                  activeLocationRef.current.id === location.id && (
+                  activeLocationRef.current.loc_id === location.loc_id && (
                     <div>
-                      <h2>{activeLocation.location.loc_name}</h2>
-                      <p>{activeLocation.location.loc_descr_en}</p>
+                      <h2>{activeLocation.loc_name}</h2>
+                      <p>{activeLocation.loc_descr_en}</p>
                     </div>
                   )}
               </Popup>
