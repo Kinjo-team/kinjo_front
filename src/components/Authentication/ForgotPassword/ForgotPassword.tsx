@@ -2,7 +2,14 @@ import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import './ForgotPassword.scss'
 
-const ForgotPassword = () => {
+type ForgotPasswordProps = {
+    toggleForgotPassword: () => void
+    toggleLogin: () => void
+    toggleSignUp: () => void
+    closeAll: () => void;
+}
+
+const ForgotPassword = ({toggleForgotPassword, toggleLogin, toggleSignUp, closeAll} : ForgotPasswordProps) => {
     const emailRef = useRef<HTMLInputElement>(null)
     const { resetPassword } = useAuth()
     const [error, setError] = useState<string>("")
@@ -22,11 +29,15 @@ const ForgotPassword = () => {
         }
         setLoading(false)
     }
+
+    function stopBubbling(e : any) {
+        e.stopPropagation()
+    }
     
 
   return (
-    <main className='forgotpassword--container'>
-        <section className='forgotpassword'>
+    <main onClick={toggleForgotPassword} className='forgotpassword--container'>
+        <section onClick={stopBubbling} className='forgotpassword'>
             <h2 className="title">Password Reset</h2>
             {error && <div className="error">{error}</div>}
             {message && <div className="success">{message}</div>}
@@ -35,13 +46,13 @@ const ForgotPassword = () => {
                     <label>Email</label>
                     <input type="email" ref={emailRef} required></input>
                 </div>
-                <button type="submit" disabled={loading}>Reset Password</button>
+                <button className='forgotpassword--form--submit-btn' type="submit" disabled={loading}>Reset Password</button>
             </form>
             <div>
-                {/* <Link to="/login">Log In</Link> */}
+                <span className='auth--link' onClick={toggleLogin}>Log In</span>
             </div>
             <div>
-                {/* Don't have an account? <Link to="/signup">Sign Up!</Link> */}
+                Don't have an account? <span className='auth--link' onClick={toggleSignUp}>Sign Up!</span>
             </div>
         </section>
     </main>

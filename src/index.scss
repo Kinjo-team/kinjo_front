@@ -23,5 +23,27 @@ body {
     100% {
         opacity: 1;
     }
-    
 }
+
+@keyframes zoomin {
+    0% { 
+        background-size: 2000px; 
+    }
+    50% {  
+          background-size: 3000px;
+        }
+    100% { background-size: 2000px;
+    }
+}
+
+@keyframes mobile-zoomin {
+    0% { 
+        background-size: 1000px; 
+    }
+    50% {  
+          background-size: 1500px;
+        }
+    100% { background-size: 1000px;
+    }
+}
+

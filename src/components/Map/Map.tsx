@@ -14,6 +14,7 @@ import FlyTo from "../FlyTo/FlyTo";
 import DrawControl from "../DrawControl/DrawControl";
 
 import "./Map.scss";
+import UploadWidget from "../UploadWidget/UploadWidget";
 
 interface Location {
   id: number;
@@ -21,6 +22,7 @@ interface Location {
   loc_name: string;
   loc_descr_en: string;
   loc_tags: string[];
+  image_urls: string[];
 }
 
 interface MapProps {
@@ -44,6 +46,7 @@ const initialLocation: Location = {
   loc_name: "",
   loc_descr_en: "",
   loc_tags: [],
+  image_urls: [],
 };
 
 const Map: React.FC<MapProps> = ({ handleLocationData }) => {
@@ -98,9 +101,9 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { id, loc_coords, loc_name, loc_descr_en, loc_tags } =
+    const { id, loc_coords, loc_name, loc_descr_en, loc_tags, image_urls } =
       newLocationData;
 
     if (loc_name.trim() !== "") {
@@ -110,11 +113,36 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
         loc_name,
         loc_descr_en,
         loc_tags,
+        image_urls: [],
       };
       setLocations((prevLocations) => [...prevLocations, newLocation]);
       resetNewLocationData(true);
       handleLocationData(newLocation);
     }
+    if (newLocationData.image_urls.length === 0) {
+      setLocations((prevLocations) => [...prevLocations, newLocationData]);
+      resetNewLocationData();
+      handleLocationData(newLocationData);
+    } else {
+      try {
+        const imageUrls = await Promise.all(
+          newLocationData.image_urls.map((image) => fetchCloudinaryImageUrl(image))
+        );
+        const newLocationWithUrls: Location = {
+          ...newLocationData,
+          image_urls: imageUrls,
+        };
+        setLocations((prevLocations) => [...prevLocations, newLocationWithUrls]);
+        resetNewLocationData();
+        handleLocationData(newLocationWithUrls);
+      } catch (error) {
+        console.error("Error fetching image URLs:", error);
+      }
+    }
+  };
+
+  const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {
+
   };
 
   const resetNewLocationData = (formSubmitted: any) => {
@@ -137,7 +165,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
         if (drawnShape) {
           const latitude = e.latlng.lat;
           const longitude = e.latlng.lng;
-
+          
           if (
             !drawnShape ||
             (drawnShape && isPointInPolygon(e.latlng, drawnShape))
@@ -148,6 +176,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
               loc_name: "",
               loc_descr_en: "",
               loc_tags: [],
+              image_urls: [],
             }));
             setShowPopup(true);
           }
@@ -253,6 +282,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
               <button onClick={() => handleDeleteMarker(location.id)}>
                 Delete
               </button>
+              <p>Images: {location.image_urls.join(", ")}</p>
             </Popup>
           </Marker>
         ))}
@@ -301,6 +331,9 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
                   }}
                 />
               </label>
+              <UploadWidget handleImageUrl={(url) => {
+                setNewLocationData(prevData => ({...prevData, image_url: [url]}));
+              }} />
               <button type="submit">Add Location</button>
             </form>
           </Popup>
