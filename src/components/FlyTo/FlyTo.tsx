@@ -1,14 +1,26 @@
 import { useMap } from "react-leaflet";
 
-interface FlyToProps {
-  position: [number, number];
-  zoom: number;
+interface CustomFlyToOptions {
+  duration?: number;
+  easeLinearity?: number;
+  noMoveStart?: boolean;
+  onEnd?: () => void;
 }
 
-const FlyTo: React.FC<FlyToProps> = ({ position, zoom }) => {
+interface FlyToProps {
+  position: any;
+  zoom: any;
+  onEnd?: () => void;
+}
+
+const FlyTo: React.FC<FlyToProps> = ({ position, zoom, onEnd }) => {
   const map = useMap();
   if (position) {
-    map.flyTo(position, zoom);
+    const options: CustomFlyToOptions = {
+      duration: 1,
+      onEnd: onEnd,
+    };
+    map.flyTo(position, zoom, options);
   }
   return null;
 };

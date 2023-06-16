@@ -1,6 +1,7 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useState, useRef, useEffect } from "react";
+import { LatLngTuple, LatLngBounds } from "leaflet";
 import SubmitMapUpdater from "./SubmitMapUpdater";
 
 interface Location {
@@ -17,6 +18,13 @@ interface MapProps {
   };
 }
 const defaultPosition: [number, number] = [35.664035, 139.698212]; // this is Tokyo
+
+//setting zoomout limit to Japan
+const japanBounds: [LatLngTuple, LatLngTuple] = [
+  [20.214581, 122.71447] as LatLngTuple, // Southwest coordinates
+  [45.55783, 154.00259] as LatLngTuple, // Northeast coordinates
+];
+const japanLatLngBounds = new LatLngBounds(japanBounds);
 
 const SubmitMap: React.FC<MapProps> = ({ locations }) => {
   const { locationData } = locations;
@@ -59,6 +67,8 @@ const SubmitMap: React.FC<MapProps> = ({ locations }) => {
         center={defaultPosition}
         zoom={13}
         style={{ height: "230px", width: "100%" }}
+        maxBounds={japanBounds}
+        minZoom={5}
       >
         <SubmitMapUpdater
           newCenter={
@@ -68,6 +78,7 @@ const SubmitMap: React.FC<MapProps> = ({ locations }) => {
         <TileLayer
           url={mapboxTileUrl}
           attribution='&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'
+          bounds={japanLatLngBounds}
         />
         {locationData &&
           locationData.map((location: any) => (

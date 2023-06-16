@@ -13,7 +13,7 @@ const UserDropDown = ({username} : UserDropDownProps) => {
             <i className="fa fa-caret-down"></i>
         </button>
         <div className="dropdown-content">
-            {/* <a href="#">Profile</a> */}
+            <a className="menu-items" href="/profile">Profile</a>
             <button onClick={logout} className="menu-items">Log Out</button>
         </div>
     </div> 

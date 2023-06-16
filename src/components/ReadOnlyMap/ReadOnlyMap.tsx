@@ -1,6 +1,7 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useState, useRef, useEffect } from "react";
+import { LatLngTuple, LatLngBounds } from "leaflet";
 import MapUpdater from "./MapUpdater";
 import "./ReadOnlyMap.scss";
 
@@ -27,6 +28,13 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
   const [activeLocation, setActiveLocation] = useState<Location | any>(null);
 
   const activeLocationRef = useRef<Location | null>(null);
+
+  //setting zoomout limit to Japan
+  const japanBounds: [LatLngTuple, LatLngTuple] = [
+    [20.214581, 122.71447] as LatLngTuple, // Southwest coordinates
+    [45.55783, 154.00259] as LatLngTuple, // Northeast coordinates
+  ];
+  const japanLatLngBounds = new LatLngBounds(japanBounds);
 
   const handleMarkerClick = (location: Location) => {
     setActiveLocation(location);
@@ -62,6 +70,8 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
         center={defaultPosition}
         zoom={13}
         style={{ height: "230px", width: "100%" }}
+        maxBounds={japanBounds}
+        minZoom={5}
       >
         <MapUpdater
           newCenter={
@@ -71,6 +81,7 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
         <TileLayer
           url={mapboxTileUrl}
           attribution='&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'
+          bounds={japanLatLngBounds}
         />
         {locationData &&
           locationData.map((location: any) => (

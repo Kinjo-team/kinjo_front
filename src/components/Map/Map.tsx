@@ -1,5 +1,7 @@
 import React from "react";
-import { useState, useRef } from "react";
+import L from "leaflet";
+import { LatLngTuple, LatLngBounds } from "leaflet";
+import { useState, useRef, useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -9,6 +11,8 @@ import {
 } from "react-leaflet";
 import TagsInput from "./TagsInput";
 import FlyTo from "../FlyTo/FlyTo";
+import DrawControl from "../DrawControl/DrawControl";
+
 import "./Map.scss";
 import { MapProps, Location } from '../../../globals.d'
 import { useAuth } from "../../contexts/AuthContext";
@@ -28,7 +32,18 @@ import { useAuth } from "../../contexts/AuthContext";
     // }
     
 let uid: string | undefined = "";
-const defaultPosition: [number, number] = [35.664035, 139.698212]; // this is Tokyo
+import UploadWidget from "../UploadWidget/UploadWidget";
+
+//default position for Tokyo
+const defaultPosition: [number, number] = [35.664035, 139.698212];
+
+//setting zoomout limit to Japan
+const japanBounds: [LatLngTuple, LatLngTuple] = [
+  [20.214581, 122.71447] as LatLngTuple, // Southwest coordinates
+  [45.55783, 154.00259] as LatLngTuple, // Northeast coordinates
+];
+
+const japanLatLngBounds = new LatLngBounds(japanBounds);
 
 const initialLocation: Location = {
   loc_id: Math.floor(Date.now() * Math.random()),
@@ -37,6 +52,7 @@ const initialLocation: Location = {
   loc_name: "",
   loc_descr_en: "",
   loc_tags: [],
+  image_urls: [],
 };
 
 const Map: React.FC<MapProps> = ({ handleLocationData }) => {
@@ -48,13 +64,33 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   //useStates tied to FlyTo logic (centerPosition & zoomLevel)
-  const [centerPosition, setCenterPosition] = useState<[number, number] | null>(
+  const [flyToPosition, setFlyToPosition] = useState<[number, number] | null>(
     null
   );
-  const [zoomLevel, setZoomLevel] = useState<number>(13);
+  const [flyToZoomLevel, setFlyToZoomLevel] = useState<number>(13);
+  const [triggerFlyTo, setTriggerFlyTo] = useState(false);
 
-  //useState tied to Geolocation logic
+  //useState tied to geolocation logic
   const [userLocation, setUserLocation] = useState<Location | null>(null);
+
+  //useState tied to geometric shapes logic
+  const [drawnShape, setDrawnShape] = useState<L.Layer | null>(null);
+
+  useEffect(() => {
+    if (triggerFlyTo) {
+      setTriggerFlyTo(false);
+    }
+  }, [triggerFlyTo]);
+
+  //FlyTo component logic for SearchBar & Geolocation
+  const flyToLocation = (position: [number, number], zoom: number) => {
+    setFlyToPosition(position);
+    setFlyToZoomLevel(zoom);
+    setTriggerFlyTo(true);
+  };
+
+  // Mapbox tile layer API token
+  const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -72,7 +108,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { loc_id, creator_id, loc_coords, loc_name, loc_descr_en, loc_tags } =
       newLocationData;
@@ -85,43 +121,107 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
         loc_name,
         loc_descr_en,
         loc_tags,
+        image_urls: [],
       };
       setLocations((prevLocations) => [...prevLocations, newLocation]);
-      resetNewLocationData();
+      resetNewLocationData(true);
       handleLocationData(newLocation);
+    }
+    if (newLocationData.image_urls.length === 0) {
+      setLocations((prevLocations) => [...prevLocations, newLocationData]);
+      resetNewLocationData();
+      handleLocationData(newLocationData);
+    } else {
+      try {
+        const imageUrls = await Promise.all(
+          newLocationData.image_urls.map((image) => fetchCloudinaryImageUrl(image))
+        );
+        const newLocationWithUrls: Location = {
+          ...newLocationData,
+          image_urls: imageUrls,
+        };
+        setLocations((prevLocations) => [...prevLocations, newLocationWithUrls]);
+        resetNewLocationData();
+        handleLocationData(newLocationWithUrls);
+      } catch (error) {
+        console.error("Error fetching image URLs:", error);
+      }
     }
   };
 
-  const resetNewLocationData = () => {
-    setNewLocationData(initialLocation);
+  const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {
+
+  };
+
+  const resetNewLocationData = (formSubmitted: any) => {
+    if (!formSubmitted) {
+      // Set newLocationData back to the initial state.
+      setNewLocationData(initialLocation);
+    }
     setShowPopup(false);
   };
 
-  // Add marker to map logic
+  // Add shapes & markers to map logic
+  const isPointInPolygon = (point: L.LatLng, polygon: L.Layer): boolean => {
+    const poly = polygon as L.Polygon;
+    return poly.getBounds().contains(point);
+  };
+
   const AddMarkerToMap = () => {
     useMapEvents({
       click: (e) => {
-        const latitude = e.latlng.lat;
-        const longitude = e.latlng.lng;
-
-        setNewLocationData((prevData) => ({
-          loc_id: Math.floor(Date.now() * Math.random()),
-          creator_id: uid,
-          loc_coords: [latitude, longitude],
-          loc_name: "",
-          loc_descr_en: "",
-          loc_tags: [],
-        }));
-        setShowPopup(true);
+        if (drawnShape) {
+          const latitude = e.latlng.lat;
+          const longitude = e.latlng.lng;
+          
+          if (
+            !drawnShape ||
+            (drawnShape && isPointInPolygon(e.latlng, drawnShape))
+          ) {
+            setNewLocationData((prevData) => ({
+              id: locations.length + 1,
+              loc_coords: [latitude, longitude],
+              loc_name: "",
+              loc_descr_en: "",
+              loc_tags: [],
+              image_urls: [],
+            }));
+            setShowPopup(true);
+          }
+        }
       },
       locationfound: (e) => {
         const { lat, lng } = e.latlng;
-        setCenterPosition([lat, lng]);
-        setZoomLevel(13);
+        setFlyToPosition([lat, lng]);
+        setFlyToZoomLevel(13);
       },
     });
 
     return null;
+  };
+
+  // Delete shapes logic
+  const handleShapeDeleted = (shape: L.Layer) => {
+    if (shape instanceof L.Polygon || shape instanceof L.Polyline) {
+      const shapeType = shape.toGeoJSON().geometry.type;
+      if (shapeType === "Polygon") {
+        const polygon = shape as L.Polygon;
+        const newLocationLatLng = new L.LatLng(
+          newLocationData.loc_coords[0],
+          newLocationData.loc_coords[1]
+        );
+        if (isPointInPolygon(newLocationLatLng, polygon)) {
+          resetNewLocationData(true);
+        }
+      }
+    }
+  };
+
+  //Delete markers logic
+  const handleDeleteMarker = (id: number) => {
+    setLocations((prevLocations) =>
+      prevLocations.filter((loc) => loc.id !== id)
+    );
   };
 
   // Geocoding logic for searchbar
@@ -131,32 +231,15 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
     if (inputElement && inputElement.value) {
       const query = inputElement.value;
       const apiKey = "0be542e0feab4cc9a51ccfc191f4dcc3";
-
       try {
         const response = await fetch(
           `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
             query
           )}&key=${apiKey}&language=en&pretty=1`
         );
-
-        if (response.ok) {
-          const data = await response.json();
-
-          if (data.results.length > 0) {
-            const { lat, lng } = data.results[0].geometry;
-            const centerCoordinates: [number, number] = [lat, lng];
-            setNewLocationData((prevData) => ({
-              ...prevData,
-              loc_coords: centerCoordinates,
-            }));
-            setCenterPosition(centerCoordinates);
-            setZoomLevel(13);
-          } else {
-            console.log("No results found");
-          }
-        } else {
-          console.error("Error fetching geocoding data:", response.statusText);
-        }
+        const data = await response.json();
+        const { lat, lng } = data.results[0].geometry;
+        flyToLocation([lat, lng], 16);
       } catch (error) {
         console.error("Error fetching geocoding data:", error);
       }
@@ -166,36 +249,17 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
   };
 
   //Geolocation logic
-  const locateUser = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setCenterPosition([latitude, longitude]);
-          setZoomLevel(13);
-
-          // Set user location
-          setUserLocation({
-            loc_id: Math.floor(Date.now() * Math.random()),
-            creator_id: uid,
-            loc_coords: [latitude, longitude],
-            loc_name: "My Location",
-            loc_descr_en: "",
-            loc_tags: [],
-          });
-        },
-        (error) => {
-          console.error("Error getting user location:", error);
-        },
-        { enableHighAccuracy: true }
-      );
-    } else {
-      console.error("Geolocation not supported in this browser");
-    }
+  const handleUseMyLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        flyToLocation([latitude, longitude], 16);
+      },
+      (error) => {
+        console.error("Error getting user location:", error);
+      }
+    );
   };
-
-  // Mapbox tile layer
-  const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
 
   return (
     <div className="map-container">
@@ -203,15 +267,18 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
         <input type="text" placeholder="Search location" ref={searchInputRef} />
         <button type="submit">Search</button>
       </form>
-      <button onClick={locateUser}>Use My Location</button>
+      <button onClick={handleUseMyLocation}>Use my location</button>
       <MapContainer
         center={defaultPosition}
         zoom={13}
         style={{ height: "500px", width: "100%" }}
+        maxBounds={japanBounds}
+        minZoom={5}
       >
         <TileLayer
           url={mapboxTileUrl}
           attribution='&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'
+          bounds={japanLatLngBounds}
         />
         <AddMarkerToMap />
         {locations.map((location) => (
@@ -220,6 +287,10 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
               <h3>{location.loc_name}</h3>
               <p>{location.loc_descr_en}</p>
               <p>Tags: {location.loc_tags.join(" ")}</p>
+              <button onClick={() => handleDeleteMarker(location.id)}>
+                Delete
+              </button>
+              <p>Images: {location.image_urls.join(", ")}</p>
             </Popup>
           </Marker>
         ))}
@@ -230,7 +301,13 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
         )}
         <Marker position={newLocationData.loc_coords} interactive={false} />
         {showPopup && (
-          <Popup position={newLocationData.loc_coords} closeOnClick={false}>
+          <Popup
+            position={newLocationData.loc_coords}
+            closeOnClick={false}
+            eventHandlers={{
+              remove: () => resetNewLocationData(false),
+            }}
+          >
             <form onSubmit={handleSubmit}>
               <label>
                 Name:
@@ -262,11 +339,20 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
                   }}
                 />
               </label>
+              <UploadWidget handleImageUrl={(url) => {
+                setNewLocationData(prevData => ({...prevData, image_url: [url]}));
+              }} />
               <button type="submit">Add Location</button>
             </form>
           </Popup>
         )}
-        {centerPosition && <FlyTo position={centerPosition} zoom={zoomLevel} />}
+        {triggerFlyTo && (
+          <FlyTo position={flyToPosition} zoom={flyToZoomLevel} />
+        )}
+        <DrawControl
+          onShapeCreated={setDrawnShape}
+          onShapeDeleted={handleShapeDeleted}
+        />
       </MapContainer>
     </div>
   );
