@@ -121,7 +121,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
     }
     if (newLocationData.image_urls.length === 0) {
       setLocations((prevLocations) => [...prevLocations, newLocationData]);
-      resetNewLocationData();
+      resetNewLocationData(true);
       handleLocationData(newLocationData);
     } else {
       try {
@@ -133,7 +133,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
           image_urls: imageUrls,
         };
         setLocations((prevLocations) => [...prevLocations, newLocationWithUrls]);
-        resetNewLocationData();
+        resetNewLocationData(true);
         handleLocationData(newLocationWithUrls);
       } catch (error) {
         console.error("Error fetching image URLs:", error);

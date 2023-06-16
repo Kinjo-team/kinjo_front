@@ -2,10 +2,11 @@ import {useEffect, useState} from 'react'
 import {useAuth} from '../../contexts/AuthContext'
 import Navbar from '../../components/Navbar/Navbar'
 import DProfile from '../../components/DashboardCompos/DProfile/DProfile'
+import DKinjoViewer from '../../components/DashboardCompos/DKinjoViewer/DKinjoViewer'
+import DKinjoBookmarked from '../../components/DashboardCompos/DKinjoBookmarked/DKinjoBookmarked'
 import Footer from '../../components/Footer/Footer'
 
 import './ProfileDashboard.scss'
-import DKinjoViewer from '../../components/DashboardCompos/DKinjoViewer/DKinjoViewer'
 
 const ProfileDashboard = () => {
     const {currentUser} = useAuth()
@@ -46,6 +47,7 @@ const ProfileDashboard = () => {
         <div>PLACEHOLDER MAP</div>
         {/* OWN COMPONENT */}
         <DKinjoViewer />
+        <DKinjoBookmarked />
     </div>
     <Footer text='Kinjo' />
    </>

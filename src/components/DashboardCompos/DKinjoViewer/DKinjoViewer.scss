@@ -1,4 +1,5 @@
 .dkinjoviewer--container {
+    grid-area: itineraries;
     display: grid;
     grid-template-rows: 60px 1fr;
     border: 1px solid lightgray;
