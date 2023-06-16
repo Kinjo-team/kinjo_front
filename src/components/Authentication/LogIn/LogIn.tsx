@@ -1,7 +1,6 @@
-import React from "react";
-import { useRef, useState } from "react";
-import { useAuth } from "../../../contexts/AuthContext";
-import "./LogIn.scss";
+import { useRef, useState } from 'react'
+import { useAuth } from '../../../contexts/AuthContext'
+import './LogIn.scss'
 
 type LogInProps = {
     toggleLogin: () => void
@@ -18,27 +17,28 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
     const [loading, setLoading] = useState<boolean>(false)
 
 
-  async function handleSubmit(e: any) {
-    e.preventDefault();
-    try {
-      setError("");
-      setLoading(true);
-      await login(emailRef.current?.value, passwordRef.current?.value);
-      navigateToMain();
-      toggleLogin();
-    } catch {
-      setError("Failed to sign in");
+    async function handleSubmit(e : any) {
+        e.preventDefault()
+        try {
+            setError("")
+            setLoading(true)
+            await login(emailRef.current?.value, passwordRef.current?.value);
+            navigateToMain();
+            toggleLogin();
+        } catch {
+            setError("Failed to sign in")
+        }
+        setLoading(false)
     }
-    setLoading(false);
-  }
 
-  function stopBubbling(e: any) {
-    e.stopPropagation();
-  }
+    function stopBubbling(e : any) {
+        e.stopPropagation()
+    }
 
-  function navigateToMain() {
-    window.location.href = "/main";
-  }
+    function navigateToMain() {
+        window.location.href = '/main';
+    }
+    
 
     return (
     <main onClick={toggleLogin} className='login--container'>
@@ -67,4 +67,4 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
     )
 }
 
-export default LogIn;
+export default LogIn

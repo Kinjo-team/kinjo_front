@@ -7,6 +7,8 @@ import ThankYouSubmit from "./ThankYouSubmit/ThankYouSubmit";
 import { KinjoProvider } from "../../contexts/KinjoContext";
 
 import "./CreateItinerary.scss";
+import { LocationData, CreateItineraryData} from '../../../globals.d';
+
 
 type CreateItineraryProps = {
   toggleCreateItinerary: () => void;

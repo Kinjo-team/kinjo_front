@@ -5,7 +5,7 @@ import { LatLngTuple, LatLngBounds } from "leaflet";
 import SubmitMapUpdater from "./SubmitMapUpdater";
 
 interface Location {
-  id: number;
+  loc_id: number;
   loc_coords: [number, number];
   loc_descr_en: string;
   loc_name: string;
@@ -83,7 +83,7 @@ const SubmitMap: React.FC<MapProps> = ({ locations }) => {
         {locationData &&
           locationData.map((location: any) => (
             <Marker
-              key={location.id}
+              key={location.loc_id}
               position={location.loc_coords}
               eventHandlers={{
                 click: () => {
@@ -93,7 +93,7 @@ const SubmitMap: React.FC<MapProps> = ({ locations }) => {
             >
               <Popup>
                 {activeLocationRef.current &&
-                  activeLocationRef.current.id === location.id && (
+                  activeLocationRef.current.loc_id === location.loc_id && (
                     <div>
                       <h2>{activeLocation.loc_name}</h2>
                       <p>{activeLocation.loc_descr_en}</p>

@@ -68,7 +68,7 @@ const SubmitAndReview = () => {
             {itinerary.locationData &&
               itinerary.locationData.map((location: any) => (
                 <SubmitLocationCard
-                  key={location.id}
+                  key={location.loc_id}
                   location={location}
                   handleClick={() => selectLocation(location)}
                 />

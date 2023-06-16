@@ -14,20 +14,25 @@ import FlyTo from "../FlyTo/FlyTo";
 import DrawControl from "../DrawControl/DrawControl";
 
 import "./Map.scss";
+import { MapProps, Location } from '../../../globals.d'
+import { useAuth } from "../../contexts/AuthContext";
+
+// interface Location {
+  //   id: number;
+  //   creator_id?: string,
+  //   loc_coords: [number, number];
+  //   loc_name: string;
+  //   loc_descr_en: string;
+  //   loc_descr_ja?: string;
+  //   loc_tags: string[];
+  // }
+  
+  // interface MapProps {
+    //   handleLocationData: (locationData: Location) => void;
+    // }
+    
+let uid: string | undefined = "";
 import UploadWidget from "../UploadWidget/UploadWidget";
-
-interface Location {
-  id: number;
-  loc_coords: [number, number];
-  loc_name: string;
-  loc_descr_en: string;
-  loc_tags: string[];
-  image_urls: string[];
-}
-
-interface MapProps {
-  handleLocationData: (locationData: Location) => void;
-}
 
 //default position for Tokyo
 const defaultPosition: [number, number] = [35.664035, 139.698212];
@@ -41,7 +46,8 @@ const japanBounds: [LatLngTuple, LatLngTuple] = [
 const japanLatLngBounds = new LatLngBounds(japanBounds);
 
 const initialLocation: Location = {
-  id: 0,
+  loc_id: Math.floor(Date.now() * Math.random()),
+  creator_id: "NULLUSER",
   loc_coords: [0, 0],
   loc_name: "",
   loc_descr_en: "",
@@ -50,6 +56,7 @@ const initialLocation: Location = {
 };
 
 const Map: React.FC<MapProps> = ({ handleLocationData }) => {
+  uid = useAuth().currentUser?.uid;
   const [locations, setLocations] = useState<Location[]>([]);
   const [newLocationData, setNewLocationData] =
     useState<Location>(initialLocation);
@@ -103,12 +110,13 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { id, loc_coords, loc_name, loc_descr_en, loc_tags, image_urls } =
+    const { loc_id, creator_id, loc_coords, loc_name, loc_descr_en, loc_tags } =
       newLocationData;
 
     if (loc_name.trim() !== "") {
       const newLocation: Location = {
-        id,
+        loc_id,
+        creator_id,
         loc_coords,
         loc_name,
         loc_descr_en,
@@ -274,7 +282,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
         />
         <AddMarkerToMap />
         {locations.map((location) => (
-          <Marker key={location.id} position={location.loc_coords}>
+          <Marker key={location.loc_id} position={location.loc_coords}>
             <Popup>
               <h3>{location.loc_name}</h3>
               <p>{location.loc_descr_en}</p>

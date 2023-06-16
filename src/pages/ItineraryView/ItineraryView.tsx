@@ -112,10 +112,10 @@ const ItineraryView = () => {
           <ReadOnlyMap locations={itinerary} />
         </section>
         <section className="cards--container">
-          {itinerary.itinerary_locations &&
-            itinerary.itinerary_locations.map((location: any) => (
+          {itinerary.locationData &&
+            itinerary.locationData.map((location: any) => (
               <LocationCard
-                key={location.id}
+                key={location.loc_id}
                 location={location}
                 handleClick={() => selectLocation(location)}
               />
