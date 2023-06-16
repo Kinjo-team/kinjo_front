@@ -16,13 +16,13 @@ interface Location {
 
 interface MapProps {
   locations: {
-    itinerary_locations: Location[];
+    locationData: Location[];
   };
 }
 const defaultPosition: [number, number] = [35.664035, 139.698212]; // this is Tokyo
 
 const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
-  const { itinerary_locations } = locations;
+  const { locationData } = locations;
   //   console.log("Locations", itinerary_locations);
   const [activeLocation, setActiveLocation] = useState<Location | any>(null);
 
@@ -43,14 +43,14 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
   let avgLat = 0;
   let avgLng = 0;
 
-  if (itinerary_locations && itinerary_locations.length > 0) {
-    for (const location of itinerary_locations) {
+  if (locationData && locationData.length > 0) {
+    for (const location of locationData) {
       avgLat += location.loc_coords[0];
       avgLng += location.loc_coords[1];
     }
 
-    avgLat /= itinerary_locations.length;
-    avgLng /= itinerary_locations.length;
+    avgLat /= locationData.length;
+    avgLng /= locationData.length;
   }
   const averagePosition: [number, number] = [avgLat, avgLng];
   //   console.log("Average Position", averagePosition);
@@ -72,8 +72,8 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
           url={mapboxTileUrl}
           attribution='&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a>'
         />
-        {itinerary_locations &&
-          itinerary_locations.map((location: any) => (
+        {locationData &&
+          locationData.map((location: any) => (
             <Marker
               key={location.loc_id}
               position={location.loc_coords}
