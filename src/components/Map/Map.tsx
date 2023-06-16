@@ -14,23 +14,23 @@ import FlyTo from "../FlyTo/FlyTo";
 import DrawControl from "../DrawControl/DrawControl";
 
 import "./Map.scss";
-import { MapProps, Location } from '../../../globals.d'
+import { MapProps, Location } from "../../../globals.d";
 import { useAuth } from "../../contexts/AuthContext";
 
 // interface Location {
-  //   id: number;
-  //   creator_id?: string,
-  //   loc_coords: [number, number];
-  //   loc_name: string;
-  //   loc_descr_en: string;
-  //   loc_descr_ja?: string;
-  //   loc_tags: string[];
-  // }
-  
-  // interface MapProps {
-    //   handleLocationData: (locationData: Location) => void;
-    // }
-    
+//   id: number;
+//   creator_id?: string,
+//   loc_coords: [number, number];
+//   loc_name: string;
+//   loc_descr_en: string;
+//   loc_descr_ja?: string;
+//   loc_tags: string[];
+// }
+
+// interface MapProps {
+//   handleLocationData: (locationData: Location) => void;
+// }
+
 let uid: string | undefined = "";
 import UploadWidget from "../UploadWidget/UploadWidget";
 
@@ -129,19 +129,24 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
     }
     if (newLocationData.image_urls.length === 0) {
       setLocations((prevLocations) => [...prevLocations, newLocationData]);
-      resetNewLocationData();
+      resetNewLocationData(true);
       handleLocationData(newLocationData);
     } else {
       try {
         const imageUrls = await Promise.all(
-          newLocationData.image_urls.map((image) => fetchCloudinaryImageUrl(image))
+          newLocationData.image_urls.map((image) =>
+            fetchCloudinaryImageUrl(image)
+          )
         );
         const newLocationWithUrls: Location = {
           ...newLocationData,
           image_urls: imageUrls,
         };
-        setLocations((prevLocations) => [...prevLocations, newLocationWithUrls]);
-        resetNewLocationData();
+        setLocations((prevLocations) => [
+          ...prevLocations,
+          newLocationWithUrls,
+        ]);
+        resetNewLocationData(true);
         handleLocationData(newLocationWithUrls);
       } catch (error) {
         console.error("Error fetching image URLs:", error);
@@ -149,9 +154,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
     }
   };
 
-  const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {
-
-  };
+  const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {};
 
   const resetNewLocationData = (formSubmitted: any) => {
     if (!formSubmitted) {
@@ -173,13 +176,13 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
         if (drawnShape) {
           const latitude = e.latlng.lat;
           const longitude = e.latlng.lng;
-          
+
           if (
             !drawnShape ||
             (drawnShape && isPointInPolygon(e.latlng, drawnShape))
           ) {
             setNewLocationData((prevData) => ({
-              id: locations.length + 1,
+              loc_id: locations.length + 1,
               loc_coords: [latitude, longitude],
               loc_name: "",
               loc_descr_en: "",
@@ -220,7 +223,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
   //Delete markers logic
   const handleDeleteMarker = (id: number) => {
     setLocations((prevLocations) =>
-      prevLocations.filter((loc) => loc.id !== id)
+      prevLocations.filter((loc) => loc.loc_id !== id)
     );
   };
 
@@ -287,7 +290,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
               <h3>{location.loc_name}</h3>
               <p>{location.loc_descr_en}</p>
               <p>Tags: {location.loc_tags.join(" ")}</p>
-              <button onClick={() => handleDeleteMarker(location.id)}>
+              <button onClick={() => handleDeleteMarker(location.loc_id)}>
                 Delete
               </button>
               <p>Images: {location.image_urls.join(", ")}</p>
@@ -339,9 +342,14 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
                   }}
                 />
               </label>
-              <UploadWidget handleImageUrl={(url) => {
-                setNewLocationData(prevData => ({...prevData, image_url: [url]}));
-              }} />
+              <UploadWidget
+                handleImageUrl={(url) => {
+                  setNewLocationData((prevData) => ({
+                    ...prevData,
+                    image_url: [url],
+                  }));
+                }}
+              />
               <button type="submit">Add Location</button>
             </form>
           </Popup>
