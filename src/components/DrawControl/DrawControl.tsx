@@ -78,7 +78,7 @@ import { EditControl } from "react-leaflet-draw";
 
 interface DrawControlProps {
   onShapeCreated: (shape: L.Layer) => void;
-  onShapeDeleted: (shape: L.Layer) => void;
+  onShapeDeleted: (shapes: L.Layer[]) => void;
 }
 
 const DrawControl: React.FC<DrawControlProps> = ({
@@ -94,11 +94,11 @@ const DrawControl: React.FC<DrawControlProps> = ({
 
   const onDeleted = (e: any) => {
     const layers = e.layers;
+    const deletedLayers: L.Layer[] = [];
     layers.eachLayer((layer: any) => {
-      console.log("Deleted layer:", layer);
-      onShapeDeleted(layer);
-      // Remove the shape from your application (e.g., delete from the database)
+      deletedLayers.push(layer);
     });
+    onShapeDeleted(deletedLayers);
   };
 
   return (
@@ -106,6 +106,7 @@ const DrawControl: React.FC<DrawControlProps> = ({
       <EditControl
         position="topright"
         onCreated={onCreated}
+        onDeleted={onDeleted}
         draw={{
           polyline: false,
           polygon: false,
