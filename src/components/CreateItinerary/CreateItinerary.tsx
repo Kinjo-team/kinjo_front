@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SetYourKinjo from "./SetYourKinjo/SetYourKinjo";
-import ChooseLocations from "./ChooseLocations/ChooseLocations";
-import SubmitKinjo from "./SubmitKinjo/SubmitKinjo";
+// import ChooseLocations from "./ChooseLocations/ChooseLocations";
+// import SubmitKinjo from "./SubmitKinjo/SubmitKinjo";
 import ThankYouSubmit from "./ThankYouSubmit/ThankYouSubmit";
 // CONTEXTS
 import { KinjoProvider } from "../../contexts/KinjoContext";
@@ -40,7 +40,6 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
 
   // LOGIC FOR CHANGING POPUPS
   const [pageTransition, setPageTransition] = useState<number>(1);
-
 
   // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   //   event.preventDefault();
@@ -87,32 +86,37 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
   //   ]);
   // };
 
-
   // FUNCTIONS
   // This function is the form from closing when user clicks on elements
   function stopBubblingUp(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     event.stopPropagation();
   }
-  function forwardTransition() {
+  function forwardTransitionPage() {
     setPageTransition((prevPageTransition) => prevPageTransition + 1);
   }
-  function backwardTransition() {
-    setPageTransition((prevPageTransition) => prevPageTransition - 1);
-  }
+  // function backwardTransition() {
+  //   setPageTransition((prevPageTransition) => prevPageTransition - 1);
+  // }
 
   return (
     <>
       <main className="overlay--container">
         <KinjoProvider value>
-          {pageTransition === 1 && <SetYourKinjo forwardTransition={forwardTransition} toggleCreateItinerary={toggleCreateItinerary} />}
-          {pageTransition === 2 && <ChooseLocations forwardTransition={forwardTransition} backwardTransition={backwardTransition} toggleCreateItinerary={toggleCreateItinerary} />}
-          {pageTransition === 3 && <SubmitKinjo forwardTransition={forwardTransition} backwardTransition={backwardTransition} toggleCreateItinerary={toggleCreateItinerary} />}
-          {pageTransition === 4 && <ThankYouSubmit toggleCreateItinerary={toggleCreateItinerary} />}
+          {pageTransition === 1 && (
+            <SetYourKinjo
+              forwardTransitionPage={forwardTransitionPage}
+              toggleCreateItinerary={toggleCreateItinerary}
+            />
+          )}
+          {/* {pageTransition === 2 && <ChooseLocations forwardTransitionPage={forwardTransitionPage} backwardTransition={backwardTransition} toggleCreateItinerary={toggleCreateItinerary} />}
+          {pageTransition === 3 && <SubmitKinjo forwardTransitionPage={forwardTransitionPage} backwardTransition={backwardTransition} toggleCreateItinerary={toggleCreateItinerary} />} */}
+          {pageTransition === 2 && (
+            <ThankYouSubmit toggleCreateItinerary={toggleCreateItinerary} />
+          )}
         </KinjoProvider>
       </main>
     </>
-  )
+  );
 };
 
 export default CreateItinerary;
-
