@@ -77,11 +77,13 @@ import { FeatureGroup } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 
 interface DrawControlProps {
+  forwardTransition: Function;
   onShapeCreated: (shape: L.Layer) => void;
   onShapeDeleted: (shapes: L.Layer[]) => void;
 }
 
 const DrawControl: React.FC<DrawControlProps> = ({
+  forwardTransition,
   onShapeCreated,
   onShapeDeleted,
 }) => {
@@ -90,6 +92,7 @@ const DrawControl: React.FC<DrawControlProps> = ({
   const onCreated = (e: any) => {
     const layer = e.layer;
     onShapeCreated(layer);
+    forwardTransition();
   };
 
   const onDeleted = (e: any) => {

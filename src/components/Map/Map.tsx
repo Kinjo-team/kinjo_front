@@ -27,6 +27,7 @@ interface Location {
 
 interface MapProps {
   handleLocationData: (locationData: Location) => void;
+  forwardTransition: () => void;
 }
 
 //default position for Tokyo
@@ -49,7 +50,7 @@ const initialLocation: Location = {
   image_urls: [],
 };
 
-const Map: React.FC<MapProps> = ({ handleLocationData }) => {
+const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [newLocationData, setNewLocationData] =
     useState<Location>(initialLocation);
@@ -106,7 +107,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
     const { id, loc_coords, loc_name, loc_descr_en, loc_tags, image_urls } =
       newLocationData;
 
-    if (loc_name.trim() !== "") {
+    if (loc_name.trim() !== "" || newLocationData.image_urls.length === 0) {
       const newLocation: Location = {
         id,
         loc_coords,
@@ -171,6 +172,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
       click: (e) => {
         if (drawnShape && isPointInShape(e.latlng, drawnShape)) {
           const newId = locations.length + 1;
+          setNewLocationData(initialLocation); // resetting the form data here
           setNewLocationData((prevData) => ({
             ...prevData,
             id: newId,
@@ -329,7 +331,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
                 handleImageUrl={(url) => {
                   setNewLocationData((prevData) => ({
                     ...prevData,
-                    image_url: [url],
+                    image_url: [url], // Should this be image_urls instead of image_url?
                   }));
                 }}
               />
@@ -341,6 +343,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
           <FlyTo position={flyToPosition} zoom={flyToZoomLevel} />
         )}
         <DrawControl
+          forwardTransition={forwardTransition}
           onShapeCreated={setDrawnShape}
           onShapeDeleted={handleShapeDeleted}
         />

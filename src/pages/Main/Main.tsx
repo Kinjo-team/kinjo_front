@@ -57,7 +57,7 @@ const Main = () => {
             </Link>
           ))}
         </section>
-      <Footer text={"kinjo"} />
+        <Footer text={"kinjo"} />
       </main>
     </>
   );
