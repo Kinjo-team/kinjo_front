@@ -1,52 +1,52 @@
-.itineraryview--container {
-    display: grid;
-    height: 100vh;
-    width: 100vw;
-    padding: clamp(1rem, 2vw, 2rem);
-    background-color: white;
-    grid-template-rows: 20px 1fr;
-    grid-template-columns: 1fr 1fr;;
-    grid-template-areas: "buttons buttons"
-                         "info cards";
-    gap: 1.5rem;
+// .itineraryview--container {
+//     display: grid;
+//     height: 100vh;
+//     width: 100vw;
+//     padding: clamp(1rem, 2vw, 2rem);
+//     background-color: white;
+//     grid-template-rows: 20px 1fr;
+//     grid-template-columns: 1fr 1fr;;
+//     grid-template-areas: "buttons buttons"
+//                          "info cards";
+//     gap: 1.5rem;
 
-    .info--container {
-        grid-area: info;
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        gap: 1rem;
-        padding: 1rem;
-        border-radius: 5px;
-        background-color: #ecebea;
-        overflow-y: auto;
+//     .info--container {
+//         grid-area: info;
+//         display: grid;
+//         grid-template-rows: 1fr 1fr;
+//         gap: 1rem;
+//         padding: 1rem;
+//         border-radius: 5px;
+//         background-color: #ecebea;
+//         overflow-y: auto;
 
-        article {
-            display: flex;
-            gap: clamp(1rem, 2vw, 2rem);
-            flex-direction: column;
-            background-color: white;
-            padding: 1rem;
-        }
-    }
+//         article {
+//             display: flex;
+//             gap: clamp(1rem, 2vw, 2rem);
+//             flex-direction: column;
+//             background-color: white;
+//             padding: 1rem;
+//         }
+//     }
 
-    .cards--container {
-        grid-area: cards;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-        border-radius: 5px;
-        background-color: #ecebea;
-        overflow: auto;
-    }
-}
+//     .cards--container {
+//         grid-area: cards;
+//         display: flex;
+//         flex-direction: column;
+//         gap: 1rem;
+//         padding: 1rem;
+//         border-radius: 5px;
+//         background-color: #ecebea;
+//         overflow: auto;
+//     }
+// }
 
-@media screen and (max-width: 768px) {
-    .itineraryview--container {
-        grid-template-rows: 20px 1fr 1fr;
-        grid-template-columns: 1fr;
-        grid-template-areas: "buttons"
-                             "info"
-                             "cards";
-    }
-}
+// @media screen and (max-width: 768px) {
+//     .itineraryview--container {
+//         grid-template-rows: 20px 1fr 1fr;
+//         grid-template-columns: 1fr;
+//         grid-template-areas: "buttons"
+//                              "info"
+//                              "cards";
+//     }
+// }

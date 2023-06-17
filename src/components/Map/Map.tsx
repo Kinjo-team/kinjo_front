@@ -126,13 +126,18 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
     } else {
       try {
         const imageUrls = await Promise.all(
-          newLocationData.image_urls.map((image) => fetchCloudinaryImageUrl(image))
+          newLocationData.image_urls.map((image) =>
+            fetchCloudinaryImageUrl(image)
+          )
         );
         const newLocationWithUrls: Location = {
           ...newLocationData,
           image_urls: imageUrls,
         };
-        setLocations((prevLocations) => [...prevLocations, newLocationWithUrls]);
+        setLocations((prevLocations) => [
+          ...prevLocations,
+          newLocationWithUrls,
+        ]);
         resetNewLocationData(true);
         handleLocationData(newLocationWithUrls);
       } catch (error) {
@@ -141,9 +146,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
     }
   };
 
-  const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {
-
-  };
+  const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {};
 
   const resetNewLocationData = (formSubmitted: any) => {
     if (!formSubmitted) {
@@ -154,32 +157,26 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
   };
 
   // Add shapes & markers to map logic
-  const isPointInPolygon = (point: L.LatLng, polygon: L.Layer): boolean => {
-    const poly = polygon as L.Polygon;
-    return poly.getBounds().contains(point);
+  const isPointInShape = (point: L.LatLng, shape: L.Layer): boolean => {
+    if (shape instanceof L.Polygon) {
+      return shape.getBounds().contains(point);
+    } else if (shape instanceof L.Circle) {
+      return shape.getLatLng().distanceTo(point) <= shape.getRadius();
+    }
+    return false;
   };
 
   const AddMarkerToMap = () => {
     useMapEvents({
       click: (e) => {
-        if (drawnShape) {
-          const latitude = e.latlng.lat;
-          const longitude = e.latlng.lng;
-          
-          if (
-            !drawnShape ||
-            (drawnShape && isPointInPolygon(e.latlng, drawnShape))
-          ) {
-            setNewLocationData((prevData) => ({
-              id: locations.length + 1,
-              loc_coords: [latitude, longitude],
-              loc_name: "",
-              loc_descr_en: "",
-              loc_tags: [],
-              image_urls: [],
-            }));
-            setShowPopup(true);
-          }
+        if (drawnShape && isPointInShape(e.latlng, drawnShape)) {
+          const newId = locations.length + 1;
+          setNewLocationData((prevData) => ({
+            ...prevData,
+            id: newId,
+            loc_coords: [e.latlng.lat, e.latlng.lng],
+          }));
+          setShowPopup(true);
         }
       },
       locationfound: (e) => {
@@ -193,20 +190,17 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
   };
 
   // Delete shapes logic
-  const handleShapeDeleted = (shape: L.Layer) => {
-    if (shape instanceof L.Polygon || shape instanceof L.Polyline) {
-      const shapeType = shape.toGeoJSON().geometry.type;
-      if (shapeType === "Polygon") {
-        const polygon = shape as L.Polygon;
-        const newLocationLatLng = new L.LatLng(
-          newLocationData.loc_coords[0],
-          newLocationData.loc_coords[1]
-        );
-        if (isPointInPolygon(newLocationLatLng, polygon)) {
-          resetNewLocationData(true);
-        }
+  const handleShapeDeleted = (shapes: L.Layer[]) => {
+    shapes.forEach((shape) => {
+      const newLocationLatLng = new L.LatLng(
+        newLocationData.loc_coords[0],
+        newLocationData.loc_coords[1]
+      );
+      if (isPointInShape(newLocationLatLng, shape)) {
+        resetNewLocationData(true);
       }
-    }
+    });
+    setDrawnShape(null);
   };
 
   //Delete markers logic
@@ -331,9 +325,14 @@ const Map: React.FC<MapProps> = ({ handleLocationData }) => {
                   }}
                 />
               </label>
-              <UploadWidget handleImageUrl={(url) => {
-                setNewLocationData(prevData => ({...prevData, image_url: [url]}));
-              }} />
+              <UploadWidget
+                handleImageUrl={(url) => {
+                  setNewLocationData((prevData) => ({
+                    ...prevData,
+                    image_url: [url],
+                  }));
+                }}
+              />
               <button type="submit">Add Location</button>
             </form>
           </Popup>
