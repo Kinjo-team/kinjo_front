@@ -95,6 +95,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: clamp(1rem, 2vw, 2rem);
 
         img {
             filter: grayscale(100%);

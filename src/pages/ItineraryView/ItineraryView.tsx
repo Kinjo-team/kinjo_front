@@ -95,6 +95,23 @@ const ItineraryView = () => {
     }
   };
 
+  async function bookmarkItinerary() {
+    const response = await fetch("http://localhost:8000/bookmarks", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            },
+        body: JSON.stringify({
+            firebase_uuid: currentUser?.uid,
+            itinerary_id: itinerary.itinerary_id,
+        }),
+    });
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+    }
+}
+
   return (
     <>
       <Navbar />
@@ -106,6 +123,7 @@ const ItineraryView = () => {
             <p>{itinerary.itinerary_descr}</p>
             <button onClick={handleLikeButtonClick}>Like (+1)</button>
             <button onClick={handleDislikeButtonClick}>Dislike (+1)</button>
+            <button onClick={bookmarkItinerary}>Bookmark</button>
             <p>Likes: {likesCount}</p>
             <p>Dislikes: {dislikesCount}</p>
           </article>

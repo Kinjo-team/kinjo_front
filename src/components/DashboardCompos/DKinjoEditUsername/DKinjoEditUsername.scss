@@ -1,0 +1,52 @@
+.editusername--overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+
+    .editusername--container {
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(1rem, 2vw, 2rem);
+        gap: 1rem;
+        border-radius: 5px;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+
+            input {
+                width: 100%;
+                padding: 0.5rem;
+                border: 1px solid black;
+                border-radius: 5px;
+            }
+
+            button {
+                padding: 1rem;
+                border: none;
+                color: white;
+                border-radius: 5px;
+                background-color: black;
+                cursor: pointer;
+                &:hover {
+                    background-color: gray;
+                }
+            }
+        }
+    }
+}

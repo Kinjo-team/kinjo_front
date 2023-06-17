@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {useState} from 'react'
+import DKinjoEditUsername from '../DKinjoEditUsername/DKinjoEditUsername'
+
 import "./DProfile.scss"
 const defaultUserImage = require('../../../assets/images/defaultuser.png')
 
@@ -8,6 +10,13 @@ type DProfileProps = {
 }
 
 const DProfile = ({username, email} : DProfileProps) => {
+    const [showEditUsername, setShowEditUsername] = useState(false)
+
+
+    function toggleShowEditUsername() {
+        setShowEditUsername(!showEditUsername)
+    }
+
   return (
     <>
         <div className='dprofile--container'>
@@ -22,8 +31,9 @@ const DProfile = ({username, email} : DProfileProps) => {
                     <p>Following</p>
                 </div>
             </div>
-            <button className='dprofile-edit-btn' type='button'><span className="material-symbols-outlined">edit</span>Edit Username</button>
+            <button className='dprofile-edit-btn' onClick={toggleShowEditUsername} type='button'><span className="material-symbols-outlined">edit</span>Edit Username</button>
         </div>
+        {showEditUsername && <DKinjoEditUsername toggleShowEditUsername={toggleShowEditUsername} />}
     </>
   )
 }
