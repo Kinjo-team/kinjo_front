@@ -1,0 +1,21 @@
+
+.setkinjo-map-pointer
+    {
+        color: crimson;
+        position: absolute;
+        right: 7px;
+        bottom: -10px;
+        z-index: 1;
+        font-size: clamp(2rem, 5vw, 4.5rem);
+        animation: infinite pulse-bounce 1s ease-in-out;
+    }
+
+@media screen and (max-width: 768px)
+    {
+        .setkinjo-map-pointer
+            {
+                right: 16px;
+                bottom: -5px;
+            }
+    }
+    

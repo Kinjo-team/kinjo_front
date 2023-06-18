@@ -1,14 +1,35 @@
 .itinpicturecard--container {
+    padding: clamp(1rem, 2vw, 1rem);
+    filter: grayscale(100%);
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: white;
-    padding: clamp(1rem, 2vw, 2rem);
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+    &:hover, &:focus, &:active {
+        filter: grayscale(0%);
+        scale: 1.05;
+    }
     
-    h2 {
+    h3 {
         font-size: clamp(1.5rem, 2.5vw, 3rem);
         margin-bottom: 1rem;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        color: white;
+    }
+
+    .itinpicture--img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
     }
 }

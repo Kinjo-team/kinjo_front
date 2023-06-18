@@ -1,0 +1,15 @@
+.dkinjo-card--container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid lightgray;
+    padding: clamp(0.5rem, 1vw, 1rem);
+    border-radius: 5px;
+
+    .dkinjo-card-title {
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
+        width: 100%;
+        text-align: center;
+    }
+}

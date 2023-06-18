@@ -1,0 +1,69 @@
+.dprofile--container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: clamp(1rem, 2vw, 2rem);
+    border-radius: 5px;
+    background-color: white;
+    overflow-y: auto;
+    border: solid 1px lightgray;
+
+    .dprofile-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: clamp(100px, 20vw, 250px);
+        width: clamp(100px, 20vw, 250px);
+        border-radius: 50%;
+        background-color: #d3d3d3;
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+    
+    .dprofile-followers {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: clamp(0.8rem, 2vw, 0.9rem);
+        gap: 1rem;
+        padding: 1rem;
+        border-radius: 5px;
+
+        .follow-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+    }
+
+    .dprofile-info {
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dprofile-edit-btn {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: medium;
+        padding: clamp(0.5rem, 1vw, 1rem);
+        border-radius: 5px;
+        background-color: #d3d3d3;
+        border: none;
+
+        &:hover {
+            background-color: #b3b3b3;
+        }
+    }
+}

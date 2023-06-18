@@ -1,38 +1,83 @@
 .search-itineraries {
     display: flex;
     position: relative;
+    width: 85%;
+
+    .searchbar {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        outline: none;
+        border: 2px solid rgba($color: #000000, $alpha: 0.5);
+        transition: all 0.3s ease-in-out;
+        &:focus-within {
+            scale: 1.1;
+        }
+
+        select {
+            background-color: crimson;
+            color: white;
+            padding: clamp(0.2rem, 1vw, 0.5rem);
+            border: none;
+            border-radius: 5px 0 0 5px;
+            text-align: center;
+            font-size: clamp(0.7rem, 1vw, 1.5rem);
+        }
+
+        .search-input {
+            padding: clamp(0.5rem, 1vw, 1rem);
+            font-size: large;
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: black;
+            font-size: clamp(1rem, 2vw, 2rem);
+        }
+
+    }
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1;
-    width: 100px;
-    // border: 2px solid red;
-    background-color: #fff;
-}
+// .dropdown-content {
+//     display: none;
+//     position: absolute;
+//     top: 100%;
+//     left: 0;
+//     z-index: 1;
+//     width: 100px;
+//     // border: 2px solid red;
+//     background-color: #fff;
+// }
 
-.dropbtn {
-    width: 100px;
-}
+// .dropbtn {
+//     width: 100px;
+// }
 
-.dropdown-section {
-    display: flex;
-    flex-direction: column;
-}
+// .dropdown-section {
+//     display: flex;
+//     flex-direction: column;
+// }
   
-.dropdown-content.show {
-    display: block;
-}
+// .dropdown-content.show {
+//     display: block;
+// }
 
-.dropdown-content .search-option:hover {
-    background-color: lightgrey;
-    cursor: pointer;
-  }
+// .dropdown-content .search-option:hover {
+//     background-color: lightgrey;
+//     cursor: pointer;
+//   }
 
-.dropdown-section:hover .dropdown-content {
-    transform: scale(1);
-    transition: transform 0.3s ease;
-  }
+// .dropdown-section:hover .dropdown-content {
+//     transform: scale(1);
+//     transition: transform 0.3s ease;
+//   }

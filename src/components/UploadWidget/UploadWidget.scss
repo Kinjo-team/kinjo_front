@@ -1,0 +1,16 @@
+.add-img-btn {
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #7b7fa1;
+    cursor: pointer;
+    border: solid 1px #7b7fa1;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    margin: 5px;
+    &:hover {
+        background-color: white;
+        color: #7b7fa1;
+    }
+}

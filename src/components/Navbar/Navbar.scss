@@ -1,19 +1,23 @@
 nav {
-    position: fixed;
+    position: sticky;
     width: 100vw;
     top: 0;
+    left: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 2rem;
-    background-color: transparent;
-    color: black;
+    color: white;
+    z-index: 100;
+    background-color: white;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
     
     .title {
         cursor: pointer;
         font-size: clamp(1.5rem, 3vw, 2rem);
         font-weight: bold;
-        color: inherit;
+        color: black;
+        white-space: nowrap;
     }
 
     .btn-grp {
@@ -22,31 +26,28 @@ nav {
         gap: clamp(1rem, 2vw, 2rem);
         font-size: clamp(0.7rem, 2vw, 1.5rem);
 
-        a {
+        
+        .nav-btn {
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 0.7rem;
             text-decoration: none;
-            padding: 0.5rem;
-            border: 1px solid black;
-            border-radius: 0.5rem;
-            background-color: transparent;
-            color: inherit;
-            cursor: pointer;
-            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
-        }
-        button {
-            padding: 0.5rem;
-            border: 1px solid black;
-            border-radius: 0.5rem;
-            background-color: transparent;
+            // border: 1px solid black;
+            border: none;
+            border-radius: 5px;
+            background-color: crimson;
+            border: 1px solid crimson;
             color: inherit;
             cursor: pointer;
             font-size: clamp(0.7rem, 2vw, 1.5rem);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+            // CHANGE THIS LATER
+            &:hover {
+                background-color: white;
+                border: 1px solid crimson;
+                color: crimson;
+            }
+        }
         }
 
-        // CHANGE THIS LATER
-        a:hover, button:hover {
-            background-color: black;
-            color: white;
-        }
-    }
 }

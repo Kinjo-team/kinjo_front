@@ -1,61 +1,63 @@
-import { useRef, useState } from 'react'
-import { useAuth } from '../../../contexts/AuthContext'
-import './LogIn.scss'
+import React from "react";
+import { useRef, useState } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+import "./LogIn.scss";
 
 type LogInProps = {
     toggleLogin: () => void
     toggleSignUp: () => void
+    toggleForgotPassword: () => void
     closeAll: () => void
 }
 
-const LogIn = ({toggleLogin, toggleSignUp, closeAll} : LogInProps) => {
+const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : LogInProps) => {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const { login } = useAuth()
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
 
-    async function handleSubmit(e : any) {
-        e.preventDefault()
-        try {
-            setError("")
-            setLoading(true)
-            await login(emailRef.current?.value, passwordRef.current?.value);
-            navigateToMain();
-            toggleLogin();
-        } catch {
-            setError("Failed to sign in")
-        }
-        setLoading(false)
-    }
 
-    function stopBubbling(e : any) {
-        e.stopPropagation()
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    try {
+      setError("");
+      setLoading(true);
+      await login(emailRef.current?.value, passwordRef.current?.value);
+      navigateToMain();
+      toggleLogin();
+    } catch {
+      setError("Failed to sign in");
     }
+    setLoading(false);
+  }
 
-    function navigateToMain() {
-        window.location.href = '/main';
-    }
-    
+  function stopBubbling(e: any) {
+    e.stopPropagation();
+  }
 
-  return (
+  function navigateToMain() {
+    window.location.href = "/main";
+  }
+
+    return (
     <main onClick={toggleLogin} className='login--container'>
         <section onClick={stopBubbling} className='login'>
-            <h2 className="title">Log In</h2>
+            <h2 className="login-title">Log in to KINJO</h2>
             {error && <div className="error">{error}</div>}
             <form className='login--form' onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor='Email'>Email</label>
+                <div className='login--form--section'>
+                    <label htmlFor='Email'>EMAIL ADDRESS</label>
                     <input type="email" ref={emailRef} required></input>
                 </div>
-                <div>
-                    <label htmlFor='password'>Password</label>
+                <div className='login--form--section'>
+                    <label htmlFor='password'>PASSWORD</label>
                     <input type="password" ref={passwordRef} required />
                 </div>
-                <button type="submit" disabled={loading}>Log In</button>
+                <button className='login--form--submit-btn' type="submit" disabled={loading}>Log In</button>
             </form>
           <div>
-              <span>Forgot Password?</span>
+              <span className='auth--link' onClick={toggleForgotPassword}>Forgot Password?</span>
           </div>
           <div>
               <span>Don't have an account? <span className='auth--link' onClick={toggleSignUp}>Sign Up!</span></span>
@@ -65,4 +67,4 @@ const LogIn = ({toggleLogin, toggleSignUp, closeAll} : LogInProps) => {
     )
 }
 
-export default LogIn
+export default LogIn;

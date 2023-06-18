@@ -1,7 +1,7 @@
 .dropdown--container {
     float: right;
     position: relative;
-    color: black;
+    color: white;
   
     .dropdown-content {
       display: none;
@@ -11,21 +11,30 @@
       position: absolute;
       right: 0;
     //   POSITIONING
-
-      background-color: black;
+      background-color: crimson;
+      border-radius: 5px;
       width: clamp(7rem, 20vw, 10rem);
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 999;
   
-      a,
-      button {
+      .menu-items {
+        font-family: Arial, Helvetica, sans-serif;
         color: white;
         float: none;
-        padding: 12px 16px;
+        padding: clamp(0.5rem, 1vw, 1rem);
+        font-size: clamp(0.7rem, 1.5vw, 1rem);
         text-decoration: none;
         display: block;
         text-align: left;
         border: none;
+        background-color: crimson;
+        border-radius: 5px;
+        width: 100%;
+        cursor: pointer;
+        &:hover {
+          background-color: white;
+            color: black;
+        }
       }
     }
   

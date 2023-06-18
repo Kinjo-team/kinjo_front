@@ -3,16 +3,47 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: clamp(5rem, 10vw, 2rem);
-    color: black;
+    color: white;
+    // PARRALAX SCROLL
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    video {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: -1;
+    }
 
     .title {
         // REVERSED
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
         margin-left: clamp(1rem, 10vw, 7rem);
         display: flex;
         flex-direction: column;
         gap: clamp(1rem, 5vw, 3rem);
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .kanji {
+                display: flex;
+                flex-direction: column;
+                h1 {
+                    font-size: clamp(1rem, 5vw, 3rem);
+                    color: crimson;
+                }
+                .kanji-bottom {
+                    margin-top: -0.6rem;
+                }
+            }
+        }
     }
 
     h1 {
@@ -30,7 +61,8 @@
         color: inherit;
         border: none;
         border-radius: 5px;
-        background: rgba(255, 255, 255, 0.7);
+        background-color:  crimson;
+        // background: rgba(255, 255, 255, 0.7);
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         font-size: clamp(1rem, 2vw, 1.5rem);
         font-weight: bold;
@@ -41,6 +73,7 @@
     button:hover {
         background: rgba(255, 255, 255, 1);
         transform: scale(1.1);
+        color: black;
     }
 }
 
@@ -49,7 +82,6 @@
         align-items: center;
     }
     .title {
-        align-items: center;
         // REVERSED
         margin-right: clamp(1rem, 10vw, 7rem);
     }
@@ -57,50 +89,56 @@
 }
 
 .landing--info--container {
+    position: relative;
     padding-top: 7rem;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 50px 1fr;
-    grid-template-areas: "landingtitle landingpic"
-                         "landinginfo landingpic";
+    display: flex;
     width: 100vw;
     height: 100vh;
 
-    h2 {
-        grid-area: landingtitle;
-        font-size: clamp(1.5rem, 2.5vw, 3rem);
-        margin-left:auto;
-        padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 20vw, 10rem);
-    }
     .info--section {
-        grid-area: landinginfo;
-        margin-left:auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
         margin-top: clamp(1rem, 2vw, 2rem);
-        padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 20vw, 10rem);
+        padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 20vw, 5rem);
         font-size: clamp(1rem, 2vw, 1.5rem);
         line-height: clamp(1.5rem, 2vw, 2rem);
+        h2 {
+            grid-area: landingtitle;
+            font-size: clamp(1.5rem, 2.5vw, 3rem);
+            font-style: italic;
+        }
     }
     .img--container {
+        position: relative;
         display: flex;
-        grid-area: landingpic;
+        justify-content: center;
+        align-items: center;
+        padding: clamp(1rem, 2vw, 2rem);
 
+        img {
+            filter: grayscale(100%);
+            padding: clamp(1rem, 2vw, 2rem);
+            width: 100%;
+            height: 100%;
+            white-space: nowrap;
+            object-fit: cover;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                filter: grayscale(0%);
+            }
+        }
     }
 }
 
+
 @media screen and (max-width: 768px) {
-    .info--container {
-        grid-template-columns: 1fr;
-        grid-template-rows: 50px 1fr 1fr;
-        grid-template-areas: "title"
-                             "info"
-                             "pic";
+    .landing--info--container {
+        flex-direction: column;
     }
     .info--section {
         margin-left: 0;
         padding: clamp(1rem, 2vw, 2rem);
     }
-    img {
-        width: 100%;
-        height: 100%;
-    }
+
 }

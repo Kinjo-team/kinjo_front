@@ -1,5 +1,7 @@
 .login--container {
     position: fixed;
+    top: 0;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,12 +17,14 @@
         align-items: center;
         justify-content: center;
         background-color: white;
-        padding: 2rem;
+        padding: clamp(1rem, 2vw, 2rem);
         border-radius: 5px;
         margin-bottom: clamp(6rem, 5vw, 10rem);
+        gap: clamp(1rem, 2vw, 2rem);
+        box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
         
-        h2 {
-            font-size: clamp(1.5rem, 2.5vw, 3rem);
+        .login-title {
+            font-size: clamp(1.5rem, 2.5vw, 2.5rem);
             margin-bottom: 1rem;
         }
     }
@@ -28,22 +32,44 @@
     .login--form {
         display: flex;
         flex-direction: column;
+        gap: clamp(1rem, 2vw, 2rem);
 
-        div {
+        .login--form--section {
+            position: relative;
             display: flex;
             flex-direction: column;
             margin-bottom: 1rem;
 
             label {
-                font-size: clamp(1rem, 1.5vw, 1.5rem);
+                position: absolute;
+                font-size: clamp(0.7rem, 1.5vw, 1rem);
                 margin-bottom: 0.5rem;
+                background-color: white;
+                letter-spacing: 0.1rem;
             }
 
             input {
+                margin-top: 0.5rem;
                 font-size: clamp(1rem, 1.5vw, 1.5rem);
                 padding: 0.5rem;
-                border: 1px solid #4b3b3b;
-                border-radius: 0.5rem;
+                border: 1px solid #426abd;
+                border-radius: 5px;
+
+            }
+        }
+        .login--form--submit-btn {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #426abd;
+            border-radius: 0.5rem;
+            background-color: #426abd;
+            color: white;
+            font-size: clamp(1rem, 1.5vw, 1.5rem);
+            cursor: pointer;
+
+            &:hover {
+                background-color: white;
+                color: #426abd;
             }
         }
     }
