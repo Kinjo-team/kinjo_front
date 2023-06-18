@@ -7,6 +7,7 @@ import LocationPopUp from "../../components/LocationPopUp/LocationPopUp";
 import Navbar from "../../components/Navbar/Navbar";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
 import i18n from "../../i18n";
+import DisplayComments from "../../components/DisplayComments/DisplayComments";
 
 import "./ItineraryView.scss";
 
@@ -125,6 +126,12 @@ const ItineraryView = () => {
           <LocationPopUp location={selectedLocation} onClose={closePopup} />
         )}
       </main>
+      {currentUser?.uid && itinerary.itinerary_id && ( // if user is logged in and itinerary has an id
+        <DisplayComments 
+          firebase_uuid={currentUser?.uid} 
+          itinerary_id={itinerary.itinerary_id}
+        />
+      )}
     </>
   );
 };
