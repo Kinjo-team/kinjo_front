@@ -36,7 +36,7 @@
         gap: 1rem;
         padding: 1rem;
         border-radius: 5px;
-        background-color: #ecebea;
+        background-color: #29424E;
         overflow-y: auto;
 
         .main-info {
@@ -132,13 +132,14 @@
         gap: 1rem;
         padding: 1rem;
         border-radius: 5px;
-        background-color: #ecebea;
+        background-color: #29424E;
         overflow: auto;
     }
 }
 
 @media screen and (max-width: 768px) {
     .itineraryview--container {
+        height: 100%;
         grid-template-rows: 30px 1fr 1fr;
         grid-template-columns: 1fr;
         grid-template-areas: "buttons"

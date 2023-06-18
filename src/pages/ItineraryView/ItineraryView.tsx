@@ -9,6 +9,7 @@ import Footer from "../../components/Footer/Footer";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
 import i18n from "../../i18n";
 
+
 import "./ItineraryView.scss";
 
 const ItineraryView = () => {
@@ -25,7 +26,7 @@ const ItineraryView = () => {
   useEffect(() => {
     const fetchItinerary = async () => {
       const response = await fetch(
-        `http://localhost:8000/itineraries/id/${id}`
+        `${process.env.REACT_APP_BACKEND_URL}itineraries/id/${id}`
       );
       const data = await response.json();
       setItinerary(data);
@@ -33,13 +34,6 @@ const ItineraryView = () => {
       checkIfFollowing(data.firebase_uuid);
       console.log(i18n.language);
     };
-    const fetchTotalLikesAndDislikes = async () => {
-      const response = await fetch(`http://localhost:8000/likes/total/${id}`);
-      const data = await response.json();
-      setLikesCount(data.totalLikes);
-      setDislikesCount(data.totalDislikes);
-    };
-
     fetchItinerary();
     fetchTotalLikesAndDislikes();
   }, []);
@@ -60,49 +54,41 @@ const ItineraryView = () => {
   }
 
   const handleLikeButtonClick = async () => {
-    const response = await fetch("http://localhost:8000/likes", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}likes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         firebase_uuid: currentUser?.uid,
-        itinerary_id: itinerary.itinerary_id,
-        value: 1,
-        type: "like",
+        itinerary_id: id,
       }),
     });
     if (response.ok) {
-      const data = await response.json();
-      setLikesCount(data.totalLikes + 1);
-      setDislikesCount(data.totalDislikes);
+      setLikesCount(likesCount + 1);
     }
   };
 
   const handleDislikeButtonClick = async () => {
-    const response = await fetch("http://localhost:8000/likes", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}dislikes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         firebase_uuid: currentUser?.uid,
-        itinerary_id: itinerary.itinerary_id,
-        value: 1,
-        type: "dislike",
+        itinerary_id: id,
       }),
     });
     if (response.ok) {
-      const data = await response.json();
-      setLikesCount(data.totalLikes);
-      setDislikesCount(data.totalDislikes + 1);
+      setDislikesCount(dislikesCount + 1);
     }
   };
 
   async function fetchAuthor(authorID : string) {
     try {
         const response = await fetch(
-          `http://localhost:8000/users/${authorID}`
+          `${process.env.REACT_APP_BACKEND_URL}users/${authorID}`
         );
         const data = await response.json();
         setAuthor(data);
@@ -114,7 +100,7 @@ const ItineraryView = () => {
 
 
   async function bookmarkItinerary() {
-    const response = await fetch("http://localhost:8000/bookmarks", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}bookmarks`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -130,8 +116,22 @@ const ItineraryView = () => {
     }
 }
 
+const fetchTotalLikesAndDislikes = async () => {
+    const responseLike = await fetch(`${process.env.REACT_APP_BACKEND_URL}likes/${id}`);
+    const dataLike = await responseLike.json();
+    const likes = Number(dataLike);
+    console.log(likes)
+    setLikesCount(likes);
+
+    const responseDislike = await fetch(`${process.env.REACT_APP_BACKEND_URL}dislikes/${id}`);
+    const dataDislike = await responseDislike.json();
+    const dislikes = Number(dataDislike);
+    console.log(dislikes)
+    setDislikesCount(dislikes);
+  };
+
 async function followAuthor() {
-    const response = await fetch("http://localhost:8000/followers", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}followers`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -142,14 +142,13 @@ async function followAuthor() {
         }),
     });
     if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+        window.location.reload();
     }
 }
 
 async function checkIfFollowing(authorId : string) {
     try {
-        const res = await fetch(`http://localhost:8000/following/check`,
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}following/check`,
         {
             method: 'POST',
             headers: {
