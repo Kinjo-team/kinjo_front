@@ -1,19 +1,39 @@
 .card--container {
+    position: relative;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     background-color: white;
     padding: clamp(1rem, 2vw, 2rem);
     border-radius: 5px;
+    border: 1px solid gray;
     // CHANGE??
     height: 100%;
 
     transition: all 0.3s ease-in-out;
     &:hover {
-        scale: 1.1;
+        scale: 1.03;
     }
     h2 {
         font-size: clamp(1.5rem, 2.5vw, 3rem);
         margin-bottom: 1rem;
+    }
+
+    .link-google {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        display: flex;
+        align-items: center;
+        color: blue;
+        text-decoration: none;
+        font-size: clamp(0.7rem, 1vw, 1.5rem);
+        &:hover {
+            text-decoration: underline;
+        }
+
+        .icon-google {
+            max-width: 30px;
+        }
     }
 }

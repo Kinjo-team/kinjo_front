@@ -36,7 +36,7 @@ const Landing = () => {
       <main className="landing--container">
         <Parallax pages={1}>
           <ParallaxLayer offset={0} speed={2}>
-            <video src={landingVideo} autoPlay loop muted />
+            <video src={landingVideo} autoPlay loop muted playsInline preload="auto" />
           </ParallaxLayer>
           <ParallaxLayer offset={0} speed={0.5}>
             <div className="title">

@@ -1,5 +1,6 @@
 import React from "react";
 import "./LocationCard.scss";
+const googleIcon = require("../../assets/icons/googleIcon.png");
 
 type LocationCardProps = {
   location: any;
@@ -7,12 +8,15 @@ type LocationCardProps = {
 };
 
 const LocationCard = ({ location, handleClick }: LocationCardProps) => {
+  const latitude = location.location.loc_coords[0];
+  const longitude = location.location.loc_coords[1];
+  
   return (
     <div onClick={handleClick} className="card--container">
       <h3>{location.location.loc_name}</h3>
       <p>{location.location.loc_descr_en}</p>
       <p>Tags: {location.location.loc_tags}</p>
-      <p>{location.location.loc_coords}</p>
+      <a className="link-google" href={`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`} target="_blank" rel="noopener noreferrer"><img className="icon-google" src={googleIcon} alt="google maps" /> Open in Google Maps</a>
     </div>
   );
 };
