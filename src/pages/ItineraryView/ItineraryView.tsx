@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import LocationCard from "../../components/LocationCard/LocationCard";
 import LocationPopUp from "../../components/LocationPopUp/LocationPopUp";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
 import i18n from "../../i18n";
 
@@ -15,8 +16,10 @@ const ItineraryView = () => {
   const { id } = useParams();
   const [selectedLocation, setSelectedLocation] = useState<any>(null);
   const [itinerary, setItinerary] = useState<any>({});
+  const [author, setAuthor] = useState<any>({});
   const [likesCount, setLikesCount] = useState<any>(0);
   const [dislikesCount, setDislikesCount] = useState<any>(0);
+  const [isFollowing, setIsFollowing] = useState<any>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,8 +28,9 @@ const ItineraryView = () => {
         `http://localhost:8000/itineraries/id/${id}`
       );
       const data = await response.json();
-      console.log(data);
       setItinerary(data);
+      fetchAuthor(data.firebase_uuid);
+      checkIfFollowing(data.firebase_uuid);
       console.log(i18n.language);
     };
     const fetchTotalLikesAndDislikes = async () => {
@@ -38,7 +42,7 @@ const ItineraryView = () => {
 
     fetchItinerary();
     fetchTotalLikesAndDislikes();
-  }, [id]);
+  }, []);
 
   // HANDLERS
   function goBack() {
@@ -70,7 +74,7 @@ const ItineraryView = () => {
     });
     if (response.ok) {
       const data = await response.json();
-      setLikesCount(data.totalLikes);
+      setLikesCount(data.totalLikes + 1);
       setDislikesCount(data.totalDislikes);
     }
   };
@@ -91,9 +95,23 @@ const ItineraryView = () => {
     if (response.ok) {
       const data = await response.json();
       setLikesCount(data.totalLikes);
-      setDislikesCount(data.totalDislikes);
+      setDislikesCount(data.totalDislikes + 1);
     }
   };
+
+  async function fetchAuthor(authorID : string) {
+    try {
+        const response = await fetch(
+          `http://localhost:8000/users/${authorID}`
+        );
+        const data = await response.json();
+        setAuthor(data);
+        console.log(data)
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
 
   async function bookmarkItinerary() {
     const response = await fetch("http://localhost:8000/bookmarks", {
@@ -112,20 +130,71 @@ const ItineraryView = () => {
     }
 }
 
+async function followAuthor() {
+    const response = await fetch("http://localhost:8000/followers", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            },
+        body: JSON.stringify({
+            firebase_uid: currentUser?.uid,
+            follower_uid: author.firebase_uuid,
+        }),
+    });
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+    }
+}
+
+async function checkIfFollowing(authorId : string) {
+    try {
+        const res = await fetch(`http://localhost:8000/following/check`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firebase_uid: currentUser?.uid,
+                    follower_uid: authorId,
+                    }),
+        })
+        const data = await res.json()
+        setIsFollowing(data.length > 0 ? true : false)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
   return (
     <>
       <Navbar />
       <main className="itineraryview--container">
-        <button onClick={goBack}>Back</button>
+        <button className="back-btn" onClick={goBack}>Back</button>
         <section className="info--container">
-          <article>
-            <h1>{itinerary.itinerary_name}</h1>
-            <p>{itinerary.itinerary_descr}</p>
-            <button onClick={handleLikeButtonClick}>Like (+1)</button>
-            <button onClick={handleDislikeButtonClick}>Dislike (+1)</button>
-            <button onClick={bookmarkItinerary}>Bookmark</button>
-            <p>Likes: {likesCount}</p>
-            <p>Dislikes: {dislikesCount}</p>
+          <article className="main-info">
+            <div className="kinjo-info">
+                <div className="kinjo-header">
+                    <h1>{itinerary.itinerary_name}</h1>
+                    <div className="kinjo-btn-grp">
+                        <button onClick={bookmarkItinerary}><span className="material-symbols-outlined favourite-btn">star</span></button>
+                    </div>
+                </div>
+                <p className="kinjo-desc">{itinerary.itinerary_descr}</p>
+            </div>
+            <div className="author-info">
+                <p>{author.username}</p>
+                {isFollowing ? 
+                    <button disabled={true} className="following-btn">Following</button>    
+                    : 
+                    <button className="follow-btn" onClick={followAuthor}>Follow</button>
+                }
+                <div className="vote-container">
+                    <p className="upvote" onClick={handleLikeButtonClick}><span className="material-symbols-outlined">thumb_up</span>{likesCount}</p>
+                    <p className="downvote" onClick={handleDislikeButtonClick} ><span className="material-symbols-outlined">thumb_down</span>{dislikesCount}</p>
+                </div>
+            </div>
           </article>
           <ReadOnlyMap locations={itinerary} />
         </section>
@@ -143,6 +212,7 @@ const ItineraryView = () => {
           <LocationPopUp location={selectedLocation} onClose={closePopup} />
         )}
       </main>
+      <Footer text="Kinjo" />
     </>
   );
 };

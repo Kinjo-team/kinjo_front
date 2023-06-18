@@ -42,8 +42,8 @@ const DKinjoEditUsername = ({toggleShowEditUsername} : DKinjoEditUsernameProps) 
     }
 
   return (
-    <div className='editusername--overlay'>
-        <div className='editusername--container'>
+    <div onClick={toggleShowEditUsername} className='editusername--overlay'>
+        <div onClick={(event) => event.stopPropagation()} className='editusername--container'>
             <h1>Enter new username</h1>
             <p>{error}</p>
             <form onSubmit={handleSubmit}>
