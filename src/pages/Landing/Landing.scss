@@ -37,7 +37,7 @@
                 flex-direction: column;
                 h1 {
                     font-size: clamp(1rem, 5vw, 3rem);
-                    color: #001B94;
+                    color: crimson;
                 }
                 .kanji-bottom {
                     margin-top: -0.6rem;
@@ -61,7 +61,7 @@
         color: inherit;
         border: none;
         border-radius: 5px;
-        background-color:  #001B94;
+        background-color:  crimson;
         // background: rgba(255, 255, 255, 0.7);
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         font-size: clamp(1rem, 2vw, 1.5rem);

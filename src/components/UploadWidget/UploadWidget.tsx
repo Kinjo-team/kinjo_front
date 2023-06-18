@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+import "./UploadWidget.scss";
+
 declare global {
   interface Window {
     cloudinary: any;
@@ -32,7 +34,7 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl }) => {
   }, [handleImageUrl]);
 
   return (
-    <button onClick={() => widgetRef.current.open()}>
+    <button type="button" className="add-img-btn" onClick={() => widgetRef.current.open()}>
       Add Image
     </button>
   )
