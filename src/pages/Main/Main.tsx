@@ -4,7 +4,6 @@ import ItinPictureCard from "../../components/ItinPictureCard/ItinPictureCard";
 import Navbar from "../../components/Navbar/Navbar";
 import SearchItineraries from "../../components/SearchItineraries/SearchItineraries";
 import Footer from "../../components/Footer/Footer";
-import { KinjoProvider } from "../../contexts/KinjoContext";
 import { getRandomItineraries } from "./helperFunctions";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -43,7 +42,7 @@ const Main = () => {
           <h2 className="main--title">K I N J O</h2>
           <SearchItineraries />
           <button className="create-btn" onClick={toggleCreateItinerary}>
-            Create Your Own Itinerary
+            Create new Kinjo
           </button>
           <p className="main--tag">"Exploration made for you, by you"</p>
         </section>
@@ -57,8 +56,8 @@ const Main = () => {
             </Link>
           ))}
         </section>
-        <Footer text={"kinjo"} />
       </main>
+      <Footer text={"kinjo"} />
     </>
   );
 };

@@ -40,7 +40,13 @@ const Landing = () => {
           </ParallaxLayer>
           <ParallaxLayer offset={0} speed={0.5}>
             <div className="title">
-              <h1>K I N J O</h1>
+              <div className="logo">
+                <div className="kanji">
+                  <h1>近</h1>
+                  <h1 className="kanji-bottom">所</h1>
+                </div>
+                  <h1>K I N J O</h1>
+              </div>
               <p>{t("landingPageSubText")}</p>
               <button onClick={handleClick}>{t("landingPageButton")}</button>
             </div>

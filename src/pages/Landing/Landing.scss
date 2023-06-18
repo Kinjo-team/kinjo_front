@@ -26,6 +26,24 @@
         display: flex;
         flex-direction: column;
         gap: clamp(1rem, 5vw, 3rem);
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .kanji {
+                display: flex;
+                flex-direction: column;
+                h1 {
+                    font-size: clamp(1rem, 5vw, 3rem);
+                    color: #001B94;
+                }
+                .kanji-bottom {
+                    margin-top: -0.6rem;
+                }
+            }
+        }
     }
 
     h1 {
@@ -43,7 +61,8 @@
         color: inherit;
         border: none;
         border-radius: 5px;
-        background: rgba(255, 255, 255, 0.7);
+        background-color:  #001B94;
+        // background: rgba(255, 255, 255, 0.7);
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         font-size: clamp(1rem, 2vw, 1.5rem);
         font-weight: bold;
@@ -95,6 +114,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: clamp(1rem, 2vw, 2rem);
 
         img {
             filter: grayscale(100%);
