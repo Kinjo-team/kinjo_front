@@ -8,6 +8,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
 import i18n from "../../i18n";
+import DisplayComments from "../../components/DisplayComments/DisplayComments";
 
 
 import "./ItineraryView.scss";
@@ -211,7 +212,13 @@ async function checkIfFollowing(authorId : string) {
           <LocationPopUp location={selectedLocation} onClose={closePopup} />
         )}
       </main>
-      <Footer text="Kinjo" />
+      {currentUser?.uid && itinerary.itinerary_id && ( // if user is logged in and itinerary has an id
+        <DisplayComments 
+          firebase_uuid={currentUser?.uid} 
+          itinerary_id={itinerary.itinerary_id}
+        />
+      )}
+       <Footer text="Kinjo" />
     </>
   );
 };
