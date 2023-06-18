@@ -49,15 +49,6 @@ const KinjoProcess = ({
 
 
   // EFFECTS
-  useEffect(() => {
-    changeKinjo({
-      name: "test",
-      description: "test",
-      tags: [],
-      locationData: [],
-      kinjoCoords: [0, 0],
-    });
-  }, []);
 
   useEffect(() => {
     if (currentUser) {

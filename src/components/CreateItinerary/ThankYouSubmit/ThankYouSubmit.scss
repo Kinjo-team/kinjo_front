@@ -1,0 +1,26 @@
+.thankyou--container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(1rem, 2vw, 2rem);
+    gap: 1rem;
+    text-align: center;
+    
+    .thankyou-close-btn {
+        padding: 0.5rem;
+        cursor: pointer;
+        color: white;
+        background-color: crimson;
+        border: none;
+        border-radius: 5px;
+        border: 1px solid crimson;
+        padding: clamp(0.5rem, 1vw, 1rem);
+        transition: all 0.3s ease-in-out;
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
+        &:hover {
+            background-color: white;
+            color: crimson;
+        }
+    }
+}
