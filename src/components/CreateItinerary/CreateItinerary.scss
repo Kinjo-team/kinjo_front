@@ -1,54 +1,52 @@
-.overlay--container {
-    position: fixed;
-    // CENTERING
-    left: 0;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    // CENTERING
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: rgba($color: #000000, $alpha: 0.2);
-    padding: clamp(1rem, 5vw, 10rem);
-    z-index: 999;
-}
+// .overlay--container {
+//     position: fixed;
+//     // CENTERING
+//     left: 0;
+//     top: 50%;
+//     right: 0;
+//     transform: translateY(-50%);
+//     // CENTERING
+//     height: 100vh;
+//     width: 100vw;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     background-color: rgba($color: #000000, $alpha: 0.2);
+//     padding: clamp(1rem, 5vw, 10rem);
+//     z-index: 999;
+// }
 
-.create-kinjo--container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    padding: clamp(1rem, 2vw, 2rem);
-    border-radius: 5px;
+// .create-kinjo--container {
+//     position: relative;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     background-color: white;
+//     padding: clamp(1rem, 2vw, 2rem);
+//     border-radius: 5px;
 
-    h1 {
-        font-size: clamp(1.5rem, 2.5vw, 3rem);
-    }
+//     h1 {
+//         font-size: clamp(1.5rem, 2.5vw, 3rem);
+//     }
 
-    p {
-        font-size: clamp(1rem, 1.5vw, 1.5rem);
-    }
-    .create-kinjo-close-btn {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 0.5rem;
-        cursor: pointer;
-        background-color: transparent;
-        border: none;
-    }
-}
+//     p {
+//         font-size: clamp(1rem, 1.5vw, 1.5rem);
+//     }
+//     .create-kinjo-close-btn {
+//         position: absolute;
+//         top: 0;
+//         right: 0;
+//         padding: 0.5rem;
+//         cursor: pointer;
+//         background-color: transparent;
+//         border: none;
+//     }
+// }
 
-
-
-@media screen and (max-width: 768px) {
-    .createItinerary--container {
-        grid-template-columns: 1fr;
-        max-height: 85vh;
-    }
-}
+// @media screen and (max-width: 768px) {
+//     .createItinerary--container {
+//         grid-template-columns: 1fr;
+//         max-height: 85vh;
+//     }
+// }
