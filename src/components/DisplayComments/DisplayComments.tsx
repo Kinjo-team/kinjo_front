@@ -39,6 +39,9 @@ const DisplayComments: FC<DisplayCommentsProps> = ({ firebase_uuid, itinerary_id
                     comment: addComment,
                     firebase_uuid: firebase_uuid,
                     itinerary_id: itinerary_id,
+                    user: {
+                        username: "username",
+                    }
                 }),  
             });
             if (response.ok) {
@@ -68,18 +71,19 @@ const DisplayComments: FC<DisplayCommentsProps> = ({ firebase_uuid, itinerary_id
     }, [itinerary_id]);
 
     return (
-        <div className="display-comments--container">
-            <h1 className="display-comments--header">Comments</h1>
+        <div>
+            <h1>Comments</h1>
             <section>
                 {comments.map((comment: any) => (
                     <CommentCard key={comment.id} comment={comment} />
                 ))}
             </section>
-            <section className="add-comment--section">
+            <section>
                 <textarea
                     value={addComment}
                     onChange={handleAddComment}
-                    placeholder="Add a comment"
+                    placeholder="Add a comment (max 250 characters)"
+                    maxLength={250}
                 />
                 <button onClick={addCommentToDatabase}>POST</button>
             </section>
