@@ -3,6 +3,8 @@ import { useKinjo } from "../../../contexts/KinjoContext";
 import { useAuth } from "../../../contexts/AuthContext";
 import Map from "../../Map/Map";
 
+import "./SetYourKinjo.scss";
+
 interface LocationData {
   loc_coords: [number, number];
   loc_name: string;
@@ -47,16 +49,8 @@ const KinjoProcess = ({
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLInputElement>(null);
 
+
   // EFFECTS
-  useEffect(() => {
-    changeKinjo({
-      name: "test",
-      description: "test",
-      tags: [],
-      locationData: [],
-      kinjoCoords: [0, 0],
-    });
-  }, []);
 
   useEffect(() => {
     if (currentUser) {
@@ -126,10 +120,6 @@ const KinjoProcess = ({
     setStage((prevStage) => prevStage + 1);
   };
 
-  const backwardTransition = () => {
-    setStage((prevStage) => prevStage - 1);
-  };
-
   const handleLocationData = (locationData: LocationData) => {
     console.log("handleLocationData called with:", locationData);
     setFormData((prevFormData) => ({
@@ -197,6 +187,26 @@ const KinjoProcess = ({
         <span className="material-symbols-outlined">cancel</span>
       </button>
 
+
+      {stage === 1 ? (
+        <>
+          <div className="create-header">
+            <h1>1. Set Your Kinjo</h1>
+            <p>Click on the map, and drag to set the confines of your Kinjo!</p>
+            <div className="setkinjo-map-pointer">↓</div>
+          </div>
+        </>
+        )
+        :
+        (
+        <>
+          <div className="create-header">
+            <h1>2. Populate your Kinjo!</h1>
+            <p>Find the areas you want to show and add the information.</p>
+          </div>
+        </>
+        )
+        }
       <div className="setkinjo-map-container">
         <Map
           handleLocationData={handleLocationData}
@@ -205,24 +215,16 @@ const KinjoProcess = ({
         />
       </div>
 
-      {stage === 1 && (
-        <>
-          <h1>1. Set Your Kinjo</h1>
-          <p>Click on the map, and drag to set the confines of your Kinjo!</p>
-          <button onClick={forwardTransition}>Next ⇒</button>
-        </>
-      )}
-
       {stage === 2 && (
         <>
-          <h1>2. Populate your Kinjo!</h1>
-          <p>Find the areas you want to show and add the information.</p>
+        <div className={`create-header stage3`}>
           <h1>3. Add information</h1>
           <p>
             You're almost there! fill in the information below to describe your
             Kinjo!
           </p>
-          <form onSubmit={handleSubmit} className="submitkinjo--form">
+        </div>
+          <form onSubmit={handleSubmit} className={`submitkinjo--form ${stage === 2 ? 'show' : ''}`}>
             <section className="input-form">
               <label htmlFor="itinerary_name">NAME</label>
               <input
@@ -233,6 +235,7 @@ const KinjoProcess = ({
                 value={formData.itinerary_name}
                 onChange={handleInputChange}
                 onKeyDown={handleEnterKey}
+                required
               />
             </section>
             <section className="input-form">
@@ -245,10 +248,10 @@ const KinjoProcess = ({
                 onChange={handleInputChange}
                 onKeyDown={handleEnterKey}
                 ref={descriptionRef}
+                required
               />
             </section>
             <form>
-              <section className="label-container">
                 <div className="input-form">
                   <label htmlFor="itinerary_tags">TAGS</label>
                   <input
@@ -260,6 +263,7 @@ const KinjoProcess = ({
                     onChange={handleInputChange}
                     onKeyDown={handleEnterKey}
                     ref={tagsRef}
+                    required
                   />
                 </div>
                 <div className="tag-container">
@@ -269,21 +273,22 @@ const KinjoProcess = ({
                     </div>
                   ))}
                 </div>
-              </section>
             </form>
-            <button
-              type="submit"
-              className="submitkinjo-submit-btn"
-              disabled={false}
-            >
-              Submit
-            </button>
-            <button
-              className="submitkinjo-cancel-btn"
-              onClick={backwardTransition}
-            >
-              Back
-            </button>
+            <div className="submitkinjo-btn-grp">
+                <button
+                type="submit"
+                className="submitkinjo-submit-btn"
+                disabled={false}
+                >
+                Submit
+                </button>
+                <button
+                className="submitkinjo-cancel-btn"
+                onClick={toggleCreateItinerary}
+                >
+                Cancel
+                </button>
+            </div>
           </form>
         </>
       )}

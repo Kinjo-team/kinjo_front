@@ -250,12 +250,12 @@ const Map: React.FC<MapProps> = ({
   };
 
   return (
-    <div className="map-container">
-      <form onSubmit={handleSearch}>
+    <div className="create-map-container">
+      <form className="create-map-searchbar" onSubmit={handleSearch}>
         <input type="text" placeholder="Search location" ref={searchInputRef} />
         <button type="submit">Search</button>
+        <button type="button" onClick={handleUseMyLocation}>Use my location</button>
       </form>
-      <button onClick={handleUseMyLocation}>Use my location</button>
       <MapContainer
         center={defaultPosition}
         zoom={13}
@@ -271,14 +271,16 @@ const Map: React.FC<MapProps> = ({
         <AddMarkerToMap />
         {locations.map((location) => (
           <Marker key={location.id} position={location.loc_coords}>
-            <Popup>
-              <h3>{location.loc_name}</h3>
-              <p>{location.loc_descr_en}</p>
-              <p>Tags: {location.loc_tags.join(" ")}</p>
-              <button onClick={() => handleDeleteMarker(location.id)}>
-                Delete
-              </button>
-              <p>Images: {location.image_urls.join(", ")}</p>
+            <Popup className="request-popup">
+              <div className="created-marker-popup">
+                <h3>{location.loc_name}</h3>
+                <p>{location.loc_descr_en}</p>
+                <p>Tags: {location.loc_tags.join(" ")}</p>
+                <p>Images: {location.image_urls.join(", ")}</p>
+                <button className="popup-delete-btn" onClick={() => handleDeleteMarker(location.id)}>
+                  Delete
+                </button>
+              </div>
             </Popup>
           </Marker>
         ))}
@@ -295,29 +297,40 @@ const Map: React.FC<MapProps> = ({
             eventHandlers={{
               remove: () => resetNewLocationData(false),
             }}
+            className="request-popup"
           >
-            <form onSubmit={handleSubmit}>
-              <label>
-                Name:
+            <form className="popup-form" onSubmit={handleSubmit}>
+              <div className="popup-form-input">
+                <label htmlFor="loc_name">
+                  PLACE NAME
+                </label>
                 <input
                   type="text"
                   name="loc_name"
+                  id="loc_name"
+                  placeholder="Tanaka's Coffee"
                   value={newLocationData.loc_name}
                   onChange={handleInputChange}
                   required
                 />
-              </label>
-              <label>
-                Description:
+              </div>
+              <div className="popup-form-input">
+                <label htmlFor="loc_descr_en">
+                  PLACE DESCRIPTION
+                </label>
                 <input
-                  type="text"
                   name="loc_descr_en"
+                  id="loc_descr_en"
+                  placeholder="A cozy coffee shop with a great view of Mt. Fuji."
                   value={newLocationData.loc_descr_en}
                   onChange={handleInputChange}
+                  required
                 />
-              </label>
-              <label>
-                Tags:
+              </div>
+              <div className="popup-form-input">
+                <label htmlFor="tags_input">
+                  PLACE TAGS
+                </label>
                 <TagsInput
                   onTagsChange={(tags) => {
                     setNewLocationData((prevData) => ({
@@ -326,7 +339,7 @@ const Map: React.FC<MapProps> = ({
                     }));
                   }}
                 />
-              </label>
+              </div>
               <UploadWidget
                 handleImageUrl={(url) => {
                   setNewLocationData((prevData) => ({
@@ -335,7 +348,7 @@ const Map: React.FC<MapProps> = ({
                   }));
                 }}
               />
-              <button type="submit">Add Location</button>
+              <button className="popup-submit-btn" type="submit">Add</button>
             </form>
           </Popup>
         )}

@@ -17,11 +17,12 @@
 
 @media screen and (max-width: 768px) {
     .profiledashboard--container {
-        grid-template-rows: 2fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
         grid-template-columns: 1fr;
         grid-template-areas: "profile"
                              "map"
                              "itineraries"
                              "bookmarked";
+        height: auto;
     }
 }
