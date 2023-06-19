@@ -1,0 +1,46 @@
+.otherusersprofile--container {
+    padding: clamp(2.5rem, 5vw, 10rem);
+    height: 90vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: 40px 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "button1 kinjos"
+                         "profile kinjos";
+    gap: clamp(1rem, 2vw, 2rem);
+    
+    .back-btn {
+        grid-area: button1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: clamp(0.5rem, 1vw, 1rem);
+        border-radius: 5px;
+        font-size: clamp(1rem, 1.5vw, 1.5rem);
+        background-color: crimson;
+        color: white;
+        border: none;
+        cursor: pointer;
+        overflow-y: auto;
+        &:hover {
+            background-color: white;
+            border: 1px solid crimson;
+            color: crimson;
+        }
+    }
+    .dprofile--container {
+        grid-area: profile;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .otherusersprofile--container {
+        grid-template-rows: 30px 1fr 1fr;
+        grid-template-columns: 1fr;
+        grid-template-areas: "button1"
+                             "profile"
+                             "kinjos";
+        height: auto;
+    }
+}

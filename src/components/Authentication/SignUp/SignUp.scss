@@ -17,7 +17,7 @@
         align-items: center;
         justify-content: center;
         background-color: white;
-        padding: clamp(1rem, 2vw, 2rem);
+        padding: clamp(1rem, 10vw, 3rem);
         border-radius: 5px;
         margin-bottom: clamp(6rem, 5vw, 10rem);
         gap: clamp(1rem, 2vw, 2rem);
@@ -25,7 +25,8 @@
         
         
         .signup--title {
-            font-size: clamp(1.5rem, 2.5vw, 3rem);
+            text-align: center;
+            font-size: clamp(1rem, 2vw, 1.7rem);
             margin-bottom: 1rem;
         }
     }
@@ -53,23 +54,28 @@
                 margin-top: 0.5rem;
                 font-size: clamp(1rem, 1.5vw, 1.5rem);
                 padding: 0.5rem;
-                border: 1px solid #426abd;
+                border: 1px solid #29424E;
                 border-radius: 5px;
+            }
+            input[type=password] {
+                font-size: clamp(0.6rem, 1.5vw, 1rem);
+                padding: 0.8rem;
             }
         }
         .signup--form--submit-btn {
             margin-top: 1rem;
             padding: 0.5rem;
-            border: 1px solid #426abd;
+            border: 1px solid crimson;
             border-radius: 0.5rem;
-            background-color: #426abd;
+            background-color: crimson;
             color: white;
             font-size: clamp(1rem, 1.5vw, 1.5rem);
             cursor: pointer;
+            transition: all 0.3s ease-in-out;
 
             &:hover {
                 background-color: white;
-                color: #426abd;
+                color: crimson;
             }
         }
     }
