@@ -16,6 +16,7 @@ interface CreateItineraryData {
   itinerary_descr: string;
   itinerary_tags: string[];
   enteredTag: string;
+  kinjo_coords: [number, number];
   locationData: LocationData[];
 }
 
@@ -38,6 +39,7 @@ const KinjoProcess = ({
     itinerary_descr: "",
     itinerary_tags: [],
     enteredTag: "",
+    kinjo_coords: [0, 0],
     locationData: [],
   });
 
@@ -129,10 +131,23 @@ const KinjoProcess = ({
   };
 
   const handleLocationData = (locationData: LocationData) => {
+    console.log("handleLocationData called with:", locationData);
     setFormData((prevFormData) => ({
       ...prevFormData,
       locationData: [...prevFormData.locationData, locationData],
     }));
+  };
+
+  const handleCircleCreated = (latitude: number, longitude: number) => {
+    if (
+      window.confirm("Do you want to use these coordinates for your Kinjo?")
+    ) {
+      forwardTransition();
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        kinjo_coords: [latitude, longitude],
+      }));
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -161,6 +176,7 @@ const KinjoProcess = ({
           itinerary_descr: "",
           itinerary_tags: [],
           enteredTag: "",
+          kinjo_coords: [0, 0],
           locationData: [],
         });
         forwardTransitionPage();
@@ -184,7 +200,8 @@ const KinjoProcess = ({
       <div className="setkinjo-map-container">
         <Map
           handleLocationData={handleLocationData}
-          forwardTransition={forwardTransition}
+          handleCircleCreated={handleCircleCreated}
+          //   forwardTransition={forwardTransition}
         />
       </div>
 

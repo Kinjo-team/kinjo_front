@@ -27,7 +27,8 @@ interface Location {
 
 interface MapProps {
   handleLocationData: (locationData: Location) => void;
-  forwardTransition: () => void;
+  handleCircleCreated: (latitude: number, longitude: number) => void;
+  // forwardTransition: () => void;
 }
 
 //default position for Tokyo
@@ -50,7 +51,11 @@ const initialLocation: Location = {
   image_urls: [],
 };
 
-const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
+const Map: React.FC<MapProps> = ({
+  handleLocationData,
+  handleCircleCreated,
+  // forwardTransition,
+}) => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [newLocationData, setNewLocationData] =
     useState<Location>(initialLocation);
@@ -107,7 +112,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
     const { id, loc_coords, loc_name, loc_descr_en, loc_tags, image_urls } =
       newLocationData;
 
-    if (loc_name.trim() !== "" || newLocationData.image_urls.length === 0) {
+    if (loc_name.trim() !== "" && newLocationData.image_urls.length === 0) {
       const newLocation: Location = {
         id,
         loc_coords,
@@ -119,12 +124,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
       setLocations((prevLocations) => [...prevLocations, newLocation]);
       resetNewLocationData(true);
       handleLocationData(newLocation);
-    }
-    if (newLocationData.image_urls.length === 0) {
-      setLocations((prevLocations) => [...prevLocations, newLocationData]);
-      resetNewLocationData(true);
-      handleLocationData(newLocationData);
-    } else {
+    } else if (newLocationData.image_urls.length > 0) {
       try {
         const imageUrls = await Promise.all(
           newLocationData.image_urls.map((image) =>
@@ -343,7 +343,8 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
           <FlyTo position={flyToPosition} zoom={flyToZoomLevel} />
         )}
         <DrawControl
-          forwardTransition={forwardTransition}
+          // forwardTransition={forwardTransition}
+          handleCircleCreated={handleCircleCreated}
           onShapeCreated={setDrawnShape}
           onShapeDeleted={handleShapeDeleted}
         />
