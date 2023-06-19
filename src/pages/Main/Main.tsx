@@ -3,6 +3,7 @@ import CreateItinerary from "../../components/CreateItinerary/CreateItinerary";
 import ItinPictureCard from "../../components/ItinPictureCard/ItinPictureCard";
 import Navbar from "../../components/Navbar/Navbar";
 import SearchItineraries from "../../components/SearchItineraries/SearchItineraries";
+import KinjoNearYou from "../../components/KinjoNearYou/KinjoNearYou";
 import Footer from "../../components/Footer/Footer";
 import { getRandomItineraries } from "./helperFunctions";
 import { useState, useEffect } from "react";
@@ -56,6 +57,10 @@ const Main = () => {
             </Link>
           ))}
         </section>
+        <section className="near--container">
+          <KinjoNearYou />
+        </section>
+        <Footer text={"kinjo"} />
       </main>
       <Footer text={"kinjo"} />
     </>
