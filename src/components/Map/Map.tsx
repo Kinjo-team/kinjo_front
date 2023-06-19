@@ -27,7 +27,13 @@ interface Location {
 
 interface MapProps {
   handleLocationData: (locationData: Location) => void;
-  forwardTransition: () => void;
+  handleCircleCreated: (
+    latitude: number,
+    longitude: number,
+    radius: number,
+    layer: any,
+    featureGroup: any
+  ) => void;
 }
 
 //default position for Tokyo
@@ -50,7 +56,10 @@ const initialLocation: Location = {
   image_urls: [],
 };
 
-const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
+const Map: React.FC<MapProps> = ({
+  handleLocationData,
+  handleCircleCreated,
+}) => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [newLocationData, setNewLocationData] =
     useState<Location>(initialLocation);
@@ -107,7 +116,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
     const { id, loc_coords, loc_name, loc_descr_en, loc_tags, image_urls } =
       newLocationData;
 
-    if (loc_name.trim() !== "" || newLocationData.image_urls.length === 0) {
+    if (loc_name.trim() !== "" && newLocationData.image_urls.length === 0) {
       const newLocation: Location = {
         id,
         loc_coords,
@@ -119,12 +128,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
       setLocations((prevLocations) => [...prevLocations, newLocation]);
       resetNewLocationData(true);
       handleLocationData(newLocation);
-    }
-    if (newLocationData.image_urls.length === 0) {
-      setLocations((prevLocations) => [...prevLocations, newLocationData]);
-      resetNewLocationData(true);
-      handleLocationData(newLocationData);
-    } else {
+    } else if (newLocationData.image_urls.length > 0) {
       try {
         const imageUrls = await Promise.all(
           newLocationData.image_urls.map((image) =>
@@ -158,10 +162,9 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
   };
 
   // Add shapes & markers to map logic
+
   const isPointInShape = (point: L.LatLng, shape: L.Layer): boolean => {
-    if (shape instanceof L.Polygon) {
-      return shape.getBounds().contains(point);
-    } else if (shape instanceof L.Circle) {
+    if (shape instanceof L.Circle) {
       return shape.getLatLng().distanceTo(point) <= shape.getRadius();
     }
     return false;
@@ -180,11 +183,6 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
           }));
           setShowPopup(true);
         }
-      },
-      locationfound: (e) => {
-        const { lat, lng } = e.latlng;
-        setFlyToPosition([lat, lng]);
-        setFlyToZoomLevel(13);
       },
     });
 
@@ -227,7 +225,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
         );
         const data = await response.json();
         const { lat, lng } = data.results[0].geometry;
-        flyToLocation([lat, lng], 16);
+        flyToLocation([lat, lng], 15);
       } catch (error) {
         console.error("Error fetching geocoding data:", error);
       }
@@ -254,7 +252,9 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
       <form className="create-map-searchbar" onSubmit={handleSearch}>
         <input type="text" placeholder="Search location" ref={searchInputRef} />
         <button type="submit">Search</button>
-        <button type="button" onClick={handleUseMyLocation}>Use my location</button>
+        <button type="button" onClick={handleUseMyLocation}>
+          Use my location
+        </button>
       </form>
       <MapContainer
         center={defaultPosition}
@@ -277,7 +277,10 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
                 <p>{location.loc_descr_en}</p>
                 <p>Tags: {location.loc_tags.join(" ")}</p>
                 <p>Images: {location.image_urls.join(", ")}</p>
-                <button className="popup-delete-btn" onClick={() => handleDeleteMarker(location.id)}>
+                <button
+                  className="popup-delete-btn"
+                  onClick={() => handleDeleteMarker(location.id)}
+                >
                   Delete
                 </button>
               </div>
@@ -301,9 +304,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
           >
             <form className="popup-form" onSubmit={handleSubmit}>
               <div className="popup-form-input">
-                <label htmlFor="loc_name">
-                  PLACE NAME
-                </label>
+                <label htmlFor="loc_name">PLACE NAME</label>
                 <input
                   type="text"
                   name="loc_name"
@@ -315,9 +316,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
                 />
               </div>
               <div className="popup-form-input">
-                <label htmlFor="loc_descr_en">
-                  PLACE DESCRIPTION
-                </label>
+                <label htmlFor="loc_descr_en">PLACE DESCRIPTION</label>
                 <input
                   name="loc_descr_en"
                   id="loc_descr_en"
@@ -328,9 +327,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
                 />
               </div>
               <div className="popup-form-input">
-                <label htmlFor="tags_input">
-                  PLACE TAGS
-                </label>
+                <label htmlFor="tags_input">PLACE TAGS</label>
                 <TagsInput
                   onTagsChange={(tags) => {
                     setNewLocationData((prevData) => ({
@@ -348,7 +345,9 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
                   }));
                 }}
               />
-              <button className="popup-submit-btn" type="submit">Add</button>
+              <button className="popup-submit-btn" type="submit">
+                Add
+              </button>
             </form>
           </Popup>
         )}
@@ -356,7 +355,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
           <FlyTo position={flyToPosition} zoom={flyToZoomLevel} />
         )}
         <DrawControl
-          forwardTransition={forwardTransition}
+          handleCircleCreated={handleCircleCreated}
           onShapeCreated={setDrawnShape}
           onShapeDeleted={handleShapeDeleted}
         />

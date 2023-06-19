@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import LocationCard from "../../components/LocationCard/LocationCard";
@@ -8,6 +8,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
 import i18n from "../../i18n";
+import DisplayComments from "../../components/DisplayComments/DisplayComments";
 
 
 import "./ItineraryView.scss";
@@ -65,7 +66,7 @@ const ItineraryView = () => {
       }),
     });
     if (response.ok) {
-      setLikesCount(likesCount + 1);
+        fetchTotalLikesAndDislikes();
     }
   };
 
@@ -81,7 +82,7 @@ const ItineraryView = () => {
       }),
     });
     if (response.ok) {
-      setDislikesCount(dislikesCount + 1);
+      fetchTotalLikesAndDislikes();
     }
   };
 
@@ -183,7 +184,9 @@ async function checkIfFollowing(authorId : string) {
                 <p className="kinjo-desc">{itinerary.itinerary_descr}</p>
             </div>
             <div className="author-info">
-                <p>{author.username}</p>
+                <Link to={`/profile/${author.username}`}>
+                    <p>{author.username}</p>
+                </Link>
                 {isFollowing ? 
                     <button disabled={true} className="following-btn">Following</button>    
                     : 
@@ -211,6 +214,12 @@ async function checkIfFollowing(authorId : string) {
           <LocationPopUp location={selectedLocation} onClose={closePopup} />
         )}
       </main>
+      {currentUser?.uid && itinerary.itinerary_id && ( // if user is logged in and itinerary has an id
+        <DisplayComments 
+          firebase_uuid={currentUser?.uid} 
+          itinerary_id={itinerary.itinerary_id}
+        />
+      )}
       <Footer text="Kinjo" />
     </>
   );
