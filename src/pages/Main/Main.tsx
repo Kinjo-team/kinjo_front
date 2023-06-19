@@ -60,7 +60,6 @@ const Main = () => {
         <section className="near--container">
           <KinjoNearYou />
         </section>
-        <Footer text={"kinjo"} />
       </main>
       <Footer text={"kinjo"} />
     </>

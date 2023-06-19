@@ -1,21 +1,26 @@
 .toggle--container {
     // POSITIONING
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 2rem;
     // POSITIONING
     display: flex;
     gap: 1rem;
     margin-top: 0.5rem;
-    color: white;
+    color: crimson;
+    z-index: 999;
 
     button {
         padding: 0.2rem;
-        border: 1px solid white;
+        border: 1px solid crimson;
         border-radius: 0.5rem;
         background-color: transparent;
         color: inherit;
         cursor: pointer;
         font-size: 10px;
+        &:hover {
+            background-color: crimson;
+            color: white;
+        }
     }
 }
