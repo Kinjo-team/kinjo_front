@@ -11,11 +11,19 @@ const TagsInput: React.FC<TagsInputProps> = ({ onTagsChange }) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Enter") return;
-    const value = e.currentTarget.value;
-    if (!value.trim()) return;
-    setTags([...tags, value]);
+    e.preventDefault();
+    const value = e.currentTarget.value.trim();
+    if (!value) return;
+
+    setTags((prevTags) => {
+      const newTags = [...prevTags, value];
+      if (newTags.length > 5) {
+        newTags.shift();
+      }
+      onTagsChange(newTags);
+      return newTags;
+    });
     setInput("");
-    onTagsChange([...tags, value]);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
