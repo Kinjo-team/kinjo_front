@@ -32,7 +32,8 @@ const TagsInput: React.FC<TagsInputProps> = ({ onTagsChange }) => {
       <input
         type="text"
         className="tags-input"
-        placeholder="Type something"
+        placeholder="e.g. cafe, peaceful"
+        id="tags-input"
         value={input}
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}

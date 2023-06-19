@@ -66,7 +66,7 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
 
   async function fetchUsername() {
     try {
-      const resp = await fetch(`http://localhost:8000/users/${currentUser?.uid}`);
+      const resp = await fetch(`${process.env.REACT_APP_BACKEND_URL}users/${currentUser?.uid}`);
       const data = await resp.json();
       console.log(data);
       setUsername(data.username);

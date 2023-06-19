@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import LanguageToggle from "../../components/LanguageToggle/LanguageToggle";
 
 import "./Landing.scss";
 // VIDEO
@@ -33,14 +34,21 @@ const Landing = () => {
 
   return (
     <>
+      <LanguageToggle />
       <main className="landing--container">
         <Parallax pages={1}>
           <ParallaxLayer offset={0} speed={2}>
-            <video src={landingVideo} autoPlay loop muted />
+            <video src={landingVideo} autoPlay loop muted playsInline preload="auto" />
           </ParallaxLayer>
           <ParallaxLayer offset={0} speed={0.5}>
             <div className="title">
-              <h1>K I N J O</h1>
+              <div className="logo">
+                <div className="kanji">
+                  <h1>近</h1>
+                  <h1 className="kanji-bottom">所</h1>
+                </div>
+                  <h1>K I N J O</h1>
+              </div>
               <p>{t("landingPageSubText")}</p>
               <button onClick={handleClick}>{t("landingPageButton")}</button>
             </div>

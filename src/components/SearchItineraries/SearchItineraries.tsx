@@ -47,19 +47,22 @@ const SearchItineraries = () => {
       return (
         <>
           <form className="search-itineraries" onSubmit={handleSubmit}>
-              <select name='search-option' id='search-option' defaultValue="Itinerary" onChange={(event) => handleSearchOption(event.target.value)}>
-                <option value='Name'>Itinerary</option>
-                <option value='Tag'>Tag</option>
-                <option value='User'>User</option>
-              </select>
-              <input
-                  type="text"
-                  placeholder="Choose search option"
-                  onChange={handleSearchValue}
-              />
-              <button type="submit">
-                  Search
-              </button>
+              <div className='searchbar'>
+                <select name='search-option' id='search-option' defaultValue="Itinerary" onChange={(event) => handleSearchOption(event.target.value)}>
+                  <option value='Name'>Kinjo</option>
+                  <option value='Tag'>Tag</option>
+                  <option value='User'>User</option>
+                </select>
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    onChange={handleSearchValue}
+                    className='search-input'
+                />
+                <span className="material-symbols-outlined search-icon">
+                  search
+                </span>
+              </div>
             {showResults && <DisplayItineraries itineraries={searchResults} toggleShowResults={toggleShowResults} />}
           </form>
         </>
