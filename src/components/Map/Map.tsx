@@ -28,6 +28,7 @@ interface Location {
 interface MapProps {
   handleLocationData: (locationData: Location) => void;
   handleCircleCreated: (latitude: number, longitude: number) => void;
+  // handleImageUrl: (url: string) => void;
   // forwardTransition: () => void;
 }
 
@@ -54,6 +55,7 @@ const initialLocation: Location = {
 const Map: React.FC<MapProps> = ({
   handleLocationData,
   handleCircleCreated,
+  // handleImageUrl,
   // forwardTransition,
 }) => {
   const [locations, setLocations] = useState<Location[]>([]);
@@ -107,43 +109,69 @@ const Map: React.FC<MapProps> = ({
     }
   };
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const { id, loc_coords, loc_name, loc_descr_en, loc_tags, loc_image_url } =
+  //     newLocationData;
+
+  //   if (loc_name.trim() !== "" && newLocationData.loc_image_url.length === 0) {
+  //     const newLocation: Location = {
+  //       id,
+  //       loc_coords,
+  //       loc_name,
+  //       loc_descr_en,
+  //       loc_tags,
+  //       loc_image_url,
+  //     };
+  //     setLocations((prevLocations) => [...prevLocations, newLocation]);
+  //     resetNewLocationData(true);
+  //     handleLocationData(newLocation);
+  //   }
+  //   // } else if (newLocationData.loc_image_url.length > 0) {
+  //   //   try {
+  //   //     const imageUrls = await Promise.all(
+  //   //       newLocationData.loc_image_url.map((image) =>
+  //   //         fetchCloudinaryImageUrl(image)
+  //   //       )
+  //   //     );
+  //   //     const newLocationWithUrls: Location = {
+  //   //       ...newLocationData,
+  //   //       loc_image_url: imageUrls,
+  //   //     };
+  //   //     setLocations((prevLocations) => [
+  //   //       ...prevLocations,
+  //   //       newLocationWithUrls,
+  //   //     ]);
+  //   //     resetNewLocationData(true);
+  //   //     handleLocationData(newLocationWithUrls);
+  //   //   } catch (error) {
+  //   //     console.error("Error fetching image URLs:", error);
+  //   //   }
+  //   // }
+  // };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const { id, loc_coords, loc_name, loc_descr_en, loc_tags, loc_image_url } =
+      newLocationData;
 
-    const formData = new FormData();
-    Object.keys(newLocationData).forEach((key) => {
-      const value = newLocationData[key as keyof Location];
-      if (Array.isArray(value)) {
-        formData.append(key, JSON.stringify(value));
-      } else {
-        formData.append(key, String(value));
-      }
-    });
-
-    try {
-      const response = await fetch("/itineraries", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-
-      if (data.message === "Data inserted successfully") {
-        const newLocationWithUrl: Location ={
-          ...newLocationData,
-          loc_image_url: data.loc_image_url,
-        };
-        setLocations((prevLocations) => [
-          ...prevLocations,
-          newLocationWithUrl,
-        ]);
-        resetNewLocationData(true);
-        handleLocationData(newLocationWithUrl);
-      }
-    } catch(error) {
-      console.log("Error:", error);
+    // Check if loc_name is not empty
+    if (loc_name.trim() !== "") {
+      const newLocation: Location = {
+        id,
+        loc_coords,
+        loc_name,
+        loc_descr_en,
+        loc_tags,
+        loc_image_url,
+      };
+      setLocations((prevLocations) => [...prevLocations, newLocation]);
+      resetNewLocationData(true);
+      handleLocationData(newLocation);
     }
   };
 
+  // const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {};
 
   const resetNewLocationData = (formSubmitted: boolean) => {
     if (!formSubmitted) {
@@ -250,7 +278,9 @@ const Map: React.FC<MapProps> = ({
       <form className="create-map-searchbar" onSubmit={handleSearch}>
         <input type="text" placeholder="Search location" ref={searchInputRef} />
         <button type="submit">Search</button>
-        <button type="button" onClick={handleUseMyLocation}>Use my location</button>
+        <button type="button" onClick={handleUseMyLocation}>
+          Use my location
+        </button>
       </form>
       <MapContainer
         center={defaultPosition}
@@ -273,7 +303,10 @@ const Map: React.FC<MapProps> = ({
                 <p>{location.loc_descr_en}</p>
                 <p>Tags: {location.loc_tags.join(" ")}</p>
                 <p>Images: {location.loc_image_url}</p>
-                <button className="popup-delete-btn" onClick={() => handleDeleteMarker(location.id)}>
+                <button
+                  className="popup-delete-btn"
+                  onClick={() => handleDeleteMarker(location.id)}
+                >
                   Delete
                 </button>
               </div>
@@ -297,9 +330,7 @@ const Map: React.FC<MapProps> = ({
           >
             <form className="popup-form" onSubmit={handleSubmit}>
               <div className="popup-form-input">
-                <label htmlFor="loc_name">
-                  PLACE NAME
-                </label>
+                <label htmlFor="loc_name">PLACE NAME</label>
                 <input
                   type="text"
                   name="loc_name"
@@ -311,9 +342,7 @@ const Map: React.FC<MapProps> = ({
                 />
               </div>
               <div className="popup-form-input">
-                <label htmlFor="loc_descr_en">
-                  PLACE DESCRIPTION
-                </label>
+                <label htmlFor="loc_descr_en">PLACE DESCRIPTION</label>
                 <input
                   name="loc_descr_en"
                   id="loc_descr_en"
@@ -324,9 +353,7 @@ const Map: React.FC<MapProps> = ({
                 />
               </div>
               <div className="popup-form-input">
-                <label htmlFor="tags_input">
-                  PLACE TAGS
-                </label>
+                <label htmlFor="tags_input">PLACE TAGS</label>
                 <TagsInput
                   onTagsChange={(tags) => {
                     setNewLocationData((prevData) => ({
@@ -337,14 +364,17 @@ const Map: React.FC<MapProps> = ({
                 />
               </div>
               <UploadWidget
-                handleImageUrl={(file) => {
+                handleImageUrl={(url) => {
+                  // handleImageUrl(url);
                   setNewLocationData((prevData) => ({
                     ...prevData,
-                    loc_image_url: file,
+                    loc_image_url: url,
                   }));
                 }}
               />
-              <button className="popup-submit-btn" type="submit">Add</button>
+              <button className="popup-submit-btn" type="submit">
+                Add
+              </button>
             </form>
           </Popup>
         )}

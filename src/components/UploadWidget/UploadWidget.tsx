@@ -15,7 +15,7 @@ interface UploadWidgetProps {
 const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl }) => {
   const cloudinaryRef = useRef<any>();
   const widgetRef = useRef<any>();
-  
+
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
     console.log("widget:", cloudinaryRef.current);
@@ -34,10 +34,14 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl }) => {
   }, [handleImageUrl]);
 
   return (
-    <button type="button" className="add-img-btn" onClick={() => widgetRef.current.open()}>
+    <button
+      type="button"
+      className="add-img-btn"
+      onClick={() => widgetRef.current.open()}
+    >
       Add Image
     </button>
-  )
+  );
 };
 
 export default UploadWidget;

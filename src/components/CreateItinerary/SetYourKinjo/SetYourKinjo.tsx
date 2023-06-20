@@ -10,7 +10,7 @@ interface LocationData {
   loc_name: string;
   loc_descr_en: string;
   loc_tags: string[];
-  loc_image_url: string;
+  loc_image_url: any;
 }
 
 interface CreateItineraryData {
@@ -49,7 +49,6 @@ const KinjoProcess = ({
   // REFS/VARIABLES
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLInputElement>(null);
-
 
   // EFFECTS
 
@@ -141,6 +140,15 @@ const KinjoProcess = ({
     }
   };
 
+  // const handleImageUrl = (url: string) => {
+  //   console.log("handleImageUrl called with:", url);
+  //   console.log("typeof url", typeof url);
+  //   setFormData((prevFormData) => ({
+  //     ...prevFormData,
+  //     loc_image_url: url,
+  //   }));
+  // };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -188,7 +196,6 @@ const KinjoProcess = ({
         <span className="material-symbols-outlined">cancel</span>
       </button>
 
-
       {stage === 1 ? (
         <>
           <div className="create-header">
@@ -197,35 +204,36 @@ const KinjoProcess = ({
             <div className="setkinjo-map-pointer">↓</div>
           </div>
         </>
-        )
-        :
-        (
+      ) : (
         <>
           <div className="create-header">
             <h1>2. Populate your Kinjo!</h1>
             <p>Find the areas you want to show and add the information.</p>
           </div>
         </>
-        )
-        }
+      )}
       <div className="setkinjo-map-container">
         <Map
           handleLocationData={handleLocationData}
           handleCircleCreated={handleCircleCreated}
+          // handleImageUrl={handleImageUrl}
           //   forwardTransition={forwardTransition}
         />
       </div>
 
       {stage === 2 && (
         <>
-        <div className={`create-header stage3`}>
-          <h1>3. Add information</h1>
-          <p>
-            You're almost there! fill in the information below to describe your
-            Kinjo!
-          </p>
-        </div>
-          <form onSubmit={handleSubmit} className={`submitkinjo--form ${stage === 2 ? 'show' : ''}`}>
+          <div className={`create-header stage3`}>
+            <h1>3. Add information</h1>
+            <p>
+              You're almost there! fill in the information below to describe
+              your Kinjo!
+            </p>
+          </div>
+          <form
+            onSubmit={handleSubmit}
+            className={`submitkinjo--form ${stage === 2 ? "show" : ""}`}
+          >
             <section className="input-form">
               <label htmlFor="itinerary_name">NAME</label>
               <input
@@ -253,42 +261,42 @@ const KinjoProcess = ({
               />
             </section>
             <form>
-                <div className="input-form">
-                  <label htmlFor="itinerary_tags">TAGS</label>
-                  <input
-                    type="text"
-                    name="itinerary_tags"
-                    id="itinerary_tags"
-                    placeholder="Add tags(max 5) e.g. coffee"
-                    value={formData.enteredTag}
-                    onChange={handleInputChange}
-                    onKeyDown={handleEnterKey}
-                    ref={tagsRef}
-                    required
-                  />
-                </div>
-                <div className="tag-container">
-                  {formData.itinerary_tags.map((tag, index) => (
-                    <div key={index} className="tag">
-                      {tag}
-                    </div>
-                  ))}
-                </div>
+              <div className="input-form">
+                <label htmlFor="itinerary_tags">TAGS</label>
+                <input
+                  type="text"
+                  name="itinerary_tags"
+                  id="itinerary_tags"
+                  placeholder="Add tags(max 5) e.g. coffee"
+                  value={formData.enteredTag}
+                  onChange={handleInputChange}
+                  onKeyDown={handleEnterKey}
+                  ref={tagsRef}
+                  required
+                />
+              </div>
+              <div className="tag-container">
+                {formData.itinerary_tags.map((tag, index) => (
+                  <div key={index} className="tag">
+                    {tag}
+                  </div>
+                ))}
+              </div>
             </form>
             <div className="submitkinjo-btn-grp">
-                <button
+              <button
                 type="submit"
                 className="submitkinjo-submit-btn"
                 disabled={false}
-                >
+              >
                 Submit
-                </button>
-                <button
+              </button>
+              <button
                 className="submitkinjo-cancel-btn"
                 onClick={toggleCreateItinerary}
-                >
+              >
                 Cancel
-                </button>
+              </button>
             </div>
           </form>
         </>
