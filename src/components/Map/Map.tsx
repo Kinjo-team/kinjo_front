@@ -95,7 +95,9 @@ const Map: React.FC<MapProps> = ({
   // Mapbox tile layer API token
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = <T extends HTMLInputElement | HTMLTextAreaElement>(
+    e: React.ChangeEvent<T>
+  ) => {
     const { name, value } = e.target;
     if (name === "loc_tags") {
       const tagsArray = value.split(" ").map((tag) => tag.trim());
@@ -317,7 +319,7 @@ const Map: React.FC<MapProps> = ({
               </div>
               <div className="popup-form-input">
                 <label htmlFor="loc_descr_en">PLACE DESCRIPTION</label>
-                <input
+                <textarea
                   name="loc_descr_en"
                   id="loc_descr_en"
                   placeholder="A cozy coffee shop with a great view of Mt. Fuji."

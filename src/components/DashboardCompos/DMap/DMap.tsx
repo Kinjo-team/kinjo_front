@@ -80,7 +80,9 @@ const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
   // Mapbox tile layer API token
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = <T extends HTMLInputElement | HTMLTextAreaElement>(
+    e: React.ChangeEvent<T>
+  ) => {
     const { name, value } = e.target;
     setNewLocationData((prevData) => ({
       ...prevData,
@@ -259,8 +261,8 @@ const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
                 />
               </div>
               <div className="popup-form-input">
-                <label htmlFor="visited_descr">DESCRIPTION</label>
-                <input
+                <label htmlFor="visited_descr">PLACE DESCRIPTION</label>
+                <textarea
                   name="visited_descr"
                   id="visited_descr"
                   placeholder="e.g. 3 day stay, toured temples, ate ramen"
