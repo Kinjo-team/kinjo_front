@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useKinjo } from "../../../contexts/KinjoContext";
 import { useAuth } from "../../../contexts/AuthContext";
 import Map from "../../Map/Map";
+import Modal from "./Modal";
 
 import "./SetYourKinjo.scss";
 
@@ -27,7 +28,7 @@ type KinjoProcessProps = {
   toggleCreateItinerary: () => void;
 };
 
-const KinjoProcess = ({
+const SetYourKinjo = ({
   forwardTransitionPage,
   toggleCreateItinerary,
 }: KinjoProcessProps) => {
@@ -44,6 +45,13 @@ const KinjoProcess = ({
     kinjo_coords: [0, 0],
     locationData: [],
   });
+
+  // MODAL STATES
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalConfirmHandler, setModalConfirmHandler] = useState(
+    () => () => {}
+  );
 
   // REFS/VARIABLES
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -128,6 +136,33 @@ const KinjoProcess = ({
     }));
   };
 
+  // const handleCircleCreated = (
+  //   latitude: number,
+  //   longitude: number,
+  //   radius: number,
+  //   layer: any,
+  //   featureGroup: any
+  // ) => {
+  //   const userCircleArea = Math.PI * radius * radius;
+
+  //   if (userCircleArea > MAX_AREA) {
+  //     window.alert(
+  //       "Your circle exceeds the maximum allowed area. Please try again."
+  //     );
+  //     featureGroup.removeLayer(layer);
+  //     return;
+  //   }
+
+  //   if (
+  //     window.confirm("Do you want to use these coordinates for your Kinjo?")
+  //   ) {
+  //     forwardTransition();
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       kinjo_coords: [latitude, longitude],
+  //     }));
+  //   }
+  // };
   const handleCircleCreated = (
     latitude: number,
     longitude: number,
@@ -138,60 +173,65 @@ const KinjoProcess = ({
     const userCircleArea = Math.PI * radius * radius;
 
     if (userCircleArea > MAX_AREA) {
-      window.alert(
+      setModalMessage(
         "Your circle exceeds the maximum allowed area. Please try again."
       );
-      featureGroup.removeLayer(layer);
+      setIsModalOpen(true);
+      setModalConfirmHandler(() => () => featureGroup.removeLayer(layer));
       return;
     }
 
-    if (
-      window.confirm("Do you want to use these coordinates for your Kinjo?")
-    ) {
+    setModalMessage("Do you want to use these coordinates for your Kinjo?");
+    setIsModalOpen(true);
+    setModalConfirmHandler(() => () => {
       forwardTransition();
       setFormData((prevFormData) => ({
         ...prevFormData,
         kinjo_coords: [latitude, longitude],
       }));
-    }
+    });
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!window.confirm("Are you sure you want to submit this kinjo?")) {
-      return;
-    }
+    // if (!window.confirm("Are you sure you want to submit this kinjo?")) {
+    //   return;
+    // }
 
-    try {
-      const response = await fetch("http://localhost:8000/itineraries", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Successfully created itinerary:", data);
-        // Reset the form data
-        setFormData({
-          firebase_uuid: "",
-          itinerary_name: "",
-          itinerary_descr: "",
-          itinerary_tags: [],
-          enteredTag: "",
-          kinjo_coords: [0, 0],
-          locationData: [],
+    setModalMessage("Are you sure you want to submit this kinjo?");
+    setIsModalOpen(true);
+    setModalConfirmHandler(() => async () => {
+      try {
+        const response = await fetch("http://localhost:8000/itineraries", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         });
-        forwardTransitionPage();
-      } else {
-        throw new Error("Failed to create itinerary");
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Successfully created itinerary:", data);
+          // Reset the form data
+          setFormData({
+            firebase_uuid: "",
+            itinerary_name: "",
+            itinerary_descr: "",
+            itinerary_tags: [],
+            enteredTag: "",
+            kinjo_coords: [0, 0],
+            locationData: [],
+          });
+          forwardTransitionPage();
+        } else {
+          throw new Error("Failed to create itinerary");
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
-    }
+    });
   };
 
   return (
@@ -306,8 +346,17 @@ const KinjoProcess = ({
           </form>
         </>
       )}
+      <Modal
+        isOpen={isModalOpen}
+        message={modalMessage}
+        onConfirm={() => {
+          modalConfirmHandler();
+          setIsModalOpen(false);
+        }}
+        onCancel={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
 
-export default KinjoProcess;
+export default SetYourKinjo;

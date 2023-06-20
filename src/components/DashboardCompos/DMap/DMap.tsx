@@ -77,7 +77,9 @@ const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
   // Mapbox tile layer API token
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = <T extends HTMLInputElement | HTMLTextAreaElement>(
+    e: React.ChangeEvent<T>
+  ) => {
     const { name, value } = e.target;
     setNewLocationData((prevData) => ({
       ...prevData,
@@ -257,7 +259,7 @@ const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
               </div>
               <div className="popup-form-input">
                 <label htmlFor="visited_descr">PLACE DESCRIPTION</label>
-                <input
+                <textarea
                   name="visited_descr"
                   id="visited_descr"
                   placeholder="A cozy coffee shop with a great view of Mt. Fuji."
