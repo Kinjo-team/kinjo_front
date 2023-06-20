@@ -10,6 +10,9 @@ import {
 } from "react-leaflet";
 import FlyTo from "../../FlyTo/FlyTo";
 
+import "./DMap.scss"
+
+
 interface Visited_map {
   id: number;
   visited_coords: [number, number];
@@ -186,8 +189,8 @@ const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
   };
 
   return (
-    <div className="create-map-container">
-      <form className="create-map-searchbar" onSubmit={handleSearch}>
+    <div className="dmap--container">
+      <form className="dmap--searchbar" onSubmit={handleSearch}>
         <input type="text" placeholder="Search location" ref={searchInputRef} />
         <button type="submit">Search</button>
         <button type="button" onClick={handleUseMyLocation}>
@@ -196,8 +199,8 @@ const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
       </form>
       <MapContainer
         center={defaultPosition}
-        zoom={5}
-        style={{ height: "500px", width: "100%" }}
+        zoom={6}
+        style={{ height: "100%", width: "100%" }}
         maxBounds={japanBounds}
       >
         <TileLayer
@@ -244,23 +247,23 @@ const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
           >
             <form className="popup-form" onSubmit={handleSubmit}>
               <div className="popup-form-input">
-                <label htmlFor="visited_name">PLACE NAME</label>
+                <label htmlFor="visited_name">CITY</label>
                 <input
                   type="text"
                   name="visited_name"
                   id="visited_name"
-                  placeholder="Tanaka's Coffee"
+                  placeholder="e.g. Kyoto"
                   value={newLocationData.visited_name}
                   onChange={handleInputChange}
                   required
                 />
               </div>
               <div className="popup-form-input">
-                <label htmlFor="visited_descr">PLACE DESCRIPTION</label>
+                <label htmlFor="visited_descr">DESCRIPTION</label>
                 <input
                   name="visited_descr"
                   id="visited_descr"
-                  placeholder="A cozy coffee shop with a great view of Mt. Fuji."
+                  placeholder="e.g. 3 day stay, toured temples, ate ramen"
                   value={newLocationData.visited_descr}
                   onChange={handleInputChange}
                   required

@@ -53,11 +53,7 @@ const ProfileDashboard = () => {
       <Navbar />
       <div className="profiledashboard--container">
         <DProfile username={userData.username} email={userData.user_email} />
-        {/* OWN COMPONENT */}
-        <div>
-          <DMap userData={userData} visitedPlaces={visitedPlaces} />
-        </div>
-        {/* OWN COMPONENT */}
+        <DMap userData={userData} visitedPlaces={visitedPlaces} />
         <DKinjoViewer />
         <DKinjoBookmarked />
       </div>
