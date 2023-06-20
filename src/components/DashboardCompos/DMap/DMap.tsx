@@ -1,5 +1,4 @@
 import React from "react";
-import L from "leaflet";
 import { LatLngTuple, LatLngBounds } from "leaflet";
 import { useState, useRef, useEffect } from "react";
 import {
@@ -9,35 +8,22 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import TagsInput from "./TagsInput";
-import FlyTo from "../FlyTo/FlyTo";
-import DrawControl from "../DrawControl/DrawControl";
+import FlyTo from "../../FlyTo/FlyTo";
 
-import "./Map.scss";
-import UploadWidget from "../UploadWidget/UploadWidget";
-
-interface Location {
+interface Visited_map {
   id: number;
-  loc_coords: [number, number];
-  loc_name: string;
-  loc_descr_en: string;
-  loc_tags: string[];
-  image_urls: string[];
+  visited_coords: [number, number];
+  visited_name: string;
+  visited_descr: string;
 }
 
 interface MapProps {
-  handleLocationData: (locationData: Location) => void;
-  handleCircleCreated: (
-    latitude: number,
-    longitude: number,
-    radius: number,
-    layer: any,
-    featureGroup: any
-  ) => void;
+  userData: any;
+  visitedPlaces: Visited_map[];
 }
 
-//default position for Tokyo
-const defaultPosition: [number, number] = [35.664035, 139.698212];
+//default position for Japan
+const defaultPosition: [number, number] = [36.2048, 138.2529];
 
 //setting zoomout limit to Japan
 const japanBounds: [LatLngTuple, LatLngTuple] = [
@@ -47,22 +33,17 @@ const japanBounds: [LatLngTuple, LatLngTuple] = [
 
 const japanLatLngBounds = new LatLngBounds(japanBounds);
 
-const initialLocation: Location = {
+const initialLocation: Visited_map = {
   id: 0,
-  loc_coords: [0, 0],
-  loc_name: "",
-  loc_descr_en: "",
-  loc_tags: [],
-  image_urls: [],
+  visited_coords: [0, 0],
+  visited_name: "",
+  visited_descr: "",
 };
 
-const Map: React.FC<MapProps> = ({
-  handleLocationData,
-  handleCircleCreated,
-}) => {
-  const [locations, setLocations] = useState<Location[]>([]);
+const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
+  const [locations, setLocations] = useState<Visited_map[]>([]);
   const [newLocationData, setNewLocationData] =
-    useState<Location>(initialLocation);
+    useState<Visited_map>(initialLocation);
   const [showPopup, setShowPopup] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -74,10 +55,11 @@ const Map: React.FC<MapProps> = ({
   const [triggerFlyTo, setTriggerFlyTo] = useState(false);
 
   //useState tied to geolocation logic
-  const [userLocation, setUserLocation] = useState<Location | null>(null);
+  const [userLocation, setUserLocation] = useState<Visited_map | null>(null);
 
-  //useState tied to geometric shapes logic
-  const [drawnShape, setDrawnShape] = useState<L.Layer | null>(null);
+  useEffect(() => {
+    setLocations(visitedPlaces);
+  }, [visitedPlaces]);
 
   useEffect(() => {
     if (triggerFlyTo) {
@@ -97,61 +79,41 @@ const Map: React.FC<MapProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "loc_tags") {
-      const tagsArray = value.split(" ").map((tag) => tag.trim());
-      setNewLocationData((prevData) => ({
-        ...prevData,
-        [name]: tagsArray,
-      }));
-    } else {
-      setNewLocationData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setNewLocationData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { id, loc_coords, loc_name, loc_descr_en, loc_tags, image_urls } =
-      newLocationData;
 
-    if (loc_name.trim() !== "" && newLocationData.image_urls.length === 0) {
-      const newLocation: Location = {
-        id,
-        loc_coords,
-        loc_name,
-        loc_descr_en,
-        loc_tags,
-        image_urls: [],
-      };
-      setLocations((prevLocations) => [...prevLocations, newLocation]);
-      resetNewLocationData(true);
-      handleLocationData(newLocation);
-    } else if (newLocationData.image_urls.length > 0) {
-      try {
-        const imageUrls = await Promise.all(
-          newLocationData.image_urls.map((image) =>
-            fetchCloudinaryImageUrl(image)
-          )
-        );
-        const newLocationWithUrls: Location = {
-          ...newLocationData,
-          image_urls: imageUrls,
-        };
-        setLocations((prevLocations) => [
-          ...prevLocations,
-          newLocationWithUrls,
-        ]);
-        resetNewLocationData(true);
-        handleLocationData(newLocationWithUrls);
-      } catch (error) {
-        console.error("Error fetching image URLs:", error);
+    const url = `${process.env.REACT_APP_BACKEND_URL}visited_map`;
+
+    const postData = {
+      ...newLocationData,
+      firebase_uuid: userData.firebase_uuid,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setNewLocationData(data);
       }
+    } catch (error) {
+      console.error(error);
     }
+    setLocations((prevLocations) => [...prevLocations, postData]);
+    resetNewLocationData(true);
   };
-
-  const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {};
 
   const resetNewLocationData = (formSubmitted: any) => {
     if (!formSubmitted) {
@@ -163,44 +125,20 @@ const Map: React.FC<MapProps> = ({
 
   // Add shapes & markers to map logic
 
-  const isPointInShape = (point: L.LatLng, shape: L.Layer): boolean => {
-    if (shape instanceof L.Circle) {
-      return shape.getLatLng().distanceTo(point) <= shape.getRadius();
-    }
-    return false;
-  };
-
   const AddMarkerToMap = () => {
     useMapEvents({
       click: (e) => {
-        if (drawnShape && isPointInShape(e.latlng, drawnShape)) {
-          const newId = locations.length + 1;
-          setNewLocationData(initialLocation); // resetting the form data here
-          setNewLocationData((prevData) => ({
-            ...prevData,
-            id: newId,
-            loc_coords: [e.latlng.lat, e.latlng.lng],
-          }));
-          setShowPopup(true);
-        }
+        const newId = locations.length + 1;
+        setNewLocationData(initialLocation); // resetting the form data here
+        setNewLocationData((prevData) => ({
+          ...prevData,
+          id: newId,
+          visited_coords: [e.latlng.lat, e.latlng.lng],
+        }));
+        setShowPopup(true);
       },
     });
-
     return null;
-  };
-
-  // Delete shapes logic
-  const handleShapeDeleted = (shapes: L.Layer[]) => {
-    shapes.forEach((shape) => {
-      const newLocationLatLng = new L.LatLng(
-        newLocationData.loc_coords[0],
-        newLocationData.loc_coords[1]
-      );
-      if (isPointInShape(newLocationLatLng, shape)) {
-        resetNewLocationData(true);
-      }
-    });
-    setDrawnShape(null);
   };
 
   //Delete markers logic
@@ -258,10 +196,9 @@ const Map: React.FC<MapProps> = ({
       </form>
       <MapContainer
         center={defaultPosition}
-        zoom={13}
+        zoom={5}
         style={{ height: "500px", width: "100%" }}
         maxBounds={japanBounds}
-        minZoom={5}
       >
         <TileLayer
           url={mapboxTileUrl}
@@ -270,13 +207,11 @@ const Map: React.FC<MapProps> = ({
         />
         <AddMarkerToMap />
         {locations.map((location) => (
-          <Marker key={location.id} position={location.loc_coords}>
+          <Marker key={location.id} position={location.visited_coords}>
             <Popup className="request-popup">
               <div className="created-marker-popup">
-                <h3>{location.loc_name}</h3>
-                <p>{location.loc_descr_en}</p>
-                <p>Tags: {location.loc_tags.join(" ")}</p>
-                <p>Images: {location.image_urls.join(", ")}</p>
+                <h3>{location.visited_name}</h3>
+                <p>{location.visited_descr}</p>
                 <button
                   className="popup-delete-btn"
                   onClick={() => handleDeleteMarker(location.id)}
@@ -288,14 +223,19 @@ const Map: React.FC<MapProps> = ({
           </Marker>
         ))}
         {userLocation && (
-          <Marker position={userLocation.loc_coords} interactive={false}>
-            <Popup>{userLocation.loc_name}</Popup>
+          <Marker position={userLocation.visited_coords} interactive={false}>
+            <Popup>{userLocation.visited_name}</Popup>
           </Marker>
         )}
-        <Marker position={newLocationData.loc_coords} interactive={false} />
+        {newLocationData.visited_coords && (
+          <Marker
+            position={newLocationData.visited_coords}
+            interactive={false}
+          />
+        )}
         {showPopup && (
           <Popup
-            position={newLocationData.loc_coords}
+            position={newLocationData.visited_coords}
             closeOnClick={false}
             eventHandlers={{
               remove: () => resetNewLocationData(false),
@@ -304,47 +244,28 @@ const Map: React.FC<MapProps> = ({
           >
             <form className="popup-form" onSubmit={handleSubmit}>
               <div className="popup-form-input">
-                <label htmlFor="loc_name">PLACE NAME</label>
+                <label htmlFor="visited_name">PLACE NAME</label>
                 <input
                   type="text"
-                  name="loc_name"
-                  id="loc_name"
+                  name="visited_name"
+                  id="visited_name"
                   placeholder="Tanaka's Coffee"
-                  value={newLocationData.loc_name}
+                  value={newLocationData.visited_name}
                   onChange={handleInputChange}
                   required
                 />
               </div>
               <div className="popup-form-input">
-                <label htmlFor="loc_descr_en">PLACE DESCRIPTION</label>
+                <label htmlFor="visited_descr">PLACE DESCRIPTION</label>
                 <input
-                  name="loc_descr_en"
-                  id="loc_descr_en"
+                  name="visited_descr"
+                  id="visited_descr"
                   placeholder="A cozy coffee shop with a great view of Mt. Fuji."
-                  value={newLocationData.loc_descr_en}
+                  value={newLocationData.visited_descr}
                   onChange={handleInputChange}
                   required
                 />
               </div>
-              <div className="popup-form-input">
-                <label htmlFor="tags_input">PLACE TAGS</label>
-                <TagsInput
-                  onTagsChange={(tags) => {
-                    setNewLocationData((prevData) => ({
-                      ...prevData,
-                      loc_tags: tags,
-                    }));
-                  }}
-                />
-              </div>
-              <UploadWidget
-                handleImageUrl={(url) => {
-                  setNewLocationData((prevData) => ({
-                    ...prevData,
-                    image_url: [url], // Should this be image_urls instead of image_url?
-                  }));
-                }}
-              />
               <button className="popup-submit-btn" type="submit">
                 Add
               </button>
@@ -354,14 +275,9 @@ const Map: React.FC<MapProps> = ({
         {triggerFlyTo && (
           <FlyTo position={flyToPosition} zoom={flyToZoomLevel} />
         )}
-        <DrawControl
-          handleCircleCreated={handleCircleCreated}
-          onShapeCreated={setDrawnShape}
-          onShapeDeleted={handleShapeDeleted}
-        />
       </MapContainer>
     </div>
   );
 };
 
-export default Map;
+export default DMap;
