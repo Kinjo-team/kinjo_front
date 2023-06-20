@@ -14,10 +14,26 @@ nav {
     
     .title {
         cursor: pointer;
-        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-size: clamp(1rem, 2vw, 1.5rem);
         font-weight: bold;
         color: black;
         white-space: nowrap;
+        font-family: 'Roboto Flex', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .kanji {
+            display: flex;
+            flex-direction: column;
+            h1 {
+                font-size: 1rem;
+                color: crimson;
+            }
+            .kanji-bottom {
+                margin-top: -0.6rem;
+            }
+        }
     }
 
     .btn-grp {

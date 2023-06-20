@@ -6,7 +6,6 @@
     gap: clamp(5rem, 10vw, 2rem);
     color: white;
     // PARRALAX SCROLL
-    overflow-y: auto;
     overflow-x: hidden;
 
     video {
@@ -31,6 +30,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: 'Roboto Flex', sans-serif;
 
             .kanji {
                 display: flex;
@@ -52,6 +52,7 @@
         color: inherit;
     }
     p {
+        font-family: 'Roboto', sans-serif;
         color: inherit;
         font-style: italic;
         font-size: clamp(0.8rem, 2vw, 1.2rem);
@@ -89,6 +90,7 @@
 }
 
 .landing--info--container {
+    font-family: 'Roboto', sans-serif;
     position: relative;
     padding-top: 7rem;
     display: flex;
