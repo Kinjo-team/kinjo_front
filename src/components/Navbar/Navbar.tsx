@@ -105,9 +105,13 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
         />
       )}
       <nav>
-        <h1 className="title" onClick={navigateToLanding}>
-          K I N J O
-        </h1>
+        <div className="title" onClick={navigateToLanding}>
+          <div className="kanji">
+            <h1>近</h1>
+            <h1 className="kanji-bottom">所</h1>
+          </div>
+            <h1>K I N J O</h1>
+        </div>
         <LanguageToggle />
         <div className="btn-grp">
           <a className="nav-btn" href="/">{t("landingPageHeaderHome")}</a>

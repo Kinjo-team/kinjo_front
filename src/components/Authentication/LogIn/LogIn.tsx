@@ -3,6 +3,8 @@ import { useRef, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./LogIn.scss";
 
+const googleIcon = require("../../../assets/icons/googleIcon.png")
+
 type LogInProps = {
     toggleLogin: () => void
     toggleSignUp: () => void
@@ -13,7 +15,7 @@ type LogInProps = {
 const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : LogInProps) => {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
-    const { login } = useAuth()
+    const { login, signInWithGoogle } = useAuth()
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -32,6 +34,60 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
     setLoading(false);
   }
 
+  async function handleGoogleSignIn() {
+    try {
+        setLoading(true);
+        const userCredential = await signInWithGoogle();
+        const { user } = userCredential;
+        if (user) {
+            const username = user.displayName || generateTemporaryUsername(user);
+            const exists = await checkIfUsernameExists(username);
+            if (!exists) {
+                await postUser(username, user.email, user.uid);
+            }
+            navigateToMain();
+            toggleLogin();
+        }
+    } catch (error) {
+        setError("Failed to sign in with Google");
+        console.error(error);
+    } finally {
+        setLoading(false);
+    }
+  }
+
+  function generateTemporaryUsername(user : any) {
+    return user.email.split('@')[0];
+  }
+
+  async function checkIfUsernameExists(username : any) {
+    try {
+        const res = await fetch(`http://localhost:8000/users/username/${username}`)
+        const data = await res.json()
+        console.log(data)
+        return data;
+    } catch(error) {
+        console.error(error)
+    }
+} 
+
+async function postUser(username : string, email : string, uid : string) {
+  console.log(username, email, uid)
+  const resp = await fetch(`http://localhost:8000/users`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              username: username,
+              user_email: email,
+              uid: uid
+              })
+  })
+  const data = await resp.json()
+  console.log(data)
+}
+
   function stopBubbling(e: any) {
     e.stopPropagation();
   }
@@ -43,7 +99,16 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
     return (
     <main onClick={toggleLogin} className='login--container'>
         <section onClick={stopBubbling} className='login'>
-            <h2 className="login-title">Log in to KINJO</h2>
+            <button 
+              className='login--form--google-btn' 
+              type="button" 
+              onClick={handleGoogleSignIn} 
+              disabled={loading}
+              >
+              <img className="login--google-icon" src={googleIcon} alt="google logo" />
+              Log In With Google
+            </button>
+            <h2>OR</h2>
             {error && <div className="error">{error}</div>}
             <form className='login--form' onSubmit={handleSubmit}>
                 <div className='login--form--section'>

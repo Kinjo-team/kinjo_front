@@ -1,29 +1,32 @@
 import React from "react";
-import { useMap } from "react-leaflet";
 import { FeatureGroup } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 
 interface DrawControlProps {
-  // forwardTransition: Function;
-  handleCircleCreated: (latitude: number, longitude: number) => void;
+  handleCircleCreated: (
+    latitude: number,
+    longitude: number,
+    radius: number,
+    layer: any,
+    featureGroupRef: any
+  ) => void;
   onShapeCreated: (shape: L.Layer) => void;
   onShapeDeleted: (shapes: L.Layer[]) => void;
 }
 
 const DrawControl: React.FC<DrawControlProps> = ({
-  // forwardTransition,
   handleCircleCreated,
   onShapeCreated,
   onShapeDeleted,
 }) => {
-  const map = useMap();
+  const featureGroupRef = React.useRef<L.FeatureGroup>(null);
 
   const onCreated = (e: any) => {
     const layer = e.layer;
     const { lat, lng } = layer.getLatLng();
-    handleCircleCreated(lat, lng);
+    let radius = layer.getRadius();
+    handleCircleCreated(lat, lng, radius, layer, featureGroupRef.current);
     onShapeCreated(layer);
-    // forwardTransition();
   };
 
   const onDeleted = (e: any) => {
@@ -32,11 +35,12 @@ const DrawControl: React.FC<DrawControlProps> = ({
     layers.eachLayer((layer: any) => {
       deletedLayers.push(layer);
     });
+    console.log("DELETED LAYERS", deletedLayers);
     onShapeDeleted(deletedLayers);
   };
 
   return (
-    <FeatureGroup>
+    <FeatureGroup ref={featureGroupRef}>
       <EditControl
         position="topright"
         onCreated={onCreated}

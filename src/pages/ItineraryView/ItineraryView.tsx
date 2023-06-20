@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import LocationCard from "../../components/LocationCard/LocationCard";
@@ -66,7 +66,7 @@ const ItineraryView = () => {
       }),
     });
     if (response.ok) {
-      setLikesCount(likesCount + 1);
+        fetchTotalLikesAndDislikes();
     }
   };
 
@@ -82,7 +82,7 @@ const ItineraryView = () => {
       }),
     });
     if (response.ok) {
-      setDislikesCount(dislikesCount + 1);
+      fetchTotalLikesAndDislikes();
     }
   };
 
@@ -184,7 +184,9 @@ async function checkIfFollowing(authorId : string) {
                 <p className="kinjo-desc">{itinerary.itinerary_descr}</p>
             </div>
             <div className="author-info">
-                <p>{author.username}</p>
+                <Link to={`/profile/${author.username}`}>
+                    <p>{author.username}</p>
+                </Link>
                 {isFollowing ? 
                     <button disabled={true} className="following-btn">Following</button>    
                     : 
@@ -218,7 +220,7 @@ async function checkIfFollowing(authorId : string) {
           itinerary_id={itinerary.itinerary_id}
         />
       )}
-       <Footer text="Kinjo" />
+      <Footer text="Kinjo" />
     </>
   );
 };

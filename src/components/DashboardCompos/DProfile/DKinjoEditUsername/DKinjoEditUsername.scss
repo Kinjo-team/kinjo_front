@@ -18,9 +18,10 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: clamp(1rem, 2vw, 2rem);
+        padding: clamp(2rem, 2vw, 3rem);
         gap: 1rem;
         border-radius: 5px;
+        font-size: clamp(0.6rem, 2vw, 0.8rem);
 
         form {
             display: flex;
@@ -41,10 +42,13 @@
                 border: none;
                 color: white;
                 border-radius: 5px;
-                background-color: black;
+                border: 1px solid crimson;
+                background-color: crimson;
                 cursor: pointer;
+                transition: all 0.3s ease-in-out;
                 &:hover {
-                    background-color: gray;
+                    background-color: white;
+                    color: crimson;
                 }
             }
         }
