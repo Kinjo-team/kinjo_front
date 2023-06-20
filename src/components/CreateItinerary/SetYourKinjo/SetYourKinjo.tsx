@@ -3,6 +3,7 @@ import { useKinjo } from "../../../contexts/KinjoContext";
 import { useAuth } from "../../../contexts/AuthContext";
 import Map from "../../Map/Map";
 import Modal from "./Modal";
+import UploadWidget from "../../UploadWidget/UploadWidget";
 
 import "./SetYourKinjo.scss";
 
@@ -22,6 +23,7 @@ interface CreateItineraryData {
   enteredTag: string;
   kinjo_coords: [number, number];
   locationData: LocationData[];
+  itinerary_image_url: string;
 }
 
 type KinjoProcessProps = {
@@ -47,6 +49,7 @@ const SetYourKinjo = ({
     enteredTag: "",
     kinjo_coords: [0, 0],
     locationData: [],
+    itinerary_image_url: "",
   });
 
   // MODAL STATES
@@ -141,33 +144,6 @@ const SetYourKinjo = ({
     }));
   };
 
-  // const handleCircleCreated = (
-  //   latitude: number,
-  //   longitude: number,
-  //   radius: number,
-  //   layer: any,
-  //   featureGroup: any
-  // ) => {
-  //   const userCircleArea = Math.PI * radius * radius;
-
-  //   if (userCircleArea > MAX_AREA) {
-  //     window.alert(
-  //       "Your circle exceeds the maximum allowed area. Please try again."
-  //     );
-  //     featureGroup.removeLayer(layer);
-  //     return;
-  //   }
-
-  //   if (
-  //     window.confirm("Do you want to use these coordinates for your Kinjo?")
-  //   ) {
-  //     forwardTransition();
-  //     setFormData((prevFormData) => ({
-  //       ...prevFormData,
-  //       kinjo_coords: [latitude, longitude],
-  //     }));
-  //   }
-  // };
   const handleCircleCreated = (
     latitude: number,
     longitude: number,
@@ -197,14 +173,12 @@ const SetYourKinjo = ({
     });
   };
 
-  // const handleImageUrl = (url: string) => {
-  //   console.log("handleImageUrl called with:", url);
-  //   console.log("typeof url", typeof url);
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     loc_image_url: url,
-  //   }));
-  // };
+const handleImageUrl = (imageUrl: string) => {
+  setFormData((prevFormData) => ({
+    ...prevFormData,
+    itinerary_image_url: imageUrl,
+  }));
+}
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -217,6 +191,7 @@ const SetYourKinjo = ({
     setIsModalOpen(true);
     setModalConfirmHandler(() => async () => {
       try {
+        console.log("FormData:", formData);
         const response = await fetch("http://localhost:8000/itineraries", {
           method: "POST",
           headers: {
@@ -237,6 +212,7 @@ const SetYourKinjo = ({
             enteredTag: "",
             kinjo_coords: [0, 0],
             locationData: [],
+            itinerary_image_url: "",
           });
           insertNewKinjoId(data.id);
           forwardTransitionPage();
@@ -343,6 +319,9 @@ const SetYourKinjo = ({
                 ))}
               </div>
             </form>
+            <UploadWidget
+               handleImageUrl={handleImageUrl}
+              />
             <div className="submitkinjo-btn-grp">
               <button
                 type="submit"
