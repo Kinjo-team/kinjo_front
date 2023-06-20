@@ -27,11 +27,13 @@ interface CreateItineraryData {
 type KinjoProcessProps = {
   forwardTransitionPage: () => void;
   toggleCreateItinerary: () => void;
+  insertNewKinjoId: (newKinjoId: any) => void;
 };
 
 const SetYourKinjo = ({
   forwardTransitionPage,
   toggleCreateItinerary,
+  insertNewKinjoId,
 }: KinjoProcessProps) => {
   // STATES
   const { kinjo, changeKinjo } = useKinjo();
@@ -236,6 +238,7 @@ const SetYourKinjo = ({
             kinjo_coords: [0, 0],
             locationData: [],
           });
+          insertNewKinjoId(data.id);
           forwardTransitionPage();
         } else {
           throw new Error("Failed to create itinerary");
