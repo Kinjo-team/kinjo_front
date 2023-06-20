@@ -10,6 +10,7 @@ interface LocationData {
   loc_name: string;
   loc_descr_en: string;
   loc_tags: string[];
+  loc_image_url: string;
 }
 
 interface CreateItineraryData {
