@@ -22,6 +22,7 @@ const DisplayComments: FC<DisplayCommentsProps> = ({ firebase_uuid, itinerary_id
     const [addComment, setAddComment] = useState<any>("");
     const [comments, setComments] = useState<CommentType[]>([]);
 
+
     // function to get comments from database
     useEffect(() => {
         const fetchComments = async () => {
@@ -45,7 +46,7 @@ const DisplayComments: FC<DisplayCommentsProps> = ({ firebase_uuid, itinerary_id
         if (addComment === "") {
             return;
         }
-        
+
         try {
             const response = await fetch("http://localhost:8000/comments", {
                 method: "POST",
@@ -74,7 +75,6 @@ const DisplayComments: FC<DisplayCommentsProps> = ({ firebase_uuid, itinerary_id
             console.log("Error:", error);
         }
     };
-
 
     return (
         <div className='displaycomments--container'>

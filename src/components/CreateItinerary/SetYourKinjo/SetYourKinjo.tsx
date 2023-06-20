@@ -11,6 +11,7 @@ interface LocationData {
   loc_name: string;
   loc_descr_en: string;
   loc_tags: string[];
+  loc_image_url: any;
 }
 
 interface CreateItineraryData {
@@ -56,7 +57,9 @@ const SetYourKinjo = ({
   // REFS/VARIABLES
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLInputElement>(null);
+
   const MAX_AREA = 3539860000; // Biggest area district in Japan in meters for Ishikari, Hokkaido
+
 
   // EFFECTS
 
@@ -191,6 +194,15 @@ const SetYourKinjo = ({
       }));
     });
   };
+
+  // const handleImageUrl = (url: string) => {
+  //   console.log("handleImageUrl called with:", url);
+  //   console.log("typeof url", typeof url);
+  //   setFormData((prevFormData) => ({
+  //     ...prevFormData,
+  //     loc_image_url: url,
+  //   }));
+  // };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
