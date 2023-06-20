@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import "./CommentCard.scss";
 
 interface CommentCardProps {
@@ -16,15 +17,17 @@ interface CommentCardProps {
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
     return ( 
-        <div>
+        <div className='comment-card--container'>
             <header>
-                <p>{comment.user.username}</p>
+                <Link to={`/profile/${comment.user.username}`}>
+                    <p className='username'>{comment.user.username}</p>
+                </Link>
                 <section>
-                    <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
+                    <p className='date'>{new Date(comment.createdAt).toLocaleDateString()}</p>
                     <p>{new Date(comment.createdAt).toLocaleTimeString()}</p> 
                 </section>
             </header>
-            <p>{comment.comment}</p>
+            <p className='comment-text'>{comment.comment}</p>
         </div>
      );
 }

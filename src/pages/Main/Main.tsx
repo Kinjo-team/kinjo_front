@@ -26,7 +26,7 @@ const Main = () => {
     fetchItineraries();
   }, []);
 
-  const filteredItineraries = getRandomItineraries(itineraries, 3);
+  const filteredItineraries = getRandomItineraries(itineraries, 4);
 
   function toggleCreateItinerary(): void {
     setShowCreateItinerary(!showCreateItinerary);
@@ -48,6 +48,7 @@ const Main = () => {
           <p className="main--tag">"Exploration made for you, by you"</p>
         </section>
         <section className="recommend--container">
+          <h1>POPULAR</h1>
           {filteredItineraries.map((itinerary: any, index: number) => (
             <Link
               to={`/itinerary/${itinerary.itinerary_id}`}
@@ -57,9 +58,7 @@ const Main = () => {
             </Link>
           ))}
         </section>
-        <section className="near--container">
-          <KinjoNearYou />
-        </section>
+        <KinjoNearYou />
       </main>
       <Footer text={"kinjo"} />
     </>

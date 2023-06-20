@@ -1,5 +1,5 @@
 import React, {useState, useRef, FormEvent} from 'react'
-import {useAuth} from '../../../contexts/AuthContext'
+import {useAuth} from '../../../../contexts/AuthContext'
 
 import './DKinjoEditUsername.scss'
 
