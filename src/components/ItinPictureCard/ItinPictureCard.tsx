@@ -11,6 +11,7 @@ type ItinPictureCardProps = {
 const ItinPictureCard = ({itinerary, index} : ItinPictureCardProps) => {
 
     const pics = [pic1, pic2, pic3]
+    if (index > 2) index = Math.floor(Math.random() * 3);
 
   return (
     <div className="itinpicturecard--container">

@@ -322,6 +322,7 @@ const Map: React.FC<MapProps> = ({
                 <textarea
                   name="loc_descr_en"
                   id="loc_descr_en"
+                  rows={6}
                   placeholder="A cozy coffee shop with a great view of Mt. Fuji."
                   value={newLocationData.loc_descr_en}
                   onChange={handleInputChange}

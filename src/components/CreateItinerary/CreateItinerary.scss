@@ -26,6 +26,7 @@
     border-radius: 5px;
     overflow-y: scroll;
     transition: all 0.3s ease-in-out;
+    overflow-x: hidden;
 
     .create-header {
         position: relative;

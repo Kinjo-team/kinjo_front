@@ -1,4 +1,5 @@
 import React from "react";
+import "./Modal.scss";
 
 interface ModalProps {
   isOpen: boolean;
@@ -18,14 +19,14 @@ const Modal: React.FC<ModalProps> = ({
   }
 
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div className="modal--overlay">
+      <div className="modal--container">
         <div className="modal-body">
           <p>{message}</p>
         </div>
-        <div className="modal-footer">
-          <button onClick={onConfirm}>OK</button>
-          <button onClick={onCancel}>Cancel</button>
+        <div className="btn-grp">
+          <button className="confirm" onClick={onConfirm}>Confirm</button>
+          <button className="cancel" onClick={onCancel}>Cancel</button>
         </div>
       </div>
     </div>
