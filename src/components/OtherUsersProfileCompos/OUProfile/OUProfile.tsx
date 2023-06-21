@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 
 import "./OUProfile.scss"
-const defaultUserImage = require('../../../assets/images/defaultuser.png')
 
 type OUProfileProps = {
     username: string | undefined,
+    userImage: string | undefined
 }
 
-const OUProfile = ({username} : OUProfileProps) => {
+const OUProfile = ({username, userImage} : OUProfileProps) => {
     const [followers, setFollowers] = useState<any[]>([])
     const [following, setFollowing] = useState<any[]>([])
 
@@ -44,7 +44,7 @@ const OUProfile = ({username} : OUProfileProps) => {
     <>
         <div className='dprofile--container'>
             <div className='dprofile-image'>
-                <img src={defaultUserImage} alt="user" />
+                <img src={userImage} alt="user" />
             </div>
             <div className='dprofile-info'>
                 <h1>{username}</h1>

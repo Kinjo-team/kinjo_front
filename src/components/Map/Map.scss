@@ -63,6 +63,30 @@
                 padding: 0.5rem;
                 border-radius: 5px;
             }
+            .tags-input-container {
+                display: flex;
+                flex-direction: column;
+                .tag-items {
+                    display: flex;
+                    gap: 7px;
+                    flex-wrap: wrap;
+                    margin: 5px 0;
+                    .tags {
+                        padding: 0.5rem;
+                        border-radius: 5px;
+                        background-color: crimson;
+                    }
+                }
+            }
+        }
+
+        .marker-img {
+            width: clamp(100px, 20vw, 200px);
+            height: clamp(100px, 20vw, 200px);
+            object-fit: cover;
+            border-radius: 5px;
+            align-self: center;
+
         }
         .popup-submit-btn {
             padding: 0.5rem;

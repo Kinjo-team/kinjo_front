@@ -32,11 +32,6 @@ const TagsInput: React.FC<TagsInputProps> = ({ onTagsChange }) => {
 
   return (
     <div className="tags-input-container">
-      {tags.map((tag, index) => (
-        <div className="tag-item" key={index}>
-          <span className="text">{tag}</span>
-        </div>
-      ))}
       <input
         type="text"
         className="tags-input"
@@ -45,7 +40,12 @@ const TagsInput: React.FC<TagsInputProps> = ({ onTagsChange }) => {
         value={input}
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}
-      />
+        />
+        <div className="tag-items">
+          {tags.map((tag, index) => (
+            <span key={index} className="tags">{tag}</span>
+          ))}
+        </div>
     </div>
   );
 };

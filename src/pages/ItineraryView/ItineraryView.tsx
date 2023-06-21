@@ -26,15 +26,19 @@ const ItineraryView = () => {
 
   useEffect(() => {
     const fetchItinerary = async () => {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}itineraries/id/${id}`
-      );
-      const data = await response.json();
-      console.log(data)
-      setItinerary(data);
-      fetchAuthor(data.firebase_uuid);
-      checkIfFollowing(data.firebase_uuid);
-      console.log(i18n.language);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}itineraries/id/${id}`
+        );
+        const data = await response.json();
+        console.log(data)
+        setItinerary(data);
+        await fetchAuthor(data.firebase_uuid);
+        checkIfFollowing(data.firebase_uuid);
+        console.log(i18n.language);
+      } catch (error) {
+        console.error(error);
+      }
     };
     fetchItinerary();
     fetchTotalLikesAndDislikes();
@@ -56,34 +60,42 @@ const ItineraryView = () => {
   }
 
   const handleLikeButtonClick = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}likes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firebase_uuid: currentUser?.uid,
-        itinerary_id: id,
-      }),
-    });
-    if (response.ok) {
-        fetchTotalLikesAndDislikes();
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}likes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firebase_uuid: currentUser?.uid,
+          itinerary_id: id,
+        }),
+      });
+      if (response.ok) {
+          fetchTotalLikesAndDislikes();
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
   const handleDislikeButtonClick = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}dislikes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firebase_uuid: currentUser?.uid,
-        itinerary_id: id,
-      }),
-    });
-    if (response.ok) {
-      fetchTotalLikesAndDislikes();
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}dislikes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firebase_uuid: currentUser?.uid,
+          itinerary_id: id,
+        }),
+      });
+      if (response.ok) {
+        fetchTotalLikesAndDislikes();
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -102,19 +114,23 @@ const ItineraryView = () => {
 
 
   async function bookmarkItinerary() {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}bookmarks`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            },
-        body: JSON.stringify({
-            firebase_uuid: currentUser?.uid,
-            itinerary_id: itinerary.itinerary_id,
-        }),
-    });
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}bookmarks`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              },
+          body: JSON.stringify({
+              firebase_uuid: currentUser?.uid,
+              itinerary_id: itinerary.itinerary_id,
+          }),
+      });
+      if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
     }
 }
 
@@ -122,17 +138,16 @@ const fetchTotalLikesAndDislikes = async () => {
     const responseLike = await fetch(`${process.env.REACT_APP_BACKEND_URL}likes/${id}`);
     const dataLike = await responseLike.json();
     const likes = Number(dataLike);
-    console.log(likes)
     setLikesCount(likes);
 
     const responseDislike = await fetch(`${process.env.REACT_APP_BACKEND_URL}dislikes/${id}`);
     const dataDislike = await responseDislike.json();
     const dislikes = Number(dataDislike);
-    console.log(dislikes)
     setDislikesCount(dislikes);
   };
 
 async function followAuthor() {
+  try {
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}followers`, {
         method: "POST",
         headers: {
@@ -146,6 +161,9 @@ async function followAuthor() {
     if (response.ok) {
         window.location.reload();
     }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function checkIfFollowing(authorId : string) {
@@ -186,7 +204,10 @@ async function checkIfFollowing(authorId : string) {
             </div>
             <div className="author-info">
                 <Link to={`/profile/${author.username}`}>
+                  <div className="author-link">
+                    <img className="author-img" src={author.user_img} alt="profile-pic" />
                     <p>{author.username}</p>
+                  </div>
                 </Link>
                 {isFollowing ? 
                     <button disabled={true} className="following-btn">Following</button>    

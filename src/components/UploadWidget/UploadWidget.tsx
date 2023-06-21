@@ -9,17 +9,18 @@ declare global {
 }
 
 interface UploadWidgetProps {
+  insertNewImgUrl: (url: string) => void;
   handleImageUrl: (imageURL: string) => void;
-  setNewImgUrl: (url:string) => void;
+  text: string;
 }
 
-const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl, setNewImgUrl }) => {
+const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl, text, insertNewImgUrl }) => {
   const cloudinaryRef = useRef<any>();
   const widgetRef = useRef<any>();
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
-    console.log("widget:", cloudinaryRef.current);
+    // console.log("widget:", cloudinaryRef.current);
     widgetRef.current = cloudinaryRef.current.createUploadWidget(
       {
         cloudName: "dy6bhh9th",
@@ -28,8 +29,7 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl, setNewImgUr
       function (error: any, result: any) {
         if (!error && result && result.event === "success") {
           console.log("Done! Here is the image info: ", result.info);
-          
-          setNewImgUrl(result.info.secure_url)
+          insertNewImgUrl(result.info.secure_url);
           handleImageUrl(result.info.secure_url);
         }
       }
@@ -42,7 +42,7 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl, setNewImgUr
       className="add-img-btn"
       onClick={() => widgetRef.current.open()}
     >
-      Add Image
+      {text}
     </button>
   );
 };

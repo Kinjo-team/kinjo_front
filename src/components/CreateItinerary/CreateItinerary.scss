@@ -67,8 +67,8 @@
 }
 
 .submitkinjo--form {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     padding: clamp(1rem, 2vw, 2rem);
     gap: clamp(1rem, 1.5vw, 1.5rem);
     opacity: 0;
@@ -109,6 +109,25 @@
         }
     }
 
+    .upload-img-btn-grp {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .kinjo-cover-img {
+            min-width: clamp(10rem, 20vw, 20rem);
+            max-width: clamp(10rem, 20vw, 20rem);
+        }
+        .kinjo-cover-noimg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: clamp(10rem, 20vw, 20rem);
+            height: clamp(10rem, 20vw, 20rem);
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+    }
     .submitkinjo-btn-grp {
         display: flex;
         align-items: center;
@@ -152,11 +171,11 @@
     }
     .tag {
         margin-top: 10px;
-        background-color: rgba($color: #d45a0d, $alpha: 1);
+        background-color: rgba($color: #213A5C, $alpha: 1);
         color: white;
         font-weight: 550;
         border-radius: 10px;
-        box-shadow: 0 0 5px rgba($color: #d45a0d, $alpha: 1);
+        box-shadow: 0 0 5px rgba($color: #213A5C, $alpha: 1);
         padding: clamp(0.5rem, 1vw, 0.7rem);
         animation: fade-in 0.5s forwards ease-in-out;
     }        
@@ -171,5 +190,9 @@
     .createItinerary--container {
         grid-template-columns: 1fr;
         max-height: 85vh;
+    }
+    .submitkinjo--form {
+        display: flex;
+        flex-direction: column;
     }
 }
