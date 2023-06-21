@@ -8,6 +8,7 @@
                          "cards cards";
     animation: fade-in 1s ease-in-out;
     align-self: self-start;
+    width: 100%;
     padding: 1rem;
         gap: 1rem;
 
@@ -21,8 +22,9 @@
     }
 
     .no-kinjos-msg {
-        text-align: center;
+        grid-area: cards;
         display: flex;
+        text-align: center;
         justify-content: center;
         align-items: center;
         color: black;

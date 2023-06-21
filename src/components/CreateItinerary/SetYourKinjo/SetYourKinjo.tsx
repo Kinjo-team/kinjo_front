@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useKinjo } from "../../../contexts/KinjoContext";
 import { useAuth } from "../../../contexts/AuthContext";
 import Map from "../../Map/Map";
 import Modal from "./Modal";
@@ -36,7 +35,6 @@ const SetYourKinjo = ({
   insertNewKinjoId,
 }: KinjoProcessProps) => {
   // STATES
-  const { kinjo, changeKinjo } = useKinjo();
   const { currentUser } = useAuth();
   const [stage, setStage] = useState(1);
   const [formData, setFormData] = useState<CreateItineraryData>({

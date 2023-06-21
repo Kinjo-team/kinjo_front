@@ -30,6 +30,7 @@ const ItineraryView = () => {
         `${process.env.REACT_APP_BACKEND_URL}itineraries/id/${id}`
       );
       const data = await response.json();
+      console.log(data)
       setItinerary(data);
       fetchAuthor(data.firebase_uuid);
       checkIfFollowing(data.firebase_uuid);

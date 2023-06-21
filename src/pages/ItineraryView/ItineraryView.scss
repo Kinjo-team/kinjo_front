@@ -7,11 +7,12 @@
     background-color: white;
     grid-template-rows: 50px 1fr;
     grid-template-columns: 1fr 1fr;;
-    grid-template-areas: "buttons1 cards"
+    grid-template-areas: "buttons cards"
                          "info cards";
     gap: 1.5rem;
 
     .back-btn {
+        grid-area: buttons;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -22,7 +23,6 @@
         color: white;
         border: none;
         cursor: pointer;
-        overflow-y: auto;
         &:hover {
             background-color: white;
             border: 1px solid crimson;
@@ -39,23 +39,27 @@
         gap: 1rem;
         padding: 1rem;
         border-radius: 5px;
-        background-color: #29424E;
+        background-color: white;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
         overflow-y: auto;
 
         .main-info {
             grid-area: main;
             display: grid;
-            grid-template-columns: 5fr 1fr;
-            gap: clamp(1rem, 2vw, 2rem);
+            grid-template-columns: 4fr 1fr;
+            grid-template-areas: "info author";
             background-color: white;
-            padding: 1rem;
+            border-radius: 5px;
+            
 
             .kinjo-info {
+                grid-area: info;
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;
 
                 .kinjo-header {
+                    padding: 0.3rem;
                     display: flex;
                     justify-content: space-between;
                     h1 {
@@ -81,6 +85,8 @@
                     }
                 }
                 .kinjo-desc {
+                    display: flex;
+                    padding: 0.3rem;
                     font-size: clamp(0.9rem, 2vw, 1.1rem);
                 }
             }
@@ -89,12 +95,13 @@
                 flex-direction: column;
                 gap: clamp(1rem, 2vw, 2rem);
                 justify-content: center;
+                padding: 1rem;
 
                 .follow-btn {
                     background-color: orange;
                     border: none;
                     padding: clamp(0.5rem, 1vw, 1rem);
-                    font-size: clamp(0.6rem, 2vw, 1.2rem);
+                    font-size: clamp(0.6rem, 2vw, 1rem);
                     border-radius: 5px;
                     color: white;
                 }
@@ -136,9 +143,21 @@
         gap: 1rem;
         padding: 1rem;
         border-radius: 5px;
-        background-color: #29424E;
-        overflow: auto;
+        background-color: white;
+        overflow-y: scroll;
+        
+        &::-webkit-scrollbar {
+            width: 10px; /* For WebKit browsers */
+        }
+        &::-webkit-scrollbar-track {
+            background-color: lightgray; /* For WebKit browsers */
+          }
+        &::-webkit-scrollbar-thumb {
+        background-color: darkgray; /* For WebKit browsers */
+        }
     }
+
+  
 }
 
 @media screen and (max-width: 768px) {
@@ -150,8 +169,15 @@
                              "info"
                              "cards";
         
+     
         .readonly-map-container {
-        height: 300px;
+            height: 300px;
+        }
+
+        .cards--container {
+            &::-webkit-scrollbar {
+                width: 0px; /* For WebKit browsers */
+            }
         }
     }
 }

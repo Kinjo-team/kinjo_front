@@ -49,7 +49,11 @@ const Main = () => {
         </section>
         <section className="recommend--container">
           <h1>POPULAR</h1>
-          {filteredItineraries.map((itinerary: any, index: number) => (
+          {filteredItineraries.length === 0 ? 
+            <div className="no-popular-msg">
+              <p>There are no itineraries yet!</p>
+          </div>
+          : filteredItineraries.map((itinerary: any, index: number) => (
             <Link
               to={`/itinerary/${itinerary.itinerary_id}`}
               key={itinerary.itinerary_id}

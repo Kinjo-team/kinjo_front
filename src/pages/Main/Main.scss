@@ -70,6 +70,7 @@
     }
 
     .recommend--container {
+        align-self: self-start;
         font-family: 'Roboto', sans-serif;
         grid-area: recommend;
         grid-template-rows: 50px 1fr;
@@ -77,6 +78,7 @@
         grid-template-areas: "title title"
                              "cards cards";
         padding: 1rem;
+        width: 100%;
         gap: 1rem;
         display: grid;
         animation: fade-in 1s ease-in-out;
@@ -88,6 +90,14 @@
             color: black;
             font-size: clamp(1rem, 2vw, 1.5rem);
             margin-bottom: 0.5rem;
+        }
+        .no-popular-msg {
+            grid-area: cards;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            color: black;
         }
     }
 }

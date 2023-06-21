@@ -61,8 +61,7 @@
         background-color: transparent;
         border: none;
         &:hover {
-            background-color: black;
-            color: white;
+            scale: 1.1;
         }
     }
 }
@@ -127,19 +126,22 @@
         }
     
         .submitkinjo-submit-btn {
-            background-color: #47a570;
+            background-color: crimson;
             color: white;
+            border: 1px solid crimson;
             &:hover {
-                background-color: #5c6b77;
+                background-color: white;
+                color: crimson;
             }
         }
     
         .submitkinjo-cancel-btn {
-            background-color: #0e7eb9;
-            color: white;
+            background-color: white;
+            border: 1px solid black;
+            color: black;
             &:hover {
-                background-color: white;
-                color: black;
+                background-color: black;
+                color: white;
             }
         }
     }

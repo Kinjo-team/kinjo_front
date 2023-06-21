@@ -10,9 +10,10 @@ declare global {
 
 interface UploadWidgetProps {
   handleImageUrl: (imageURL: string) => void;
+  setNewImgUrl: (url:string) => void;
 }
 
-const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl }) => {
+const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl, setNewImgUrl }) => {
   const cloudinaryRef = useRef<any>();
   const widgetRef = useRef<any>();
 
@@ -27,6 +28,8 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl }) => {
       function (error: any, result: any) {
         if (!error && result && result.event === "success") {
           console.log("Done! Here is the image info: ", result.info);
+          
+          setNewImgUrl(result.info.secure_url)
           handleImageUrl(result.info.secure_url);
         }
       }
