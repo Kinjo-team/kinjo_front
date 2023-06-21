@@ -13,15 +13,29 @@
         a {
             text-decoration: none;
         }
-        
-        .username {
-            font-size: clamp(0.8rem, 2vw, 1.1rem);
-            font-weight: 600;
-            color: crimson;
-            
+
+        .comment-user {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin: 1rem;
+            .user-img {
+                width: clamp(40px, 10vw, 60px);
+                height: clamp(40px, 10vw, 60px);
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .username {
+                font-size: clamp(0.8rem, 2vw, 1.1rem);
+                font-weight: 600;
+                color: crimson;
+                
+            }
         }
+        
         section {
             display: flex;
+            align-items: center;
             gap: 0.5rem;
             font-size: clamp(0.7rem, 2vw, 0.9rem);
             font-style: italic;

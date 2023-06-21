@@ -11,6 +11,7 @@ interface CommentCardProps {
         createdAt: string;
         user: {
             username: string;
+            user_img: string;
         };
     };
 }
@@ -20,7 +21,10 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
         <div className='comment-card--container'>
             <header>
                 <Link to={`/profile/${comment.user.username}`}>
-                    <p className='username'>{comment.user.username}</p>
+                    <div className='comment-user'>
+                        <img className='user-img' src={comment.user.user_img} alt="" />
+                        <p className='username'>{comment.user.username}</p>
+                    </div>
                 </Link>
                 <section>
                     <p className='date'>{new Date(comment.createdAt).toLocaleDateString()}</p>
