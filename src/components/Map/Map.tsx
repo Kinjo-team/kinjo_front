@@ -64,6 +64,7 @@ const Map: React.FC<MapProps> = ({
   const [newLocationData, setNewLocationData] =
     useState<Location>(initialLocation);
   const [showPopup, setShowPopup] = useState(false);
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   //useStates tied to FlyTo logic (centerPosition & zoomLevel)
@@ -271,6 +272,14 @@ const Map: React.FC<MapProps> = ({
     );
   };
 
+  console.log(newLocationData)
+  console.log(imgUrl)
+
+  // allow setting of image url 
+  function setNewImgUrl(url: string) {
+    setImgUrl(url);
+  }
+
   return (
     <div className="create-map-container">
       <form className="create-map-searchbar" onSubmit={handleSearch}>
@@ -300,7 +309,7 @@ const Map: React.FC<MapProps> = ({
                 <h3>{location.loc_name}</h3>
                 <p>{location.loc_descr_en}</p>
                 <p>Tags: {location.loc_tags.join(" ")}</p>
-                <p>Images: {location.loc_image_url}</p>
+                <img className="popup-img" src={location.loc_image_url} alt="location" />
                 <button
                   className="popup-delete-btn"
                   onClick={() => handleDeleteMarker(location.id)}
@@ -362,7 +371,9 @@ const Map: React.FC<MapProps> = ({
                   }}
                 />
               </div>
+              <img src={newLocationData.loc_image_url} alt="" />
               <UploadWidget
+                setNewImgUrl={setNewImgUrl}
                 handleImageUrl={(url) => {
                   // handleImageUrl(url);
                   setNewLocationData((prevData) => ({
