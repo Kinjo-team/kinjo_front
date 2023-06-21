@@ -64,8 +64,9 @@ const Map: React.FC<MapProps> = ({
   const [newLocationData, setNewLocationData] =
     useState<Location>(initialLocation);
   const [showPopup, setShowPopup] = useState(false);
-  const [imgUrl, setImgUrl] = useState<string | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  
+  const [imgUrl, setImgUrl] = useState<string>("");
 
   //useStates tied to FlyTo logic (centerPosition & zoomLevel)
   const [flyToPosition, setFlyToPosition] = useState<[number, number] | null>(
@@ -96,6 +97,8 @@ const Map: React.FC<MapProps> = ({
   // Mapbox tile layer API token
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
 
+
+  // HANDLERS
   const handleInputChange = <T extends HTMLInputElement | HTMLTextAreaElement>(
     e: React.ChangeEvent<T>
   ) => {
@@ -114,49 +117,9 @@ const Map: React.FC<MapProps> = ({
     }
   };
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const { id, loc_coords, loc_name, loc_descr_en, loc_tags, loc_image_url } =
-  //     newLocationData;
-
-  //   if (loc_name.trim() !== "" && newLocationData.loc_image_url.length === 0) {
-  //     const newLocation: Location = {
-  //       id,
-  //       loc_coords,
-  //       loc_name,
-  //       loc_descr_en,
-  //       loc_tags,
-  //       loc_image_url,
-  //     };
-  //     setLocations((prevLocations) => [...prevLocations, newLocation]);
-  //     resetNewLocationData(true);
-  //     handleLocationData(newLocation);
-  //   }
-  //   // } else if (newLocationData.loc_image_url.length > 0) {
-  //   //   try {
-  //   //     const imageUrls = await Promise.all(
-  //   //       newLocationData.loc_image_url.map((image) =>
-  //   //         fetchCloudinaryImageUrl(image)
-  //   //       )
-  //   //     );
-  //   //     const newLocationWithUrls: Location = {
-  //   //       ...newLocationData,
-  //   //       loc_image_url: imageUrls,
-  //   //     };
-  //   //     setLocations((prevLocations) => [
-  //   //       ...prevLocations,
-  //   //       newLocationWithUrls,
-  //   //     ]);
-  //   //     resetNewLocationData(true);
-  //   //     handleLocationData(newLocationWithUrls);
-  //   //   } catch (error) {
-  //   //     console.error("Error fetching image URLs:", error);
-  //   //   }
-  //   // }
-  // };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setImgUrl("");
     const { id, loc_coords, loc_name, loc_descr_en, loc_tags, loc_image_url } =
       newLocationData;
 
@@ -272,14 +235,12 @@ const Map: React.FC<MapProps> = ({
     );
   };
 
-  console.log(newLocationData)
-  console.log(imgUrl)
-
-  // allow setting of image url 
-  function setNewImgUrl(url: string) {
+  // Sets new img
+  function insertNewImgUrl(url: string) {
     setImgUrl(url);
   }
 
+ 
   return (
     <div className="create-map-container">
       <form className="create-map-searchbar" onSubmit={handleSearch}>
@@ -371,9 +332,10 @@ const Map: React.FC<MapProps> = ({
                   }}
                 />
               </div>
-              <img src={newLocationData.loc_image_url} alt="" />
+              {imgUrl !== "" && <img className="marker-img" src={imgUrl} alt="" />}
               <UploadWidget
-                setNewImgUrl={setNewImgUrl}
+                insertNewImgUrl={insertNewImgUrl}
+                text="Upload a Image"
                 handleImageUrl={(url) => {
                   // handleImageUrl(url);
                   setNewLocationData((prevData) => ({

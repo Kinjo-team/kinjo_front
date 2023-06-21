@@ -17,7 +17,7 @@ const DKinjoEditUsername = ({toggleShowEditUsername} : DKinjoEditUsernameProps) 
         try {
             const newUsername = usernameRef.current?.value;
             if (newUsername) {
-                const res = await fetch(`http://localhost:8000/users/${newUsername}`, {
+                const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}users/name/${newUsername}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'

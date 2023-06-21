@@ -49,6 +49,7 @@ const SetYourKinjo = ({
     locationData: [],
     itinerary_image_url: "",
   });
+  const [imgUrl, setImgUrl] = useState<string>("");
 
   // MODAL STATES
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -223,6 +224,10 @@ const handleImageUrl = (imageUrl: string) => {
     });
   };
 
+  function insertNewImgUrl(url: string) {
+    setImgUrl(url);
+  }
+
   return (
     <div className="create-kinjo--container">
       <button
@@ -268,58 +273,68 @@ const handleImageUrl = (imageUrl: string) => {
             onSubmit={handleSubmit}
             className={`submitkinjo--form ${stage === 2 ? "show" : ""}`}
           >
-            <section className="input-form">
-              <label htmlFor="itinerary_name">NAME</label>
-              <input
-                type="text"
-                name="itinerary_name"
-                id="itinerary_name"
-                placeholder="e.g. My First Itinerary"
-                value={formData.itinerary_name}
-                onChange={handleInputChange}
-                onKeyDown={handleEnterKey}
-                required
-              />
-            </section>
-            <section className="input-form">
-              <label htmlFor="itinerary_descr">DESCRIPTION</label>
-              <textarea
-                name="itinerary_descr"
-                id="itinerary_descr"
-                placeholder="Add description"
-                value={formData.itinerary_descr}
-                onChange={handleInputChange}
-                onKeyDown={handleEnterKey}
-                ref={descriptionRef}
-                required
-              />
-            </section>
-            <form>
-              <div className="input-form">
-                <label htmlFor="itinerary_tags">TAGS</label>
+            <div>
+              <section className="input-form">
+                <label htmlFor="itinerary_name">NAME</label>
                 <input
                   type="text"
-                  name="itinerary_tags"
-                  id="itinerary_tags"
-                  placeholder="Add tags(max 5) e.g. coffee"
-                  value={formData.enteredTag}
+                  name="itinerary_name"
+                  id="itinerary_name"
+                  placeholder="e.g. My First Itinerary"
+                  value={formData.itinerary_name}
                   onChange={handleInputChange}
                   onKeyDown={handleEnterKey}
-                  ref={tagsRef}
                   required
                 />
-              </div>
-              <div className="tag-container">
-                {formData.itinerary_tags.map((tag, index) => (
-                  <div key={index} className="tag">
-                    {tag}
-                  </div>
-                ))}
-              </div>
-            </form>
-            <UploadWidget
-               handleImageUrl={handleImageUrl}
-              />
+              </section>
+              <section className="input-form">
+                <label htmlFor="itinerary_descr">DESCRIPTION</label>
+                <textarea
+                  name="itinerary_descr"
+                  id="itinerary_descr"
+                  placeholder="Add description"
+                  value={formData.itinerary_descr}
+                  onChange={handleInputChange}
+                  onKeyDown={handleEnterKey}
+                  ref={descriptionRef}
+                  required
+                />
+              </section>
+              <form>
+                <div className="input-form">
+                  <label htmlFor="itinerary_tags">TAGS</label>
+                  <input
+                    type="text"
+                    name="itinerary_tags"
+                    id="itinerary_tags"
+                    placeholder="Add tags(max 5) e.g. coffee"
+                    value={formData.enteredTag}
+                    onChange={handleInputChange}
+                    onKeyDown={handleEnterKey}
+                    ref={tagsRef}
+                    required
+                  />
+                </div>
+                <div className="tag-container">
+                  {formData.itinerary_tags.map((tag, index) => (
+                    <div key={index} className="tag">
+                      {tag}
+                    </div>
+                  ))}
+                </div>
+              </form>
+            </div>
+            <div className="upload-img-btn-grp">
+              {
+                imgUrl !== "" ? <img className="kinjo-cover-img" src={imgUrl} alt="" />
+                              : <div className="kinjo-cover-noimg">No Cover Photo</div>
+              }
+              <UploadWidget
+                insertNewImgUrl={insertNewImgUrl}
+                text="Upload Cover Photo"
+                handleImageUrl={handleImageUrl}
+                />
+            </div>
             <div className="submitkinjo-btn-grp">
               <button
                 type="submit"

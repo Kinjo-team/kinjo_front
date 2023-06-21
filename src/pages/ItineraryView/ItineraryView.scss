@@ -33,7 +33,7 @@
     .info--container {
         grid-area: info;
         display: grid;
-        grid-template-rows: auto auto;
+        grid-template-rows: auto 1fr;
         grid-template-areas: "main"
                              "map";
         gap: 1rem;
@@ -46,14 +46,14 @@
         .main-info {
             grid-area: main;
             display: grid;
-            grid-template-columns: 4fr 1fr;
-            grid-template-areas: "info author";
+            grid-template-columns: 3fr 1fr;
+            grid-template-areas: "kinjoinfo authorinfo";
             background-color: white;
             border-radius: 5px;
             
 
             .kinjo-info {
-                grid-area: info;
+                grid-area: kinjoinfo;
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;
@@ -87,23 +87,45 @@
                 .kinjo-desc {
                     display: flex;
                     padding: 0.3rem;
-                    font-size: clamp(0.9rem, 2vw, 1.1rem);
+                    font-size: clamp(0.7rem, 2vw, 1.1rem);
                 }
             }
             .author-info {
                 display: flex;
                 flex-direction: column;
                 gap: clamp(1rem, 2vw, 2rem);
-                justify-content: center;
                 padding: 1rem;
 
+                a {
+                    text-decoration: none;
+                }
+                .author-link {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    align-items: center;
+                    .author-img {
+                        width: 100px;
+                        height: 100px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+                }
+
                 .follow-btn {
-                    background-color: orange;
+                    background-color: #213A5C;
+                    border: 1px solid #213A5C;
                     border: none;
                     padding: clamp(0.5rem, 1vw, 1rem);
                     font-size: clamp(0.6rem, 2vw, 1rem);
                     border-radius: 5px;
                     color: white;
+                    cursor: pointer;
+                    transition: all 0.3s ease-in-out;
+                    &:hover {
+                        background-color: white;
+                        color: #213A5C;
+                    }
                 }
 
                 .following-btn {
@@ -119,14 +141,17 @@
                 .vote-container {
                     display: flex;
                     justify-content: space-between;
+                    gap: 0.3rem;
                     .upvote {
                         display: flex;
+                        gap: 0.2rem;
                         align-items: center;
                         color: darkcyan;
                         cursor: pointer;
                     }
                     .downvote {
                         display: flex;
+                        gap: 0.2rem;
                         align-items: center;
                         color: crimson;
                         cursor: pointer;
@@ -140,8 +165,8 @@
         grid-area: cards;
         display: flex;
         flex-direction: column;
+        padding: 0.5rem;
         gap: 1rem;
-        padding: 1rem;
         border-radius: 5px;
         background-color: white;
         overflow-y: scroll;
