@@ -64,7 +64,6 @@ const SetYourKinjo = ({
 
   const MAX_AREA = 3539860000; // Biggest area district in Japan in meters for Ishikari, Hokkaido
 
-
   // EFFECTS
 
   useEffect(() => {
