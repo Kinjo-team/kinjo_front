@@ -132,11 +132,10 @@ const Map: React.FC<MapProps> = ({
         loc_tags,
         loc_image_url,
       };
-      // Check if the location already exists in the array
       const existingLocationIndex = locations.findIndex((loc) => loc.id === id);
 
+      //Edit logic
       if (existingLocationIndex > -1) {
-        // Update the existing location in the array
         setLocations((prevLocations) =>
           prevLocations.map((loc, index) =>
             index === existingLocationIndex ? newLocation : loc
@@ -149,8 +148,6 @@ const Map: React.FC<MapProps> = ({
       handleLocationData(newLocation);
     }
   };
-
-  // const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {};
 
   const resetNewLocationData = (formSubmitted: boolean) => {
     if (!formSubmitted) {
