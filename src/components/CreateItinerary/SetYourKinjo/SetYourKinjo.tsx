@@ -252,7 +252,7 @@ const SetYourKinjo = ({
         <>
           <div className="create-header">
             <h1>1. Set Your Kinjo</h1>
-            <p>Click on the map, and drag to set the confines of your Kinjo!</p>
+            <p>Click on the map and drag to set the confines of your Kinjo!</p>
             <div className="setkinjo-map-pointer">↓</div>
           </div>
         </>
