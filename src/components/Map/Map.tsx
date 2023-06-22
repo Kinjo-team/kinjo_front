@@ -364,7 +364,7 @@ const Map: React.FC<MapProps> = ({
               )}
               <UploadWidget
                 insertNewImgUrl={insertNewImgUrl}
-                text="Upload a Image"
+                text="Upload an Image"
                 handleImageUrl={(url) => {
                   // handleImageUrl(url);
                   setNewLocationData((prevData) => ({
