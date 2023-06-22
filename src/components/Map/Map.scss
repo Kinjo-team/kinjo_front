@@ -1,161 +1,168 @@
 .create-map-container {
-    position: relative;
-    border-radius: 5px;
-    border: 1px solid lightgray;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
 
-    .create-map-searchbar {
-        display: flex;
-        position: absolute;
-        gap: 5px;
-        bottom: 20px;
-        left: 0;
-        z-index: 999;
-        input {
-            border: none;
-            outline: none;
-            padding: 0.5rem;
-            font-size: clamp(0.7rem, 1vw, 1rem);
-            border-radius: 5px;
-        }
-        button {
-            padding: clamp(0.5rem, 1vw, 1rem);
-            font-size: clamp(0.5rem, 1vw, 1rem);
-            border: none;
-            outline: none;
-            color: white;
-            background-color: #213A5C;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+  .create-map-searchbar {
+    display: flex;
+    position: absolute;
+    gap: 5px;
+    bottom: 20px;
+    left: 0;
+    z-index: 999;
+    input {
+      border: none;
+      outline: none;
+      padding: 0.5rem;
+      font-size: clamp(0.7rem, 1vw, 1rem);
+      border-radius: 5px;
     }
-
-    .popup-form {
-        display: flex;
-        flex-direction: column;
-        color: white;
-        background-color: #213A5C;
-
-        .popup-form-input {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            gap: 5px;
-            padding: 1rem;
-
-            label {
-                position: absolute;
-                top: 5px;
-                background-color: #213A5C;
-                letter-spacing: 0.05rem;
-                border-radius: 5px;
-            }
-            input {
-                border: none;
-                outline: none;
-                padding: 0.5rem;
-                border-radius: 5px;
-            }
-            textarea {
-                font-family: Arial, Helvetica, sans-serif;
-                border: none;
-                outline: none;
-                padding: 0.5rem;
-                border-radius: 5px;
-            }
-            .tags-input-container {
-                display: flex;
-                flex-direction: column;
-                .tag-items {
-                    display: flex;
-                    gap: 7px;
-                    flex-wrap: wrap;
-                    margin: 5px 0;
-                    .tags {
-                        padding: 0.5rem;
-                        border-radius: 5px;
-                        background-color: crimson;
-                    }
-                }
-            }
-        }
-
-        .marker-img {
-            width: clamp(100px, 20vw, 200px);
-            height: clamp(100px, 20vw, 200px);
-            object-fit: cover;
-            border-radius: 5px;
-            align-self: center;
-
-        }
-        .popup-submit-btn {
-            padding: 0.5rem;
-            border: none;
-            outline: none;
-            color: white;
-            background-color: crimson;
-            cursor: pointer;
-            border: solid 1px crimson;
-            border-radius: 5px;
-            transition: all 0.3s ease-in-out;
-            margin: 5px;
-
-            &:hover {
-                background-color: white;
-                color: crimson;
-            }
-        }
+    button {
+      padding: clamp(0.5rem, 1vw, 1rem);
+      font-size: clamp(0.5rem, 1vw, 1rem);
+      border: none;
+      outline: none;
+      color: white;
+      background-color: #213a5c;
+      cursor: pointer;
+      border-radius: 5px;
     }
-}
+  }
 
-.created-marker-popup {
+  .popup-form {
     display: flex;
     flex-direction: column;
     color: white;
+    background-color: #213a5c;
+    max-height: 400px;
+    overflow-y: auto;
 
-    h3 {
-        font-size: clamp(0.7rem, 1vw, 1rem);
-    }
+    .popup-form-input {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      gap: 5px;
+      padding: 1rem;
 
-    p {
-        font-size: clamp(0.5rem, 1vw, 0.8rem);
-    }
-
-    .popup-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+      label {
+        position: absolute;
+        top: 5px;
+        background-color: #213a5c;
+        letter-spacing: 0.05rem;
         border-radius: 5px;
-    }
-
-    .popup-delete-btn {
-        align-self: center;
-        padding: 0.5rem;
-        width: 50%;
+      }
+      input {
         border: none;
         outline: none;
-        color: white;
-        background-color: crimson;
-        cursor: pointer;
-        border: solid 1px crimson;
+        padding: 0.5rem;
         border-radius: 5px;
-        transition: all 0.3s ease-in-out;
-        margin: 5px;
-
-        &:hover {
-            background-color: white;
-            color: crimson;
+      }
+      textarea {
+        font-family: Arial, Helvetica, sans-serif;
+        border: none;
+        outline: none;
+        padding: 0.5rem;
+        border-radius: 5px;
+      }
+      .tags-input-container {
+        display: flex;
+        flex-direction: column;
+        .tag-items {
+          display: flex;
+          gap: 7px;
+          flex-wrap: wrap;
+          margin: 5px 0;
+          .tags {
+            padding: 0.5rem;
+            border-radius: 5px;
+            background-color: crimson;
+          }
         }
+      }
     }
+
+    .marker-img {
+      width: clamp(100px, 20vw, 200px);
+      height: clamp(100px, 20vw, 200px);
+      object-fit: cover;
+      border-radius: 5px;
+      align-self: center;
+    }
+    .popup-submit-btn {
+      padding: 0.5rem;
+      border: none;
+      outline: none;
+      color: white;
+      background-color: crimson;
+      cursor: pointer;
+      border: solid 1px crimson;
+      border-radius: 5px;
+      transition: all 0.3s ease-in-out;
+      margin: 5px;
+
+      &:hover {
+        background-color: white;
+        color: crimson;
+      }
+    }
+  }
+}
+
+.created-marker-popup {
+  display: flex;
+  flex-direction: column;
+  color: white;
+
+  h3 {
+    font-size: clamp(0.7rem, 1vw, 1rem);
+  }
+
+  p {
+    font-size: clamp(0.5rem, 1vw, 0.8rem);
+  }
+
+  .popup-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .popup-delete-btn {
+    align-self: center;
+    padding: 0.5rem;
+    width: 50%;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: crimson;
+    cursor: pointer;
+    border: solid 1px crimson;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    margin: 5px;
+
+    &:hover {
+      background-color: white;
+      color: crimson;
+    }
+  }
 }
 
 // LEAFLET STYLE
 .request-popup .leaflet-popup-content-wrapper {
-    background-color: #213A5C;
-    min-width: clamp(100px, 30vw, 300px);
-  }
+  background-color: #213a5c;
+  min-width: clamp(100px, 30vw, 300px);
+}
 
-  
-.leaflet-control { z-index: 0 !important}
-.leaflet-pane { z-index: 0 !important}
-.leaflet-top, .leaflet-bottom {z-index: 0 !important}
+.leaflet-control {
+  z-index: 0 !important;
+}
+.leaflet-pane {
+  z-index: 0 !important;
+}
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 0 !important;
+}

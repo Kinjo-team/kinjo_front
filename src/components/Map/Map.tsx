@@ -177,6 +177,7 @@ const Map: React.FC<MapProps> = ({
             id: newId,
             loc_coords: [e.latlng.lat, e.latlng.lng],
           }));
+          setImgUrl("");
           setShowPopup(true);
         }
       },
