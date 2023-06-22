@@ -65,7 +65,7 @@ const Map: React.FC<MapProps> = ({
     useState<Location>(initialLocation);
   const [showPopup, setShowPopup] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
-  
+
   const [imgUrl, setImgUrl] = useState<string>("");
 
   //useStates tied to FlyTo logic (centerPosition & zoomLevel)
@@ -96,7 +96,6 @@ const Map: React.FC<MapProps> = ({
 
   // Mapbox tile layer API token
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
-
 
   // HANDLERS
   const handleInputChange = <T extends HTMLInputElement | HTMLTextAreaElement>(
@@ -133,7 +132,19 @@ const Map: React.FC<MapProps> = ({
         loc_tags,
         loc_image_url,
       };
-      setLocations((prevLocations) => [...prevLocations, newLocation]);
+      // Check if the location already exists in the array
+      const existingLocationIndex = locations.findIndex((loc) => loc.id === id);
+
+      if (existingLocationIndex > -1) {
+        // Update the existing location in the array
+        setLocations((prevLocations) =>
+          prevLocations.map((loc, index) =>
+            index === existingLocationIndex ? newLocation : loc
+          )
+        );
+      } else {
+        setLocations((prevLocations) => [...prevLocations, newLocation]);
+      }
       resetNewLocationData(true);
       handleLocationData(newLocation);
     }
@@ -198,6 +209,15 @@ const Map: React.FC<MapProps> = ({
     );
   };
 
+  //Edit markers logic
+  const handleEditMarker = (id: number) => {
+    const locationToEdit = locations.find((loc) => loc.id === id);
+    if (locationToEdit) {
+      setNewLocationData(locationToEdit);
+      setShowPopup(true);
+    }
+  };
+
   // Geocoding logic for searchbar
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -240,7 +260,6 @@ const Map: React.FC<MapProps> = ({
     setImgUrl(url);
   }
 
- 
   return (
     <div className="create-map-container">
       <form className="create-map-searchbar" onSubmit={handleSearch}>
@@ -270,7 +289,17 @@ const Map: React.FC<MapProps> = ({
                 <h3>{location.loc_name}</h3>
                 <p>{location.loc_descr_en}</p>
                 <p>Tags: {location.loc_tags.join(" ")}</p>
-                <img className="popup-img" src={location.loc_image_url} alt="location" />
+                <img
+                  className="popup-img"
+                  src={location.loc_image_url}
+                  alt="location"
+                />
+                <button
+                  className="popup-edit-btn"
+                  onClick={() => handleEditMarker(location.id)}
+                >
+                  Edit
+                </button>
                 <button
                   className="popup-delete-btn"
                   onClick={() => handleDeleteMarker(location.id)}
@@ -332,7 +361,9 @@ const Map: React.FC<MapProps> = ({
                   }}
                 />
               </div>
-              {imgUrl !== "" && <img className="marker-img" src={imgUrl} alt="" />}
+              {imgUrl !== "" && (
+                <img className="marker-img" src={imgUrl} alt="" />
+              )}
               <UploadWidget
                 insertNewImgUrl={insertNewImgUrl}
                 text="Upload a Image"
