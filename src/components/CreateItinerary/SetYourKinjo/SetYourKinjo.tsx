@@ -60,6 +60,7 @@ const SetYourKinjo = ({
   );
   const [currentLayer, setCurrentLayer] = useState<any>(null);
   const [currentFeatureGroup, setCurrentFeatureGroup] = useState<any>(null);
+  const [circleCreated, setCircleCreated] = useState(false);
 
   // REFS/VARIABLES
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -176,6 +177,7 @@ const SetYourKinjo = ({
     setIsModalOpen(true);
     setModalConfirmHandler(() => () => {
       forwardTransition();
+      setCircleCreated(true);
       setFormData((prevFormData) => ({
         ...prevFormData,
         kinjo_coords: [latitude, longitude],
@@ -192,11 +194,6 @@ const SetYourKinjo = ({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // if (!window.confirm("Are you sure you want to submit this kinjo?")) {
-    //   return;
-    // }
-
     setModalMessage("Are you sure you want to submit this kinjo?");
     setIsModalOpen(true);
     setModalConfirmHandler(() => async () => {
@@ -281,6 +278,7 @@ const SetYourKinjo = ({
         <Map
           handleLocationData={handleLocationData}
           handleCircleCreated={handleCircleCreated}
+          circleCreated={circleCreated}
         />
       </div>
 

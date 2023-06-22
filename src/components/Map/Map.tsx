@@ -34,6 +34,7 @@ interface MapProps {
     layer: any,
     featureGroup: any
   ) => void;
+  circleCreated: boolean;
 }
 
 //default position for Tokyo
@@ -386,6 +387,7 @@ const Map: React.FC<MapProps> = ({
           handleCircleCreated={handleCircleCreated}
           onShapeCreated={setDrawnShape}
           onShapeDeleted={handleShapeDeleted}
+          circleCreated={false}
         />
       </MapContainer>
     </div>
