@@ -10,12 +10,11 @@ import {
 } from "react-leaflet";
 import FlyTo from "../../FlyTo/FlyTo";
 
-import "./DMap.scss"
-
+import "./DMap.scss";
 
 interface Visited_map {
   id: number;
-  visited_coords: [number, number];
+  visited_coords: any;
   visited_name: string;
   visited_descr: string;
 }
@@ -38,7 +37,7 @@ const japanLatLngBounds = new LatLngBounds(japanBounds);
 
 const initialLocation: Visited_map = {
   id: 0,
-  visited_coords: [0, 0],
+  visited_coords: null,
   visited_name: "",
   visited_descr: "",
 };
@@ -204,6 +203,7 @@ const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
         zoom={6}
         style={{ height: "100%", width: "100%" }}
         maxBounds={japanBounds}
+        minZoom={5}
       >
         <TileLayer
           url={mapboxTileUrl}

@@ -49,18 +49,20 @@ const Main = () => {
         </section>
         <section className="recommend--container">
           <h1>POPULAR</h1>
-          {filteredItineraries.length === 0 ? 
+          {filteredItineraries.length === 0 ? (
             <div className="no-popular-msg">
               <p>There are no itineraries yet!</p>
-          </div>
-          : filteredItineraries.map((itinerary: any, index: number) => (
-            <Link
-              to={`/itinerary/${itinerary.itinerary_id}`}
-              key={itinerary.itinerary_id}
-            >
-              <ItinPictureCard itinerary={itinerary} index={index} />
-            </Link>
-          ))}
+            </div>
+          ) : (
+            filteredItineraries.map((itinerary: any, index: number) => (
+              <Link
+                to={`/itinerary/${itinerary.itinerary_id}`}
+                key={itinerary.itinerary_id}
+              >
+                <ItinPictureCard itinerary={itinerary} index={index} />
+              </Link>
+            ))
+          )}
         </section>
         <KinjoNearYou />
       </main>
