@@ -164,8 +164,9 @@ const SetYourKinjo = ({
       setModalMessage(
         "Your circle exceeds the maximum allowed area. Please try again."
       );
+      setCurrentLayer(layer);
+      setCurrentFeatureGroup(featureGroup);
       setIsModalOpen(true);
-      setModalConfirmHandler(() => () => featureGroup.removeLayer(layer));
       return;
     }
 
