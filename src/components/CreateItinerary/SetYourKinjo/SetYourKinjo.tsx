@@ -252,7 +252,13 @@ const SetYourKinjo = ({
         <>
           <div className="create-header">
             <h1>1. Set Your Kinjo</h1>
-            <p>Click on the map and drag to set the confines of your Kinjo!</p>
+            <p>
+              Create a circle which sets the area of your Kinjo coordinates!
+            </p>
+            <p>
+              (click the circle in the right-hand corner of your map to get
+              started)
+            </p>
             <div className="setkinjo-map-pointer">↓</div>
           </div>
         </>
@@ -260,7 +266,14 @@ const SetYourKinjo = ({
         <>
           <div className="create-header">
             <h1>2. Populate your Kinjo!</h1>
-            <p>Find the areas you want to show and add the information.</p>
+            <p>
+              Now that you've set your Kinjo area, click anywhere in the blue
+              circle to add markers & locations.
+            </p>
+            <p>
+              (once you're all done populating your Kinjo, scroll down for Step
+              3)
+            </p>
           </div>
         </>
       )}
