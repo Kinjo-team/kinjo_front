@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import UploadWidget from "../../UploadWidget/UploadWidget";
 
 import "./SetYourKinjo.scss";
+import { featureGroup } from "leaflet";
 
 interface LocationData {
   loc_coords: [number, number];
@@ -57,6 +58,8 @@ const SetYourKinjo = ({
   const [modalConfirmHandler, setModalConfirmHandler] = useState(
     () => () => {}
   );
+  const [currentLayer, setCurrentLayer] = useState<any>(null);
+  const [currentFeatureGroup, setCurrentFeatureGroup] = useState<any>(null);
 
   // REFS/VARIABLES
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -130,6 +133,12 @@ const SetYourKinjo = ({
     }
   };
 
+  const handleCancel = () => {
+    if (currentFeatureGroup && currentLayer) {
+      currentFeatureGroup.removeLayer(currentLayer);
+    }
+    setIsModalOpen(false);
+  };
   const forwardTransition = () => {
     setStage((prevStage) => prevStage + 1);
   };
@@ -161,6 +170,8 @@ const SetYourKinjo = ({
     }
 
     setModalMessage("Do you want to use these coordinates for your Kinjo?");
+    setCurrentLayer(layer);
+    setCurrentFeatureGroup(featureGroup);
     setIsModalOpen(true);
     setModalConfirmHandler(() => () => {
       forwardTransition();
@@ -171,12 +182,12 @@ const SetYourKinjo = ({
     });
   };
 
-const handleImageUrl = (imageUrl: string) => {
-  setFormData((prevFormData) => ({
-    ...prevFormData,
-    itinerary_image_url: imageUrl,
-  }));
-}
+  const handleImageUrl = (imageUrl: string) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      itinerary_image_url: imageUrl,
+    }));
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -324,15 +335,16 @@ const handleImageUrl = (imageUrl: string) => {
               </form>
             </div>
             <div className="upload-img-btn-grp">
-              {
-                imgUrl !== "" ? <img className="kinjo-cover-img" src={imgUrl} alt="" />
-                              : <div className="kinjo-cover-noimg">No Cover Photo</div>
-              }
+              {imgUrl !== "" ? (
+                <img className="kinjo-cover-img" src={imgUrl} alt="" />
+              ) : (
+                <div className="kinjo-cover-noimg">No Cover Photo</div>
+              )}
               <UploadWidget
                 insertNewImgUrl={insertNewImgUrl}
                 text="Upload Cover Photo"
                 handleImageUrl={handleImageUrl}
-                />
+              />
             </div>
             <div className="submitkinjo-btn-grp">
               <button
@@ -359,7 +371,10 @@ const handleImageUrl = (imageUrl: string) => {
           modalConfirmHandler();
           setIsModalOpen(false);
         }}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={() => {
+          setIsModalOpen(false);
+          handleCancel();
+        }}
       />
     </div>
   );

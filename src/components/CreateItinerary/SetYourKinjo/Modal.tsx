@@ -25,8 +25,12 @@ const Modal: React.FC<ModalProps> = ({
           <p>{message}</p>
         </div>
         <div className="btn-grp">
-          <button className="confirm" onClick={onConfirm}>Confirm</button>
-          <button className="cancel" onClick={onCancel}>Cancel</button>
+          <button className="confirm" onClick={onConfirm}>
+            Confirm
+          </button>
+          <button className="cancel" onClick={onCancel}>
+            Cancel
+          </button>
         </div>
       </div>
     </div>
