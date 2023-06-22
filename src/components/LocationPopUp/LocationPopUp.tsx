@@ -17,7 +17,7 @@ const LocationPopUp = ({ location, onClose }: LocationPopUpProps) => {
     <div className="location--popup">
       <div className="card">
         <button className="close" onClick={onClose}>
-          <span className="material-symbols-outlined">cancel</span>
+          X
         </button>
         <a className="link-google" href={`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`} target="_blank" rel="noopener noreferrer"><img className="icon-google" src={googleIcon} alt="google maps" /> Open in Google Maps</a>
         <div className="card-info">
@@ -25,7 +25,9 @@ const LocationPopUp = ({ location, onClose }: LocationPopUpProps) => {
             <h2>{location.location.loc_name}</h2>
             <p>{location.location.loc_descr_en}</p>
           </div>
-          <p>Tags: {location.location.loc_tags}</p>
+          <p className="tags-container">Tags: {location.location.loc_tags.map((tags : string) => {
+            return (<div className="tag">{tags}</div>)
+          })}</p>
         </div>
         <img className="card-img" src={location.location.loc_image_url} alt={location.location.loc_name} />
       </div>

@@ -2,8 +2,10 @@
     font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
-    padding: 1rem clamp(1.5rem, 2vw, 2rem);
+    padding: 1rem 0;
     gap: 1rem;
+    padding-left: clamp(1rem, 13vw, 15rem);
+    padding-right: clamp(1rem, 13vw, 15rem);
 
     .displaycomments {
         width: 100%;

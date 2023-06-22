@@ -200,7 +200,9 @@ async function checkIfFollowing(authorId : string) {
                         <button onClick={bookmarkItinerary}><span className="material-symbols-outlined favourite-btn">star</span></button>
                     </div>
                 </div>
-                <p className="kinjo-desc">{itinerary.itinerary_descr}</p>
+                <div className="kinjo-desc">
+                  <p>{itinerary.itinerary_descr}</p>
+                </div>
             </div>
             <div className="author-info">
                 <Link to={`/profile/${author.username}`}>

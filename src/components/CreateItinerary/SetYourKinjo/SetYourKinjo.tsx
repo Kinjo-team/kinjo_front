@@ -234,7 +234,7 @@ const handleImageUrl = (imageUrl: string) => {
         className="create-kinjo-close-btn"
         onClick={toggleCreateItinerary}
       >
-        <span className="material-symbols-outlined">cancel</span>
+        X
       </button>
 
       {stage === 1 ? (
@@ -307,11 +307,12 @@ const handleImageUrl = (imageUrl: string) => {
                     type="text"
                     name="itinerary_tags"
                     id="itinerary_tags"
-                    placeholder="Add tags(max 5) e.g. coffee"
+                    placeholder="Add tags(max 5) e.g. kichijoji"
                     value={formData.enteredTag}
                     onChange={handleInputChange}
                     onKeyDown={handleEnterKey}
                     ref={tagsRef}
+                    maxLength={15}
                     required
                   />
                 </div>
