@@ -8,8 +8,8 @@ interface CustomFlyToOptions {
 }
 
 interface FlyToProps {
-  position: any;
-  zoom: any;
+  position: [number, number];
+  zoom: number;
   onEnd?: () => void;
 }
 

@@ -5,7 +5,7 @@ import SubmitLocationCard from "../../components/SubmitLocationCard/SubmitLocati
 import LocationPopUp from "../../components/LocationPopUp/LocationPopUp";
 import SubmitMap from "../../components/SubmitMap/SubmitMap";
 import i18n from "../../i18n";
-import { LocationData, Location } from "../../../globals";
+import { Location } from "../../../globals";
 
 const SubmitAndReview = () => {
   const location = useLocation();

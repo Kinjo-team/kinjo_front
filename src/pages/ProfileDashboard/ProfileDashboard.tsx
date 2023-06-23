@@ -5,12 +5,12 @@ import DProfile from '../../components/DashboardCompos/DProfile/DProfile'
 import DKinjoViewer from '../../components/DashboardCompos/DKinjoViewer/DKinjoViewer'
 import DKinjoBookmarked from '../../components/DashboardCompos/DKinjoBookmarked/DKinjoBookmarked'
 import Footer from '../../components/Footer/Footer'
-import { userData } from '../../../globals'
+import { UserData } from '../../../globals'
 import './ProfileDashboard.scss'
 
 const ProfileDashboard = () => {
     const {currentUser} = useAuth()
-    const [userData, setUserData] = useState<userData | null >(null)
+    const [userData, setUserData] = useState<UserData | null >(null)
 
     useEffect(() => {
         fetchUserInfo();
