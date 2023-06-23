@@ -199,7 +199,7 @@ const SetYourKinjo = ({
     setModalConfirmHandler(() => async () => {
       try {
         console.log("FormData:", formData);
-        const response = await fetch("http://localhost:8000/itineraries", {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}itineraries`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
