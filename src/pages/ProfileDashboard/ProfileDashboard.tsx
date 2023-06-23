@@ -10,7 +10,7 @@ import './ProfileDashboard.scss'
 
 const ProfileDashboard = () => {
     const {currentUser} = useAuth()
-    const [userData, setUserData] = useState<userData>({})
+    const [userData, setUserData] = useState<userData | null >(null)
 
     useEffect(() => {
         fetchUserInfo();
@@ -40,7 +40,7 @@ const ProfileDashboard = () => {
    <>
     <Navbar />
     <div className="profiledashboard--container">
-        <DProfile username={userData.username ? userData.username : ""} email={userData.user_email ? userData.user_email : ""} />
+        <DProfile username={userData?.username ? userData.username : ""} email={userData?.user_email ? userData.user_email : ""} />
         {/* OWN COMPONENT */}
         <div>PLACEHOLDER MAP</div>
         {/* OWN COMPONENT */}
