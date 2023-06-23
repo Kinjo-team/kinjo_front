@@ -60,6 +60,7 @@ const SetYourKinjo = ({
   );
   const [currentLayer, setCurrentLayer] = useState<any>(null);
   const [currentFeatureGroup, setCurrentFeatureGroup] = useState<any>(null);
+  const [circleCreated, setCircleCreated] = useState(false);
 
   // REFS/VARIABLES
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -176,6 +177,7 @@ const SetYourKinjo = ({
     setIsModalOpen(true);
     setModalConfirmHandler(() => () => {
       forwardTransition();
+      setCircleCreated(true);
       setFormData((prevFormData) => ({
         ...prevFormData,
         kinjo_coords: [latitude, longitude],
@@ -192,11 +194,6 @@ const SetYourKinjo = ({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // if (!window.confirm("Are you sure you want to submit this kinjo?")) {
-    //   return;
-    // }
-
     setModalMessage("Are you sure you want to submit this kinjo?");
     setIsModalOpen(true);
     setModalConfirmHandler(() => async () => {
@@ -252,7 +249,13 @@ const SetYourKinjo = ({
         <>
           <div className="create-header">
             <h1>1. Set Your Kinjo</h1>
-            <p>Click on the map, and drag to set the confines of your Kinjo!</p>
+            <p>
+              Create a circle which sets the area of your Kinjo coordinates!
+            </p>
+            <p>
+              (click the circle in the right-hand corner of your map to get
+              started)
+            </p>
             <div className="setkinjo-map-pointer">↓</div>
           </div>
         </>
@@ -260,7 +263,14 @@ const SetYourKinjo = ({
         <>
           <div className="create-header">
             <h1>2. Populate your Kinjo!</h1>
-            <p>Find the areas you want to show and add the information.</p>
+            <p>
+              Now that you've set your Kinjo area, click anywhere in the blue
+              circle to add markers & locations.
+            </p>
+            <p>
+              (once you're all done populating your Kinjo, scroll down for Step
+              3)
+            </p>
           </div>
         </>
       )}
@@ -268,6 +278,7 @@ const SetYourKinjo = ({
         <Map
           handleLocationData={handleLocationData}
           handleCircleCreated={handleCircleCreated}
+          circleCreated={circleCreated}
         />
       </div>
 
@@ -291,7 +302,7 @@ const SetYourKinjo = ({
                   type="text"
                   name="itinerary_name"
                   id="itinerary_name"
-                  placeholder="e.g. My First Itinerary"
+                  placeholder="e.g. My Kinjo"
                   value={formData.itinerary_name}
                   onChange={handleInputChange}
                   onKeyDown={handleEnterKey}
