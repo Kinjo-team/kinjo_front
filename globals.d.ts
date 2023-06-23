@@ -4,6 +4,7 @@ export interface CreateItineraryData {
     itinerary_descr: string;
     itinerary_tags: string[];
     enteredTag: string;
+    kinjo_coords: [number, number];
     locationData: LocationData[];
 }
 
@@ -50,7 +51,7 @@ export interface Itinerary {
     itinerary_name: string           
     itinerary_descr_en: string
     itinerary_tags: string[];
-    kinjo_coords: number[]
+    kinjo_coords: [number, number];
     user: {};
     likes: {}
     bookmarks: {}
