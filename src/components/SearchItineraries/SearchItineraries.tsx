@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent} from 'react';
+import { useState, FormEvent, ChangeEvent, useRef } from 'react';
 import './SearchItineraries.scss';
 import DisplayItineraries from '../DisplayItineraries/DisplayItineraries';
 import debounce from 'lodash/debounce';
@@ -9,6 +9,8 @@ const SearchItineraries = () => {
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [autocompleteResults, setAutocompleteResults] = useState<any[]>([]);
+
+  const inputRef: any = useRef(null);
 
   const handleSearchOption = (option: string) => {
     setSearchOption(option);
@@ -46,6 +48,7 @@ const SearchItineraries = () => {
   const handleAutocompleteClick = (term: string) => {
     setSearchValue(term);
     setAutocompleteResults([]);
+    inputRef.current.focus();
   }
 
   // encodeURIComponent
@@ -89,6 +92,7 @@ const SearchItineraries = () => {
                   <option value='User'>User</option>
                 </select>
                 <input
+                    ref={inputRef}
                     type="text"
                     placeholder="Search..."
                     onChange={handleSearchValue}
