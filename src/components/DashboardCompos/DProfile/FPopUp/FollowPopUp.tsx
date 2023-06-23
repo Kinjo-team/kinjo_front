@@ -14,14 +14,19 @@ const FollowerPopUp = ({followers, toggleFollowerPopUp} : FollowerPopUpProps) =>
             className="close-btn"
             onClick={toggleFollowerPopUp}
         >
-        <span className="material-symbols-outlined">cancel</span>
+          X
         </button>
         <h2>Followers</h2>
-        {followers.map((follower: string) => (
-            <Link to={`/profile/${follower}`} key={follower}>
-                <div>{follower}</div>
-            </Link>
-        ))}
+        <div className='follow-card-container'>
+          {followers.map((follower: any) => (
+              <Link to={`/profile/${follower.username}`} key={follower.username}>
+                  <div className='card'>
+                    <img src={follower.user_img} alt={follower.username} />
+                    <span>{follower.username}</span>
+                  </div>
+              </Link>
+          ))}
+        </div>
       </div>
     </div>
   )

@@ -1,26 +1,59 @@
-.thankyou--container {
+.thankyousubmit--container {
+    font-family: 'Roboto', sans-serif;;
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: clamp(1rem, 2vw, 2rem);
-    gap: 1rem;
-    text-align: center;
-    
-    .thankyou-close-btn {
+    background-color: white;
+    padding: 1rem 0;
+    margin-left: clamp(1rem, 6vw, 10rem);
+    margin-right: clamp(1rem, 6vw, 10rem);
+    border-radius: 5px;
+    overflow-y: scroll;
+    transition: all 0.3s ease-in-out;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    .thankyou--container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: clamp(1rem, 2vw, 2rem);
+        gap: clamp(1rem, 2vw, 2rem);
+        text-align: center;
+
+        h1 {
+            font-size: clamp(1.5rem, 2.5vw, 3rem);
+        }
+        
+        .thankyou-close-btn {
+            padding: 0.5rem;
+            cursor: pointer;
+            color: white;
+            background-color: crimson;
+            border: none;
+            border-radius: 5px;
+            border: 1px solid crimson;
+            padding: clamp(0.5rem, 1vw, 1rem);
+            transition: all 0.3s ease-in-out;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            &:hover {
+                background-color: white;
+                color: crimson;
+            }
+        }
+    }
+    .create-kinjo-close-btn {
+        scale: 1.6;
+        position: absolute;
+        top: 5px;
+        right: 5px;
         padding: 0.5rem;
         cursor: pointer;
-        color: white;
-        background-color: crimson;
+        background-color: transparent;
         border: none;
-        border-radius: 5px;
-        border: 1px solid crimson;
-        padding: clamp(0.5rem, 1vw, 1rem);
-        transition: all 0.3s ease-in-out;
-        font-size: clamp(0.8rem, 2vw, 1.2rem);
         &:hover {
-            background-color: white;
-            color: crimson;
+            scale: 1.9;
         }
     }
 }

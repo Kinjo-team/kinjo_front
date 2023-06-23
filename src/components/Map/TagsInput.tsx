@@ -40,6 +40,7 @@ const TagsInput: React.FC<TagsInputProps> = ({ onTagsChange }) => {
         value={input}
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}
+        maxLength={15}
         />
         <div className="tag-items">
           {tags.map((tag, index) => (

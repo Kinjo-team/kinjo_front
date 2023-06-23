@@ -10,7 +10,9 @@ const UserDropDown = ({username} : UserDropDownProps) => {
   return (
     <div className="dropdown--container">
         <button className="nav-btn">{username} 
-            <i className="fa fa-caret-down"></i>
+            <span className="material-symbols-outlined">
+                keyboard_arrow_down
+            </span>
         </button>
         <div className="dropdown-content">
             <a className="menu-items" href="/profile">Profile</a>

@@ -71,9 +71,9 @@ const Main = () => {
           <h2 className="main--title">K I N J O</h2>
           <SearchItineraries />
           <button className="create-btn" onClick={toggleCreateItinerary}>
-            Create new Kinjo
+            Create New Kinjo
           </button>
-          <p className="main--tag">"Exploration made for you, by you"</p>
+          <p className="main--tag">Exploration made for you, by you</p>
         </section>
         <section className="recommend--container">
           <h1>POPULAR</h1>

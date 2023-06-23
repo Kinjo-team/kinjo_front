@@ -29,7 +29,8 @@ const DUploadWidget = ({ text } : DUploadWidgetProps) => {
       function (error: any, result: any) {
         if (!error && result && result.event === "success") {
           console.log("Done! Here is the image info: ", result.info);
-            postNewUserImage(result.info.secure_url)
+          postNewUserImage(result.info.secure_url)
+          window.location.reload();
         }
       }
     );

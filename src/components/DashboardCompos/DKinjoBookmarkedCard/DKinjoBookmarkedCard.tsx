@@ -12,7 +12,8 @@ const DKinjoBookmarkedCard = ({kinjo, toggleDeleteBookmark} : DKinjoBookmarkedCa
   const {currentUser} = useAuth()
 
 
-  async function handleDeleteBookmark() {
+  async function handleDeleteBookmark(event: any) {
+    event.stopPropagation();
     try {
       const resp = await fetch(`http://localhost:8000/bookmarks/`, {
         method: 'DELETE',
@@ -34,9 +35,14 @@ const DKinjoBookmarkedCard = ({kinjo, toggleDeleteBookmark} : DKinjoBookmarkedCa
   }
 
   return (
-    <div className='dkinjobookmarked-card--container'>
-      <span onClick={handleDeleteBookmark}>⭐</span>
-      <h1 className='dkinjobookmarked-card-title'>{kinjo.itinerary.itinerary_name}</h1>
+    <div className='dkinjobookmarked-card--container' onClick={(event) => event.stopPropagation()}>
+      <span className='favourite-icon' onClick={handleDeleteBookmark}>⭐</span>
+      <a href={`/itinerary/${kinjo.itinerary.itinerary_id}`}>
+        <h1 className='dkinjobookmarked-card-title'>{kinjo.itinerary.itinerary_name}</h1>
+      </a>
+      <div className='dkinjobookmarked-card-img'>
+        <img src={kinjo.itinerary.itinerary_image_url} alt={kinjo.itinerary.itinerary_name} />
+      </div>
     </div>
   )
 }

@@ -40,12 +40,14 @@ const DKinjoBookmarked = () => {
     
   return (
     <div className='dkinjobookmarked--container'>
-        <h1 className='dkinjobookmarked--header'>Favourites</h1>
+        <div className='dkinjobookmarked--header'>
+            <h1>Favourites</h1>
+        </div>
         <div className='dkinjobookmarked-cards--container'>
             {bookmarkedKinjosLoaded && bookmarkedKinjos.map((kinjo: any) => {
-                return <Link to={`/itinerary/${kinjo.itinerary_id}`} key={kinjo.itinerary_id}>
+                return (
                     <DKinjoBookmarkedCard key={kinjo.id} kinjo={kinjo} toggleDeleteBookmark={toggleDeleteBookmark}   />
-                </Link>
+                )
             })}
         </div>
     </div>

@@ -99,9 +99,7 @@ const SearchItineraries = () => {
                   search
                 </span>
               </div>
-            {showResults && 
-              <DisplayItineraries itineraries={searchResults} 
-              toggleShowResults={toggleShowResults} />}
+            {showResults && <DisplayItineraries itineraries={searchResults} toggleShowResults={toggleShowResults} searchValue={searchValue} />}
           </form>
           {autocompleteResults.length > 0 && (
                   <div className="autocomplete-results">
