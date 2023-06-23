@@ -1,9 +1,9 @@
-import React from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import LocationCard from "../../components/LocationCard/LocationCard";
 import LocationPopUp from "../../components/LocationPopUp/LocationPopUp";
+import DisplayComments from "../../components/DisplayComments/DisplayComments";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";

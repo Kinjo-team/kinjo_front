@@ -8,25 +8,6 @@ import UploadWidget from "../../UploadWidget/UploadWidget";
 import "./SetYourKinjo.scss";
 import { featureGroup } from "leaflet";
 
-interface LocationData {
-  loc_coords: [number, number];
-  loc_name: string;
-  loc_descr_en: string;
-  loc_tags: string[];
-  loc_image_url: any;
-}
-
-interface CreateItineraryData {
-  firebase_uuid: string;
-  itinerary_name: string;
-  itinerary_descr: string;
-  itinerary_tags: string[];
-  enteredTag: string;
-  kinjo_coords: [number, number];
-  locationData: LocationData[];
-  itinerary_image_url: string;
-}
-
 type KinjoProcessProps = {
   forwardTransitionPage: () => void;
   toggleCreateItinerary: () => void;
@@ -146,7 +127,6 @@ const SetYourKinjo = ({
   };
 
   const handleLocationData = (locationData: Location) => {
-  const handleLocationData = (locationData: LocationData) => {
     console.log("handleLocationData called with:", locationData);
     setFormData((prevFormData) => ({
       ...prevFormData,

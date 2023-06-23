@@ -1,7 +1,6 @@
 import React from "react";
-import { FeatureGroup } from "react-leaflet";
-import { EditControl } from "react-leaflet-draw";
 import { useMap, FeatureGroup } from "react-leaflet";
+import { Layer, LeafletEvent } from "leaflet";
 // import { FeatureGroup } from "react-leaflet";
 import { EditControl  } from "react-leaflet-draw";
 

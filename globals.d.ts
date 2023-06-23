@@ -6,6 +6,7 @@ export interface CreateItineraryData {
     enteredTag: string;
     kinjo_coords: [number, number];
     locationData: LocationData[];
+    itinerary_image_url: string;
 }
 
 export interface KinjoData {
