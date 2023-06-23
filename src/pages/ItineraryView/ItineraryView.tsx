@@ -9,7 +9,6 @@ import Footer from "../../components/Footer/Footer";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
 import i18n from "../../i18n";
 
-
 import "./ItineraryView.scss";
 
 const ItineraryView = () => {
@@ -18,9 +17,9 @@ const ItineraryView = () => {
   const [selectedLocation, setSelectedLocation] = useState<any>(null);
   const [itinerary, setItinerary] = useState<any>({});
   const [author, setAuthor] = useState<any>({});
-  const [likesCount, setLikesCount] = useState<any>(0);
-  const [dislikesCount, setDislikesCount] = useState<any>(0);
-  const [isFollowing, setIsFollowing] = useState<any>(false);
+  const [likesCount, setLikesCount] = useState<number>(0);
+  const [dislikesCount, setDislikesCount] = useState<number>(0);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -97,7 +96,6 @@ const ItineraryView = () => {
         console.error(error);
     }
   }
-
 
   async function bookmarkItinerary() {
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}bookmarks`, {
