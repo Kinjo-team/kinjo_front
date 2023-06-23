@@ -18,7 +18,7 @@ const DKinjoViewer = () => {
 
     async function fetchUserKinjos() {
         try {
-            const res = await fetch(`http://localhost:8000/itineraries/user/${currentUser?.uid}`)
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}itineraries/user/${currentUser?.uid}`)
             const data = await res.json()
             console.log(data)
             setUserKinjos(data)

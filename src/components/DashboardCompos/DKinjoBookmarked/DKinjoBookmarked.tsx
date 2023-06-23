@@ -24,7 +24,7 @@ const DKinjoBookmarked = () => {
 
     async function fetchBookmarkedKinjos() {
         try {
-            const res = await fetch(`http://localhost:8000/bookmarks/${currentUser?.uid}`)
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}bookmarks/${currentUser?.uid}`)
             const data = await res.json()
             setBookmarkedKinjos(data)
             setBookmarkedKinjosLoaded(true)

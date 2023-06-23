@@ -17,7 +17,7 @@ const SearchItineraries = () => {
   };
 
   const autocomplete = async (searchValue: string) => {
-    const response = await fetch(`http://localhost:8000/autocomplete?option=${searchOption}&value=${searchValue}`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}autocomplete?option=${searchOption}&value=${searchValue}`, {
       headers: {
         'Accept': 'application/json'
       }
@@ -56,7 +56,7 @@ const SearchItineraries = () => {
     event.preventDefault();
     if (searchOption === 'Name' || searchOption === 'Tag' || searchOption === 'User') {
       try {
-        const response = await fetch(`http://localhost:8000/search?option=${searchOption}&value=${searchValue}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}search?option=${searchOption}&value=${searchValue}`, {
           headers: {
             'Accept': 'application/json'
           }

@@ -20,7 +20,7 @@ const Main = () => {
 
   useEffect(() => {
     const fetchItineraries = async () => {
-      const response = await fetch(`http://localhost:8000/itineraries`);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}itineraries`);
       const data = await response.json();
       console.log(data);
       setItineraries(data);

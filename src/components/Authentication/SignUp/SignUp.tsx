@@ -55,7 +55,7 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
 
     async function postUser() {
         const uid = auth.currentUser?.uid
-        const resp = await fetch(`http://localhost:8000/users`, {
+        const resp = await fetch(`${process.env.REACT_APP_BACKEND_URL}users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
 
     async function checkIfUsernameExists() {
         try {
-            const res = await fetch(`http://localhost:8000/users/username/${usernameRef.current?.value}`)
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}users/username/${usernameRef.current?.value}`)
             const data = await res.json()
             console.log(data)
             return !data;
