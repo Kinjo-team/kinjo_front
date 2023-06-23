@@ -42,7 +42,7 @@ const DProfile = ({username, email, userImage} : DProfileProps) => {
     // FUNCTIONS
     async function fetchFollowers() {
         try {
-            const res = await fetch(`http://localhost:8000/followers/${currentUser?.uid}`)
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}followers/${currentUser?.uid}`)
             const data = await res.json()
             setFollowers(data)
         } catch (error) {
@@ -52,7 +52,7 @@ const DProfile = ({username, email, userImage} : DProfileProps) => {
 
     async function fetchFollowing() {
         try {
-            const res = await fetch(`http://localhost:8000/following/${currentUser?.uid}`)
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}following/${currentUser?.uid}`)
             const data = await res.json()
             setFollowing(data)
         } catch (error) {

@@ -3,12 +3,15 @@
     cursor: pointer;
     display: flex;
     background-color: white;
-    padding: clamp(1rem, 2vw, 2rem);
+    padding: clamp(1rem, 5vw, 2.5rem);
     border-radius: 5px;
     // CHANGE??
     height: 100%;
-    gap: 1rem;
+    gap: 1.5rem;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+    overflow-x: auto;
+
+
 
     transition: all 0.3s ease-in-out;
     &:hover {
@@ -16,10 +19,11 @@
     }
 
     .card--image {
-        min-width: clamp(10rem, 20vw, 20rem);
-        max-width: clamp(10rem, 20vw, 20rem);
-        max-height: clamp(10rem, 20vw, 20rem);
-        min-height: clamp(10rem, 20vw, 20rem);
+        align-self: center;
+        min-width: clamp(10rem, 15vw, 18rem);
+        max-width: clamp(10rem, 15vw, 18rem);
+        max-height: clamp(10rem, 15vw, 18rem);
+        min-height: clamp(10rem, 15vw, 18rem);
         height: 100%;
         border-radius: 5px;
         object-fit: cover;
@@ -35,31 +39,41 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            overflow: auto;
             h3 {
                 font-size: clamp(1rem, 2vw, 1.3rem);
             }
             p {
-                font-size: clamp(0.8rem, 2vw, 1.1rem);
+                font-size: clamp(0.8rem, 2vw, 0.9rem);
             }
         }
 
-        .tags {
-            font-size: clamp(0.8rem, 2vw, 1.1rem);
-            display: flex;
-            gap: 0.5rem;
+        .tags-container {
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+            .tag {
+                padding: 0.3rem;
+                color: white;
+                border-radius: 5px;
+                background-color: crimson;
+                font-size: clamp(0.5rem, 2vw, 0.8rem);
+            }
         }
     }
 
     .link-google {
         position: absolute;
-        top: 3px;
-        right: 3px;
+        bottom: 7px;
+        left: 7px;
         display: flex;
         align-items: center;
         color: blue;
         text-decoration: none;
-        font-size: clamp(0.7rem, 1vw, 1.5rem);
+        font-size: clamp(0.7rem, 1vw, 0.9rem);
         &:hover {
             text-decoration: underline;
         }
@@ -77,9 +91,22 @@
         gap: clamp(1rem, 2vw, 2rem);
         height: 100%;
         .card--image {
-            padding: 1rem;
             max-width: 100%;
             align-self: center;
+        }
+
+        .card-info-container {
+            padding: clamp(1rem, 2vw, 2rem);
+        }
+
+        .link-google {
+            left: clamp(2rem, 2vw, 2.5rem);
+            bottom: 1rem;
+            font-size: 0.5rem;
+
+            .icon-google {
+                max-width: 20px;
+            }
         }
     }
 }

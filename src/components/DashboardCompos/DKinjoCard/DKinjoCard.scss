@@ -1,15 +1,41 @@
 .dkinjo-card--container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid lightgray;
     padding: clamp(0.5rem, 1vw, 1rem);
     border-radius: 5px;
+    width: 100px;
+    height: 100px;
+    transition: all 0.2s ease-in-out;
 
-    .dkinjo-card-title {
-        font-size: clamp(0.8rem, 2vw, 1.2rem);
-        width: 100%;
-        text-align: center;
+    &:hover {
+        transform: scale(1.1);
     }
+    
+    .dkinjo-card-title {
+        font-size: clamp(0.6rem, 2vw, 0.9rem);
+        text-align: center;
+        color: white;
+        background-color: rgba($color: #000000, $alpha: 0.5 );
+        border-radius: 5px;
+    }
+
+    .dkinjo-card-img {
+        position: absolute;
+        object-fit: cover;
+        border-radius: 5px;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+    }
+
 }

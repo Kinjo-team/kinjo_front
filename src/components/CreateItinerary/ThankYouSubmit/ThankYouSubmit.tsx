@@ -20,8 +20,8 @@ const ThankYouSubmit = ({toggleCreateItinerary, newKinjoId} : ThankYouSubmitProp
   }, []);
 
   return (
-    <div className='create-kinjo--container'>
-        <button className='create-kinjo-close-btn' onClick={toggleCreateItinerary}><span className="material-symbols-outlined">cancel</span></button>
+    <div className='thankyousubmit--container'>
+        <button className='create-kinjo-close-btn' onClick={toggleCreateItinerary}>X</button>
         <div onClick={(event) => event.stopPropagation()} className='thankyou--container'>
             <h1>Your Kinjo has been created!</h1>
             <p>You did it! Thank you for creating your Kinjo.</p>

@@ -10,6 +10,7 @@
     background-color: crimson;
     color: white;
     border: none;
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
 
     &:hover {
         background-color: darkred;

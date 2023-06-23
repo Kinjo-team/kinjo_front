@@ -1,7 +1,7 @@
 .dkinjoviewer--container {
     grid-area: itineraries;
     display: grid;
-    grid-template-rows: 60px 1fr;
+    grid-template-rows: 50px 1fr;
     border: 1px solid lightgray;
     border-radius: 5px;
     overflow: auto;
@@ -11,7 +11,7 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        padding: 0.5rem;
+        padding: clamp(0.5rem, 1vw, 1rem);
         h1 {
             font-size: clamp(1rem, 1.5vw, 1.5rem);
         }
@@ -39,8 +39,19 @@
 
     .dkinjo-cards--container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 0.3rem;
         overflow: auto;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        justify-items: center;
+        padding: clamp(0.5rem, 1vw, 1rem);
+        a {
+            height: 100px;
+            text-decoration: none;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            border-radius: 5px;
+        }
     }
 }
 
@@ -53,13 +64,19 @@
         
         .dkinjo--header {
             grid-area: dkinjoheader;
+            margin-top: 2rem;
             align-items: center;
             flex-direction: column;
-
+            
             .dkinjo-create-btn {
                 position: relative;
-                transform: translateY(0);
+                transform: translateY(30%);
             }
+        }
+
+        .dkinjo-cards--container {
+            grid-area: dkinjolist;
+            margin-top: 2rem;
         }
     }
 }

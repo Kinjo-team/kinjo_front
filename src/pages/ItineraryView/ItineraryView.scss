@@ -3,13 +3,16 @@
     display: grid;
     height: 100vh;
     width: 100vw;
-    padding: clamp(1rem, 2vw, 2rem);
+    padding: 2rem 0;
     background-color: white;
     grid-template-rows: 50px 1fr;
     grid-template-columns: 1fr 1fr;;
     grid-template-areas: "buttons cards"
                          "info cards";
     gap: 1.5rem;
+    // SQUEEZING
+    padding-left: clamp(1rem, 13vw, 15rem);
+    padding-right: clamp(1rem, 13vw, 15rem);
 
     .back-btn {
         grid-area: buttons;
@@ -88,7 +91,8 @@
                 .kinjo-desc {
                     display: flex;
                     padding: 0.3rem;
-                    font-size: clamp(0.7rem, 2vw, 1.1rem);
+                    font-size: clamp(0.8rem, 2vw, 0.9rem);
+                    word-break: break-word;
                 }
             }
             .author-info {
@@ -164,8 +168,8 @@
 
     .cards--container {
         grid-area: cards;
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: repeat(auto-fit, clamp(100px, 1fr, 1fr));
         padding: 1rem;
         gap: 1rem;
         border-radius: 5px;
@@ -179,7 +183,7 @@
             background-color: lightgray; /* For WebKit browsers */
           }
         &::-webkit-scrollbar-thumb {
-        background-color: darkgray; /* For WebKit browsers */
+            background-color: darkgray; /* For WebKit browsers */
         }
     }
 
@@ -194,6 +198,8 @@
         grid-template-areas: "buttons"
                              "info"
                              "cards";
+        padding-left: clamp(1rem, 8vw, 5rem);
+        padding-right: clamp(1rem, 8vw, 5rem);
         
      
         .readonly-map-container {
@@ -201,9 +207,16 @@
         }
 
         .cards--container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5rem;
             &::-webkit-scrollbar {
                 width: 0px; /* For WebKit browsers */
             }
         }
+    }
+    .displaycomments--container  {
+        padding-left: clamp(1rem, 8vw, 5rem);
+        padding-right: clamp(1rem, 8vw, 5rem);
     }
 }
