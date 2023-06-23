@@ -24,7 +24,7 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl }) => {
         cloudName: "dy6bhh9th",
         uploadPreset: "qpjgdtk3",
       },
-      function (error: any, result: any) {
+      function (error: Error, result: any) {
         if (!error && result && result.event === "success") {
           console.log("Done! Here is the image info: ", result.info);
           handleImageUrl(result.info.secure_url);

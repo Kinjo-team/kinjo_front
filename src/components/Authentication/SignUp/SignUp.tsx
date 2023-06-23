@@ -33,14 +33,16 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
                 setLoading(false)
                 return
             }
-            await signup(emailRef.current?.value, passwordRef.current?.value);
+            if (emailRef.current?.value !== undefined && passwordRef.current?.value !== undefined){
+            await signup(emailRef.current.value, passwordRef.current?.value);
             auth.currentUser?.updateProfile({
                 displayName: usernameRef.current?.value
             })
             await postUser()
             toggleSignUp();
             navigateToMain();
-        } catch(error) {
+        } 
+    }   catch(error) {
             console.error(error)
             setError("Failed to create an account")
         }

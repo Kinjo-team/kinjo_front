@@ -22,8 +22,10 @@ const ForgotPassword = ({toggleForgotPassword, toggleLogin, toggleSignUp, closeA
             setMessage("")
             setError("")
             setLoading(true)
-            await resetPassword(emailRef.current?.value);
+            if (emailRef.current?.value !== undefined){
+            await resetPassword(emailRef.current.value);
             setMessage("Check your inbox for further instructions")
+            }
         } catch {
             setError("Failed to reset password")
         }

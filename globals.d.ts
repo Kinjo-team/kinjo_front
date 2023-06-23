@@ -11,11 +11,6 @@ export interface CreateItineraryData {
     locationData: LocationData[];
 }
 
-export interface DisplayItinerariesProps {
-    itineraries: any[];
-    toggleShowResults: () => void;
-}
-
 export interface KinjoData {
     name: string;
     description: string;
@@ -41,7 +36,6 @@ image_urls: string[];
 
 }
 
-
 // Interface Definitions from the backend;
 
 // export interface Location {
@@ -58,7 +52,7 @@ export interface ItineraryData {
     itinerary_descr: string;
     itinerary_tags: string;
     kinjo_coords: [number, number];
-    locationData: any;
+    locationData: any; //type: Location[]
   }
   
 export interface VisitedMap {

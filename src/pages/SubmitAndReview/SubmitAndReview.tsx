@@ -5,6 +5,7 @@ import SubmitLocationCard from "../../components/SubmitLocationCard/SubmitLocati
 import LocationPopUp from "../../components/LocationPopUp/LocationPopUp";
 import SubmitMap from "../../components/SubmitMap/SubmitMap";
 import i18n from "../../i18n";
+import { LocationData, Location } from "../../../globals";
 
 const SubmitAndReview = () => {
   const location = useLocation();
@@ -66,7 +67,7 @@ const SubmitAndReview = () => {
           </section>
           <section className="cards--container">
             {itinerary.locationData &&
-              itinerary.locationData.map((location: any) => (
+              itinerary.locationData.map((location: Location) => (
                 <SubmitLocationCard
                   key={location.id}
                   location={location}

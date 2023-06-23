@@ -20,15 +20,16 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+    if (emailRef.current?.value !== undefined && passwordRef.current?.value !== undefined) {
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current?.value, passwordRef.current?.value);
+      await login(emailRef.current.value, passwordRef.current.value);
       navigateToMain();
       toggleLogin();
     } catch {
       setError("Failed to sign in");
-    }
+    }}
     setLoading(false);
   }
 

@@ -4,12 +4,12 @@ import { User as FirebaseUser } from '@firebase/auth-types';
 
 interface AuthContextProps {
     currentUser : FirebaseUser | null
-    signup : (email : any, password : any) => any
-    login : (email : any, password : any) => any
+    signup : (email : string, password : string) => any
+    login : (email : string, password : string) => any
     logout : () => void
-    resetPassword : (email : any) => any
-    updateEmail : (email : any) => any
-    updatePassword : (password : any) => any
+    resetPassword : (email : string) => any
+    updateEmail : (email : string) => any
+    updatePassword : (password : string) => any
 }
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
@@ -21,22 +21,22 @@ export const AuthProvider = ({children} : ProviderProps<ReactNode>) => {
     const [currentUser, setCurrentUser] = useState<null | FirebaseUser>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    function signup(email : any, password : any) {
+    function signup(email : string, password : string) {
         return auth.createUserWithEmailAndPassword(email, password);
     }
-    function login(email : any, password : any) {
+    function login(email : string, password : string) {
         return auth.signInWithEmailAndPassword(email, password);
     }
     function logout() {
         return auth.signOut();
     }
-    function resetPassword(email : any) {
+    function resetPassword(email : string) {
         return auth.sendPasswordResetEmail(email);
     }
-    function updateEmail(email : any) {
+    function updateEmail(email : string) {
         return currentUser?.updateEmail(email);
     }
-    function updatePassword(password : any) {
+    function updatePassword(password : string) {
         return currentUser?.updatePassword(password);
     }
 
