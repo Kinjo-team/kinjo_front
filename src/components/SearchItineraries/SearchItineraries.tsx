@@ -23,7 +23,10 @@ const SearchItineraries = () => {
       if (response.ok) {
         const searchData = await response.json();
         console.log("This is the data from autocomplete:", searchData);
-        setAutocompleteResults(searchData);
+
+        const uniqueSearchData = Array.from(new Set(searchData));
+
+        setAutocompleteResults(uniqueSearchData);
       } else {
         console.error('Autocomplete request failed');
       }
@@ -40,8 +43,8 @@ const SearchItineraries = () => {
     }
   };
 
-  const handleAutocompleteClick = (itinerary: any) => {
-    setSearchValue(itinerary.itinerary_name);
+  const handleAutocompleteClick = (term: string) => {
+    setSearchValue(term);
     setAutocompleteResults([]);
   }
 
@@ -89,19 +92,9 @@ const SearchItineraries = () => {
                     type="text"
                     placeholder="Search..."
                     onChange={handleSearchValue}
+                    value={searchValue}
                     className='search-input'
                 />
-                {autocompleteResults.length > 0 && (
-                  <div className="autocomplete-results">
-                    {autocompleteResults.map((result, index) => (
-                      <div key={index}
-                           className="autocomplete-result" 
-                           onClick={() => handleAutocompleteClick(result)}>
-                    {result.itinerary_name}  {/* or itinerary_name or other field as per your requirement */}
-                  </div>
-                ))}
-              </div>
-            )}
                 <span className="material-symbols-outlined search-icon">
                   search
                 </span>
@@ -110,12 +103,19 @@ const SearchItineraries = () => {
               <DisplayItineraries itineraries={searchResults} 
               toggleShowResults={toggleShowResults} />}
           </form>
+          {autocompleteResults.length > 0 && (
+                  <div className="autocomplete-results">
+                    {autocompleteResults.map((result, index) => (
+                      <div key={index}
+                           className="autocomplete-result" 
+                           onClick={() => handleAutocompleteClick(result)}>
+                          {result}
+                      </div>
+                    ))}
+                  </div>
+                )}
         </>
       );
 };
     
 export default SearchItineraries;
-
-/*
-
-*/
