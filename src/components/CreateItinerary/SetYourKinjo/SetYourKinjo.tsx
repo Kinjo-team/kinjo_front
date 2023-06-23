@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import UploadWidget from "../../UploadWidget/UploadWidget";
 
 import "./SetYourKinjo.scss";
+import { featureGroup } from "leaflet";
 
 interface LocationData {
   loc_coords: [number, number];
@@ -57,13 +58,15 @@ const SetYourKinjo = ({
   const [modalConfirmHandler, setModalConfirmHandler] = useState(
     () => () => {}
   );
+  const [currentLayer, setCurrentLayer] = useState<any>(null);
+  const [currentFeatureGroup, setCurrentFeatureGroup] = useState<any>(null);
+  const [circleCreated, setCircleCreated] = useState(false);
 
   // REFS/VARIABLES
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLInputElement>(null);
 
   const MAX_AREA = 3539860000; // Biggest area district in Japan in meters for Ishikari, Hokkaido
-
 
   // EFFECTS
 
@@ -131,6 +134,12 @@ const SetYourKinjo = ({
     }
   };
 
+  const handleCancel = () => {
+    if (currentFeatureGroup && currentLayer) {
+      currentFeatureGroup.removeLayer(currentLayer);
+    }
+    setIsModalOpen(false);
+  };
   const forwardTransition = () => {
     setStage((prevStage) => prevStage + 1);
   };
@@ -156,15 +165,19 @@ const SetYourKinjo = ({
       setModalMessage(
         "Your circle exceeds the maximum allowed area. Please try again."
       );
+      setCurrentLayer(layer);
+      setCurrentFeatureGroup(featureGroup);
       setIsModalOpen(true);
-      setModalConfirmHandler(() => () => featureGroup.removeLayer(layer));
       return;
     }
 
     setModalMessage("Do you want to use these coordinates for your Kinjo?");
+    setCurrentLayer(layer);
+    setCurrentFeatureGroup(featureGroup);
     setIsModalOpen(true);
     setModalConfirmHandler(() => () => {
       forwardTransition();
+      setCircleCreated(true);
       setFormData((prevFormData) => ({
         ...prevFormData,
         kinjo_coords: [latitude, longitude],
@@ -172,20 +185,15 @@ const SetYourKinjo = ({
     });
   };
 
-const handleImageUrl = (imageUrl: string) => {
-  setFormData((prevFormData) => ({
-    ...prevFormData,
-    itinerary_image_url: imageUrl,
-  }));
-}
+  const handleImageUrl = (imageUrl: string) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      itinerary_image_url: imageUrl,
+    }));
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // if (!window.confirm("Are you sure you want to submit this kinjo?")) {
-    //   return;
-    // }
-
     setModalMessage("Are you sure you want to submit this kinjo?");
     setIsModalOpen(true);
     setModalConfirmHandler(() => async () => {
@@ -241,7 +249,13 @@ const handleImageUrl = (imageUrl: string) => {
         <>
           <div className="create-header">
             <h1>1. Set Your Kinjo</h1>
-            <p>Click on the map, and drag to set the confines of your Kinjo!</p>
+            <p>
+              Create a circle which sets the area of your Kinjo coordinates!
+            </p>
+            <p>
+              (click the circle in the right-hand corner of your map to get
+              started)
+            </p>
             <div className="setkinjo-map-pointer">↓</div>
           </div>
         </>
@@ -249,7 +263,14 @@ const handleImageUrl = (imageUrl: string) => {
         <>
           <div className="create-header">
             <h1>2. Populate your Kinjo!</h1>
-            <p>Find the areas you want to show and add the information.</p>
+            <p>
+              Now that you've set your Kinjo area, click anywhere in the blue
+              circle to add markers & locations.
+            </p>
+            <p>
+              (once you're all done populating your Kinjo, scroll down for Step
+              3)
+            </p>
           </div>
         </>
       )}
@@ -257,6 +278,7 @@ const handleImageUrl = (imageUrl: string) => {
         <Map
           handleLocationData={handleLocationData}
           handleCircleCreated={handleCircleCreated}
+          circleCreated={circleCreated}
         />
       </div>
 
@@ -280,7 +302,7 @@ const handleImageUrl = (imageUrl: string) => {
                   type="text"
                   name="itinerary_name"
                   id="itinerary_name"
-                  placeholder="e.g. My First Itinerary"
+                  placeholder="e.g. My Kinjo"
                   value={formData.itinerary_name}
                   onChange={handleInputChange}
                   onKeyDown={handleEnterKey}
@@ -326,15 +348,16 @@ const handleImageUrl = (imageUrl: string) => {
               </form>
             </div>
             <div className="upload-img-btn-grp">
-              {
-                imgUrl !== "" ? <img className="kinjo-cover-img" src={imgUrl} alt="" />
-                              : <div className="kinjo-cover-noimg">No Cover Photo</div>
-              }
+              {imgUrl !== "" ? (
+                <img className="kinjo-cover-img" src={imgUrl} alt="" />
+              ) : (
+                <div className="kinjo-cover-noimg">No Cover Photo</div>
+              )}
               <UploadWidget
                 insertNewImgUrl={insertNewImgUrl}
                 text="Upload Cover Photo"
                 handleImageUrl={handleImageUrl}
-                />
+              />
             </div>
             <div className="submitkinjo-btn-grp">
               <button
@@ -361,7 +384,10 @@ const handleImageUrl = (imageUrl: string) => {
           modalConfirmHandler();
           setIsModalOpen(false);
         }}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={() => {
+          setIsModalOpen(false);
+          handleCancel();
+        }}
       />
     </div>
   );

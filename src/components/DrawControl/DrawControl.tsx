@@ -10,12 +10,14 @@ interface DrawControlProps {
     layer: any,
     featureGroupRef: any
   ) => void;
+  circleCreated: boolean;
   onShapeCreated: (shape: L.Layer) => void;
   onShapeDeleted: (shapes: L.Layer[]) => void;
 }
 
 const DrawControl: React.FC<DrawControlProps> = ({
   handleCircleCreated,
+  circleCreated,
   onShapeCreated,
   onShapeDeleted,
 }) => {
@@ -48,7 +50,7 @@ const DrawControl: React.FC<DrawControlProps> = ({
         draw={{
           polyline: false,
           polygon: false,
-          circle: {},
+          circle: circleCreated ? false : {},
           marker: false,
           circlemarker: false,
           rectangle: false,
