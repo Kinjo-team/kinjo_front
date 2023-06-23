@@ -34,21 +34,23 @@ export interface LocationData {
 export interface Location {
 id: number;
 loc_coords: [number, number];
-loc_descr_en: string;
 loc_name: string;
+loc_descr_en: string;
 loc_tags: string[];
+image_urls: string[];
+
 }
 
 
 // Interface Definitions from the backend;
 
-export interface Location {
-    id: number;
-    position: [number, number];
-    name: string;
-    description: string;
-    tags: string[];
-  }
+// export interface Location {
+//     id: number;
+//     position: [number, number];
+//     name: string;
+//     description: string;
+//     tags: string[];
+//   }
   
 export interface ItineraryData {
     firebase_uuid: string;

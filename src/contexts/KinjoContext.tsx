@@ -1,19 +1,5 @@
 import React, { ProviderProps, ReactNode, useContext, createContext, useState} from 'react'
-
-interface KinjoData {
-    name: string;
-    description: string;
-    tags: string[];
-    locationData: LocationData[];
-    kinjoCoords: [number, number];
-}
-
-interface LocationData {
-    loc_coords: [number, number];
-    loc_name: string;
-    loc_descr_en: string;
-    loc_tags: string[];
-}
+import { KinjoData, LocationData } from '../../globals';
 
 interface KinjoContextProps {
     kinjo: KinjoData;

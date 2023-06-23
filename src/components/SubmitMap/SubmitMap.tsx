@@ -3,14 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useState, useRef, useEffect } from "react";
 import { LatLngTuple, LatLngBounds } from "leaflet";
 import SubmitMapUpdater from "./SubmitMapUpdater";
-
-interface Location {
-  id: number;
-  loc_coords: [number, number];
-  loc_descr_en: string;
-  loc_name: string;
-  loc_tags: string[];
-}
+import { Location } from  "../../../globals"
 
 interface MapProps {
   locations: {

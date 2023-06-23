@@ -2,24 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useKinjo } from "../../../contexts/KinjoContext";
 import { useAuth } from "../../../contexts/AuthContext";
 import Map from "../../Map/Map";
-
+import { LocationData, CreateItineraryData } from "../../../../globals"
 import "./SetYourKinjo.scss";
-
-interface LocationData {
-  loc_coords: [number, number];
-  loc_name: string;
-  loc_descr_en: string;
-  loc_tags: string[];
-}
-
-interface CreateItineraryData {
-  firebase_uuid: string;
-  itinerary_name: string;
-  itinerary_descr: string;
-  itinerary_tags: string[];
-  enteredTag: string;
-  locationData: LocationData[];
-}
 
 type KinjoProcessProps = {
   forwardTransitionPage: () => void;

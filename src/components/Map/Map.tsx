@@ -16,14 +16,16 @@ import DrawControl from "../DrawControl/DrawControl";
 import "./Map.scss";
 import UploadWidget from "../UploadWidget/UploadWidget";
 
-interface Location {
-  id: number;
-  loc_coords: [number, number];
-  loc_name: string;
-  loc_descr_en: string;
-  loc_tags: string[];
-  image_urls: string[];
-}
+import { Location } from "../../../globals"
+
+// interface Location {
+//   id: number;
+//   loc_coords: [number, number];
+//   loc_name: string;
+//   loc_descr_en: string;
+//   loc_tags: string[];
+//   image_urls: string[];
+// }
 
 interface MapProps {
   handleLocationData: (locationData: Location) => void;

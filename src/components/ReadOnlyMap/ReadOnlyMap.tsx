@@ -4,15 +4,17 @@ import { useState, useRef, useEffect } from "react";
 import { LatLngTuple, LatLngBounds } from "leaflet";
 import MapUpdater from "./MapUpdater";
 import "./ReadOnlyMap.scss";
+import { Location } from "../../../globals"
 
-interface Location {
-  id: number;
-  location: {
-    loc_coords: [number, number];
-  };
-  loc_name: string;
-  loc_descr_en: string;
-}
+//Retained for reference on account of the modification to avgLat & avgLong
+// interface Location {
+//   id: number;
+//   location: {
+//     loc_coords: [number, number];
+//   };
+//   loc_name: string;
+//   loc_descr_en: string;
+// }
 
 interface MapProps {
   locations: {
@@ -52,8 +54,8 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
 
   if (itinerary_locations && itinerary_locations.length > 0) {
     for (const location of itinerary_locations) {
-      avgLat += location.location.loc_coords[0];
-      avgLng += location.location.loc_coords[1];
+      avgLat += location.loc_coords[0]; //Modified from location.location.loc_coords[0] per SubmitMap.tsx
+      avgLng += location.loc_coords[1]; //Modified from location.location.loc_coords[1] per SubmitMap.tsx
     }
 
     avgLat /= itinerary_locations.length;
