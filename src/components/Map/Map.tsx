@@ -271,7 +271,7 @@ const Map: React.FC<MapProps> = ({
       <MapContainer
         center={defaultPosition}
         zoom={13}
-        style={{height:"500px" ,  width: "100%" }}
+        style={{height:"600px" ,  width: "100%" }}
         className="create-map"
         maxBounds={japanBounds}
         minZoom={5}

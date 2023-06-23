@@ -40,7 +40,7 @@ const App = () => {
                   </PrivateWrapper>
                 }
               />
-              <Route path="/itinerary/:id" element={<ItineraryView />} />
+              <Route path="/kinjo/:id" element={<ItineraryView />} />
               <Route 
                   path="/profile" 
                   element={

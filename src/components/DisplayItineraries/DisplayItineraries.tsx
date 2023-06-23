@@ -17,7 +17,7 @@ const DisplayItineraries: React.FC<DisplayItinerariesProps> = ({ itineraries, to
                 <h1><span>{itineraries.length}</span> search results matching <span className='search-value'>"{searchValue}"</span></h1>
                 <div className='display-itineraries-cards-container'>
                     {itineraries.map((itinerary) => (
-                        <Link to={`/itinerary/${itinerary.itinerary_id}`} key={itinerary.itinerary_id}>
+                        <Link to={`/kinjo/${itinerary.itinerary_id}`} key={itinerary.itinerary_id}>
                             <section className="display-itineraries--card"
                                 key={itinerary.itinerary_id}>
                                 <div className="part1">

@@ -41,7 +41,7 @@ const DKinjoViewer = () => {
             </div>
             <div className="dkinjo-cards--container">
                 {userKinjos.map((kinjo: any) => (
-                    <Link to={`/itinerary/${kinjo.itinerary_id}`} key={kinjo.itinerary_id}>
+                    <Link to={`/kinjo/${kinjo.itinerary_id}`} key={kinjo.itinerary_id}>
                         <DKinjoCard kinjo={kinjo} />
                     </Link>
                 ))}

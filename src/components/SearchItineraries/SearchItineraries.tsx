@@ -98,20 +98,20 @@ const SearchItineraries = () => {
                 <span className="material-symbols-outlined search-icon">
                   search
                 </span>
+                {autocompleteResults.length > 0 && (
+                      <div className="autocomplete-results--container">
+                        {autocompleteResults.map((result, index) => (
+                          <div key={index}
+                              className="autocomplete-result" 
+                              onClick={() => handleAutocompleteClick(result)}>
+                              {result}
+                          </div>
+                        ))}
+                      </div>
+                    )}
               </div>
             {showResults && <DisplayItineraries itineraries={searchResults} toggleShowResults={toggleShowResults} searchValue={searchValue} />}
           </form>
-          {autocompleteResults.length > 0 && (
-                  <div className="autocomplete-results">
-                    {autocompleteResults.map((result, index) => (
-                      <div key={index}
-                           className="autocomplete-result" 
-                           onClick={() => handleAutocompleteClick(result)}>
-                          {result}
-                      </div>
-                    ))}
-                  </div>
-                )}
         </>
       );
 };
