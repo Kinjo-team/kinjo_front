@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, MouseEvent } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import {auth } from '../../../auth/firebase'
 import './SignUp.scss'
@@ -18,7 +18,7 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
 
-    async function handleSubmit(e : any) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
         if (passwordConfirmRef.current?.value !== passwordRef.current?.value) {
@@ -51,7 +51,7 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
 
     // FUNCTIONS
 
-    function stopBubbling(e : any) {
+    function stopBubbling(e : MouseEvent<HTMLButtonElement>) {
         e.stopPropagation()
     };
 
@@ -87,7 +87,7 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         window.location.href = '/main'
     };
 
-    
+
   return (
     <main onClick={toggleSignUp} className='signup--container'>
         <section onClick={stopBubbling} className='signup'>
