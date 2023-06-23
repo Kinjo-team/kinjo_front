@@ -1,21 +1,50 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useKinjo } from "../../../contexts/KinjoContext";
 import { useAuth } from "../../../contexts/AuthContext";
 import Map from "../../Map/Map";
+<<<<<<< HEAD
 import { Location, CreateItineraryData } from "../../../../globals"
-import "./SetYourKinjo.scss";
+=======
+import Modal from "./Modal";
+import UploadWidget from "../../UploadWidget/UploadWidget";
 
+>>>>>>> development
+import "./SetYourKinjo.scss";
+import { featureGroup } from "leaflet";
+
+<<<<<<< HEAD
+=======
+interface LocationData {
+  loc_coords: [number, number];
+  loc_name: string;
+  loc_descr_en: string;
+  loc_tags: string[];
+  loc_image_url: any;
+}
+
+interface CreateItineraryData {
+  firebase_uuid: string;
+  itinerary_name: string;
+  itinerary_descr: string;
+  itinerary_tags: string[];
+  enteredTag: string;
+  kinjo_coords: [number, number];
+  locationData: LocationData[];
+  itinerary_image_url: string;
+}
+
+>>>>>>> development
 type KinjoProcessProps = {
   forwardTransitionPage: () => void;
   toggleCreateItinerary: () => void;
+  insertNewKinjoId: (newKinjoId: any) => void;
 };
 
-const KinjoProcess = ({
+const SetYourKinjo = ({
   forwardTransitionPage,
   toggleCreateItinerary,
+  insertNewKinjoId,
 }: KinjoProcessProps) => {
   // STATES
-  const { kinjo, changeKinjo } = useKinjo();
   const { currentUser } = useAuth();
   const [stage, setStage] = useState(1);
   const [formData, setFormData] = useState<CreateItineraryData>({
@@ -24,13 +53,27 @@ const KinjoProcess = ({
     itinerary_descr: "",
     itinerary_tags: [],
     enteredTag: "",
+    kinjo_coords: [0, 0],
     locationData: [],
+    itinerary_image_url: "",
   });
+  const [imgUrl, setImgUrl] = useState<string>("");
+
+  // MODAL STATES
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalConfirmHandler, setModalConfirmHandler] = useState(
+    () => () => {}
+  );
+  const [currentLayer, setCurrentLayer] = useState<any>(null);
+  const [currentFeatureGroup, setCurrentFeatureGroup] = useState<any>(null);
+  const [circleCreated, setCircleCreated] = useState(false);
 
   // REFS/VARIABLES
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const tagsRef = useRef<HTMLInputElement>(null);
 
+  const MAX_AREA = 3539860000; // Biggest area district in Japan in meters for Ishikari, Hokkaido
 
   // EFFECTS
 
@@ -98,53 +141,111 @@ const KinjoProcess = ({
     }
   };
 
+  const handleCancel = () => {
+    if (currentFeatureGroup && currentLayer) {
+      currentFeatureGroup.removeLayer(currentLayer);
+    }
+    setIsModalOpen(false);
+  };
   const forwardTransition = () => {
     setStage((prevStage) => prevStage + 1);
   };
 
+<<<<<<< HEAD
   const handleLocationData = (locationData: Location) => {
+=======
+  const handleLocationData = (locationData: LocationData) => {
+    console.log("handleLocationData called with:", locationData);
+>>>>>>> development
     setFormData((prevFormData) => ({
       ...prevFormData,
       locationData: [...prevFormData.locationData, locationData],
     }));
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleCircleCreated = (
+    latitude: number,
+    longitude: number,
+    radius: number,
+    layer: any,
+    featureGroup: any
+  ) => {
+    const userCircleArea = Math.PI * radius * radius;
 
-    if (!window.confirm("Are you sure you want to submit this kinjo?")) {
+    if (userCircleArea > MAX_AREA) {
+      setModalMessage(
+        "Your circle exceeds the maximum allowed area. Please try again."
+      );
+      setCurrentLayer(layer);
+      setCurrentFeatureGroup(featureGroup);
+      setIsModalOpen(true);
       return;
     }
 
-    try {
-      const response = await fetch("http://localhost:8000/itineraries", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Successfully created itinerary:", data);
-        // Reset the form data
-        setFormData({
-          firebase_uuid: "",
-          itinerary_name: "",
-          itinerary_descr: "",
-          itinerary_tags: [],
-          enteredTag: "",
-          locationData: [],
-        });
-        forwardTransitionPage();
-      } else {
-        throw new Error("Failed to create itinerary");
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    setModalMessage("Do you want to use these coordinates for your Kinjo?");
+    setCurrentLayer(layer);
+    setCurrentFeatureGroup(featureGroup);
+    setIsModalOpen(true);
+    setModalConfirmHandler(() => () => {
+      forwardTransition();
+      setCircleCreated(true);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        kinjo_coords: [latitude, longitude],
+      }));
+    });
   };
+
+  const handleImageUrl = (imageUrl: string) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      itinerary_image_url: imageUrl,
+    }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setModalMessage("Are you sure you want to submit this kinjo?");
+    setIsModalOpen(true);
+    setModalConfirmHandler(() => async () => {
+      try {
+        console.log("FormData:", formData);
+        const response = await fetch("http://localhost:8000/itineraries", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Successfully created itinerary:", data);
+          // Reset the form data
+          setFormData({
+            firebase_uuid: "",
+            itinerary_name: "",
+            itinerary_descr: "",
+            itinerary_tags: [],
+            enteredTag: "",
+            kinjo_coords: [0, 0],
+            locationData: [],
+            itinerary_image_url: "",
+          });
+          insertNewKinjoId(data.id);
+          forwardTransitionPage();
+        } else {
+          throw new Error("Failed to create itinerary");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  };
+
+  function insertNewImgUrl(url: string) {
+    setImgUrl(url);
+  }
 
   return (
     <div className="create-kinjo--container">
@@ -155,70 +256,84 @@ const KinjoProcess = ({
         <span className="material-symbols-outlined">cancel</span>
       </button>
 
-
       {stage === 1 ? (
         <>
           <div className="create-header">
             <h1>1. Set Your Kinjo</h1>
-            <p>Click on the map, and drag to set the confines of your Kinjo!</p>
+            <p>
+              Create a circle which sets the area of your Kinjo coordinates!
+            </p>
+            <p>
+              (click the circle in the right-hand corner of your map to get
+              started)
+            </p>
             <div className="setkinjo-map-pointer">↓</div>
           </div>
         </>
-        )
-        :
-        (
+      ) : (
         <>
           <div className="create-header">
             <h1>2. Populate your Kinjo!</h1>
-            <p>Find the areas you want to show and add the information.</p>
+            <p>
+              Now that you've set your Kinjo area, click anywhere in the blue
+              circle to add markers & locations.
+            </p>
+            <p>
+              (once you're all done populating your Kinjo, scroll down for Step
+              3)
+            </p>
           </div>
         </>
-        )
-        }
+      )}
       <div className="setkinjo-map-container">
         <Map
           handleLocationData={handleLocationData}
-          forwardTransition={forwardTransition}
+          handleCircleCreated={handleCircleCreated}
+          circleCreated={circleCreated}
         />
       </div>
 
       {stage === 2 && (
         <>
-        <div className={`create-header stage3`}>
-          <h1>3. Add information</h1>
-          <p>
-            You're almost there! fill in the information below to describe your
-            Kinjo!
-          </p>
-        </div>
-          <form onSubmit={handleSubmit} className={`submitkinjo--form ${stage === 2 ? 'show' : ''}`}>
-            <section className="input-form">
-              <label htmlFor="itinerary_name">NAME</label>
-              <input
-                type="text"
-                name="itinerary_name"
-                id="itinerary_name"
-                placeholder="e.g. My First Itinerary"
-                value={formData.itinerary_name}
-                onChange={handleInputChange}
-                onKeyDown={handleEnterKey}
-                required
-              />
-            </section>
-            <section className="input-form">
-              <label htmlFor="itinerary_descr">DESCRIPTION</label>
-              <textarea
-                name="itinerary_descr"
-                id="itinerary_descr"
-                placeholder="Add description"
-                value={formData.itinerary_descr}
-                onChange={handleInputChange}
-                onKeyDown={handleEnterKey}
-                ref={descriptionRef}
-                required
-              />
-            </section>
-            <form>
+          <div className={`create-header stage3`}>
+            <h1>3. Add information</h1>
+            <p>
+              You're almost there! fill in the information below to describe
+              your Kinjo!
+            </p>
+          </div>
+          <form
+            onSubmit={handleSubmit}
+            className={`submitkinjo--form ${stage === 2 ? "show" : ""}`}
+          >
+            <div>
+              <section className="input-form">
+                <label htmlFor="itinerary_name">NAME</label>
+                <input
+                  type="text"
+                  name="itinerary_name"
+                  id="itinerary_name"
+                  placeholder="e.g. My Kinjo"
+                  value={formData.itinerary_name}
+                  onChange={handleInputChange}
+                  onKeyDown={handleEnterKey}
+                  required
+                />
+              </section>
+              <section className="input-form">
+                <label htmlFor="itinerary_descr">DESCRIPTION</label>
+                <textarea
+                  name="itinerary_descr"
+                  id="itinerary_descr"
+                  placeholder="Add description"
+                  value={formData.itinerary_descr}
+                  onChange={handleInputChange}
+                  onKeyDown={handleEnterKey}
+                  ref={descriptionRef}
+                  required
+                />
+              </section>
+              <form>
                 <div className="input-form">
                   <label htmlFor="itinerary_tags">TAGS</label>
                   <input
@@ -240,27 +355,52 @@ const KinjoProcess = ({
                     </div>
                   ))}
                 </div>
-            </form>
+              </form>
+            </div>
+            <div className="upload-img-btn-grp">
+              {imgUrl !== "" ? (
+                <img className="kinjo-cover-img" src={imgUrl} alt="" />
+              ) : (
+                <div className="kinjo-cover-noimg">No Cover Photo</div>
+              )}
+              <UploadWidget
+                insertNewImgUrl={insertNewImgUrl}
+                text="Upload Cover Photo"
+                handleImageUrl={handleImageUrl}
+              />
+            </div>
             <div className="submitkinjo-btn-grp">
-                <button
+              <button
                 type="submit"
                 className="submitkinjo-submit-btn"
                 disabled={false}
-                >
+              >
                 Submit
-                </button>
-                <button
+              </button>
+              <button
                 className="submitkinjo-cancel-btn"
                 onClick={toggleCreateItinerary}
-                >
+              >
                 Cancel
-                </button>
+              </button>
             </div>
           </form>
         </>
       )}
+      <Modal
+        isOpen={isModalOpen}
+        message={modalMessage}
+        onConfirm={() => {
+          modalConfirmHandler();
+          setIsModalOpen(false);
+        }}
+        onCancel={() => {
+          setIsModalOpen(false);
+          handleCancel();
+        }}
+      />
     </div>
   );
 };
 
-export default KinjoProcess;
+export default SetYourKinjo;

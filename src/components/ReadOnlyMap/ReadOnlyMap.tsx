@@ -66,11 +66,11 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
 
   return (
-    <div className="map-container">
+    <div className="readonly-map-container">
       <MapContainer
         center={defaultPosition}
         zoom={13}
-        style={{ height: "230px", width: "100%" }}
+        style={{ height: "auto", width: "100%" }}
         maxBounds={japanBounds}
         minZoom={5}
       >

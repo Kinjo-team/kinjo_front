@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
+import {Link } from 'react-router-dom'
 import DKinjoBookmarkedCard from '../DKinjoBookmarkedCard/DKinjoBookmarkedCard'
 
 import "./DKinjoBookmarked.scss"
@@ -42,7 +43,9 @@ const DKinjoBookmarked = () => {
         <h1 className='dkinjobookmarked--header'>Favourites</h1>
         <div className='dkinjobookmarked-cards--container'>
             {bookmarkedKinjosLoaded && bookmarkedKinjos.map((kinjo: any) => {
-                return <DKinjoBookmarkedCard key={kinjo.id} kinjo={kinjo} toggleDeleteBookmark={toggleDeleteBookmark}   />
+                return <Link to={`/itinerary/${kinjo.itinerary_id}`} key={kinjo.itinerary_id}>
+                    <DKinjoBookmarkedCard key={kinjo.id} kinjo={kinjo} toggleDeleteBookmark={toggleDeleteBookmark}   />
+                </Link>
             })}
         </div>
     </div>

@@ -1,5 +1,6 @@
 import { ProviderProps, ReactNode, createContext, useContext, useState, useEffect } from 'react';
 import { auth } from '../auth/firebase';
+import { GoogleAuthProvider } from 'firebase/auth';
 import { User as FirebaseUser } from '@firebase/auth-types';
 
 interface AuthContextProps {
@@ -7,15 +8,19 @@ interface AuthContextProps {
     signup : (email : string, password : string) => any
     login : (email : string, password : string) => any
     logout : () => void
-    resetPassword : (email : string) => any
-    updateEmail : (email : string) => any
-    updatePassword : (password : string) => any
+    resetPassword : (email : any) => any
+    updateEmail : (email : any) => any
+    updatePassword : (password : any) => any
+    signInWithGoogle : () => any
 }
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 export function useAuth() {
     return useContext(AuthContext);
 }
+
+const provider = new GoogleAuthProvider();
+
 
 export const AuthProvider = ({children} : ProviderProps<ReactNode>) => {
     const [currentUser, setCurrentUser] = useState<null | FirebaseUser>(null);
@@ -39,6 +44,10 @@ export const AuthProvider = ({children} : ProviderProps<ReactNode>) => {
     function updatePassword(password : string) {
         return currentUser?.updatePassword(password);
     }
+    function signInWithGoogle() {
+        return auth.signInWithPopup(provider);
+    }
+    
 
     useEffect(() => {
 
@@ -58,7 +67,8 @@ export const AuthProvider = ({children} : ProviderProps<ReactNode>) => {
         logout,
         resetPassword,
         updateEmail,
-        updatePassword
+        updatePassword,
+        signInWithGoogle
     }
 
   return (

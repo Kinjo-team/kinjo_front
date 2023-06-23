@@ -2,21 +2,53 @@
     position: relative;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
     background-color: white;
     padding: clamp(1rem, 2vw, 2rem);
     border-radius: 5px;
-    border: 1px solid gray;
     // CHANGE??
     height: 100%;
+    gap: 1rem;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
 
     transition: all 0.3s ease-in-out;
     &:hover {
-        scale: 1.03;
+        scale: 1.01;
     }
-    h2 {
-        font-size: clamp(1.5rem, 2.5vw, 3rem);
-        margin-bottom: 1rem;
+
+    .card--image {
+        min-width: clamp(10rem, 20vw, 20rem);
+        max-width: clamp(10rem, 20vw, 20rem);
+        max-height: clamp(10rem, 20vw, 20rem);
+        min-height: clamp(10rem, 20vw, 20rem);
+        height: 100%;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+
+    .card-info-container {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .location-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            h3 {
+                font-size: clamp(1rem, 2vw, 1.3rem);
+            }
+            p {
+                font-size: clamp(0.8rem, 2vw, 1.1rem);
+            }
+        }
+
+        .tags {
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            display: flex;
+            gap: 0.5rem;
+            font-weight: bold;
+        }
     }
 
     .link-google {
@@ -34,6 +66,20 @@
 
         .icon-google {
             max-width: 30px;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card--container {
+        flex-direction: column;
+        justify-content: center;
+        gap: clamp(1rem, 2vw, 2rem);
+        height: 100%;
+        .card--image {
+            padding: 1rem;
+            max-width: 100%;
+            align-self: center;
         }
     }
 }

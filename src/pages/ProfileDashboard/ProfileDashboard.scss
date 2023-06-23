@@ -1,6 +1,7 @@
 .profiledashboard--container {
+    font-family: 'Roboto', sans-serif;
     padding: clamp(2.5rem, 5vw, 10rem);
-    height: 80vh;
+    height: 100vh;
     width: 100vw;
     display: grid;
     grid-template-rows: 1fr 1fr;

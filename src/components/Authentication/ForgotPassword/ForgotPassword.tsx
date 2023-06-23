@@ -40,12 +40,12 @@ const ForgotPassword = ({toggleForgotPassword, toggleLogin, toggleSignUp, closeA
   return (
     <main onClick={toggleForgotPassword} className='forgotpassword--container'>
         <section onClick={stopBubbling} className='forgotpassword'>
-            <h2 className="title">Password Reset</h2>
+            <h2 className="title">Reset Password</h2>
             {error && <div className="error">{error}</div>}
             {message && <div className="success">{message}</div>}
             <form className='forgotpassword--form' onSubmit={handleSubmit}>
                 <div>
-                    <label>Email</label>
+                    <label>EMAIL ADDRESS</label>
                     <input type="email" ref={emailRef} required></input>
                 </div>
                 <button className='forgotpassword--form--submit-btn' type="submit" disabled={loading}>Reset Password</button>

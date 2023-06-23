@@ -1,19 +1,24 @@
 import React, {useState, useEffect} from 'react'
-import DKinjoEditUsername from '../DKinjoEditUsername/DKinjoEditUsername'
+import DKinjoEditUsername from './DKinjoEditUsername/DKinjoEditUsername'
+import FollowerPopUp from './FPopUp/FollowPopUp'
+import FollowingPopUp from './FPopUp/FollowingPopUp'
+import DUploadWidget from './DUploadWidget/DUploadWidget'
 import { useAuth } from '../../../contexts/AuthContext'
 
 import "./DProfile.scss"
-const defaultUserImage = require('../../../assets/images/defaultuser.png')
 
 type DProfileProps = {
     username: string,
-    email: string
+    email: string,
+    userImage: string
 }
 
-const DProfile = ({username, email} : DProfileProps) => {
+const DProfile = ({username, email, userImage} : DProfileProps) => {
     const [showEditUsername, setShowEditUsername] = useState(false)
     const [followers, setFollowers] = useState<any[]>([])
     const [following, setFollowing] = useState<any[]>([])
+    const [showFollowerPopUp, setShowFollowerPopUp] = useState(false)
+    const [showFollowingPopUp, setShowFollowingPopUp] = useState(false)
     const {currentUser} = useAuth()
 
     useEffect(() => {
@@ -24,6 +29,14 @@ const DProfile = ({username, email} : DProfileProps) => {
     // HANDLERS
     function toggleShowEditUsername() {
         setShowEditUsername(!showEditUsername)
+    }
+
+    function toggleFollowerPopUp() {
+        setShowFollowerPopUp(!showFollowerPopUp)
+    }
+
+    function toggleFollowingPopUp() {
+        setShowFollowingPopUp(!showFollowingPopUp)
     }
 
     // FUNCTIONS
@@ -52,7 +65,7 @@ const DProfile = ({username, email} : DProfileProps) => {
     <>
         <div className='dprofile--container'>
             <div className='dprofile-image'>
-                <img src={defaultUserImage} alt="user" />
+                <img src={userImage} alt="user" />
             </div>
             <div className='dprofile-info'>
                 <h1>{username}</h1>
@@ -60,17 +73,20 @@ const DProfile = ({username, email} : DProfileProps) => {
                 <div className='dprofile-followers'>
                     <div className='follow-box'>
                         <p>Followers</p>
-                        <p>{followers.length}</p>
+                        <p className='follow-link' onClick={toggleFollowerPopUp}>{followers.length}</p>
                     </div>
                     <div className='follow-box'>
                         <p>Following</p>
-                        <p>{following.length}</p>
+                        <p className='follow-link' onClick={toggleFollowingPopUp}>{following.length}</p>
                     </div>
                 </div>
             </div>
+            <DUploadWidget text='Change Profile Picture'/>
             <button className='dprofile-edit-btn' onClick={toggleShowEditUsername} type='button'><span className="material-symbols-outlined">edit</span>Edit Username</button>
         </div>
         {showEditUsername && <DKinjoEditUsername toggleShowEditUsername={toggleShowEditUsername} />}
+        {showFollowerPopUp && <FollowerPopUp toggleFollowerPopUp={toggleFollowerPopUp} followers={followers} />}
+        {showFollowingPopUp && <FollowingPopUp toggleFollowingPopUp={toggleFollowingPopUp} following={following} />}
     </>
   )
 }

@@ -37,7 +37,7 @@ const DKinjoViewer = () => {
         <div className="dkinjoviewer--container">
             <div className="dkinjo--header">
                 <h1>My Kinjos</h1>
-                <button className="dkinjo-create-btn" onClick={toggleCreateItinerary} type="button">Create New Kinjo</button>
+                <button className="dkinjo-create-btn" onClick={toggleCreateItinerary} type="button">+</button>
             </div>
             <div className="dkinjo-cards--container">
                 {userKinjos.map((kinjo: any) => (

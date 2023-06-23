@@ -44,7 +44,6 @@ const SearchItineraries = () => {
     setShowResults(!showResults);
   }
 
-    
       return (
         <>
           <form className="search-itineraries" onSubmit={handleSubmit}>

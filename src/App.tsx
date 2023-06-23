@@ -3,7 +3,7 @@ import Landing from "./pages/Landing/Landing";
 import Main from "./pages/Main/Main";
 import ItineraryView from "./pages/ItineraryView/ItineraryView";
 import ProfileDashboard from "./pages/ProfileDashboard/ProfileDashboard";
-import SubmitAndReview from "./pages/SubmitAndReview/SubmitAndReview";
+import OtherUsersProfile from "./pages/OtherUsersProfile/OtherUsersProfile";
 
 
 // Language use
@@ -47,8 +47,14 @@ const App = () => {
                     <PrivateWrapper>
                       <ProfileDashboard />
                     </PrivateWrapper>
-                  } />
-              <Route path="/submit" element={<SubmitAndReview />} />
+                  } 
+              />
+              <Route 
+                  path="/profile/:username" 
+                  element={<PrivateWrapper>
+                    <OtherUsersProfile />
+                  </PrivateWrapper>} />
+              {/* <Route path="/submit" element={<SubmitAndReview />} /> */}
             </Routes>
           </BrowserRouter>
         </AuthProvider>

@@ -1,0 +1,15 @@
+.oukinjos--container {
+    grid-area: kinjos;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: clamp(1rem, 2vw, 2rem);
+    gap: clamp(1rem, 2vw, 2rem);
+    transition: all 0.3s ease-in-out;
+
+    h1 {
+        font-size: clamp(1.5rem, 2vw, 2rem);
+    }
+}
