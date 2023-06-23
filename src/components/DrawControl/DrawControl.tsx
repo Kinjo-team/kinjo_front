@@ -71,10 +71,11 @@
 
 // export default DrawControl;
 
+import { Layer, LeafletEvent } from "leaflet";
 import React from "react";
-import { useMap } from "react-leaflet";
-import { FeatureGroup } from "react-leaflet";
-import { EditControl } from "react-leaflet-draw";
+import { useMap, FeatureGroup } from "react-leaflet";
+// import { FeatureGroup } from "react-leaflet";
+import { EditControl  } from "react-leaflet-draw";
 
 interface DrawControlProps {
   forwardTransition: Function;
@@ -89,16 +90,16 @@ const DrawControl: React.FC<DrawControlProps> = ({
 }) => {
   const map = useMap();
 
-  const onCreated = (e: any) => {
-    const layer = e.layer;
+  const onCreated = (e: LeafletEvent) => {
+    const layer: Layer = e.target; //subbed e.layer for e.target as deprecated. Added type
     onShapeCreated(layer);
     forwardTransition();
   };
 
-  const onDeleted = (e: any) => {
-    const layers = e.layers;
-    const deletedLayers: L.Layer[] = [];
-    layers.eachLayer((layer: any) => {
+  const onDeleted = (e: LeafletEvent) => {
+    const layers = e.target; //subbed e.layers for e.target
+    const deletedLayers: Layer[] = [];
+    layers.eachLayer((layer: Layer) => {
       deletedLayers.push(layer);
     });
     onShapeDeleted(deletedLayers);
