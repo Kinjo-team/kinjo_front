@@ -1,18 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import Map from "../../Map/Map";
-<<<<<<< HEAD
 import { Location, CreateItineraryData } from "../../../../globals"
-=======
 import Modal from "./Modal";
 import UploadWidget from "../../UploadWidget/UploadWidget";
 
->>>>>>> development
 import "./SetYourKinjo.scss";
 import { featureGroup } from "leaflet";
 
-<<<<<<< HEAD
-=======
 interface LocationData {
   loc_coords: [number, number];
   loc_name: string;
@@ -32,7 +27,6 @@ interface CreateItineraryData {
   itinerary_image_url: string;
 }
 
->>>>>>> development
 type KinjoProcessProps = {
   forwardTransitionPage: () => void;
   toggleCreateItinerary: () => void;
@@ -151,12 +145,9 @@ const SetYourKinjo = ({
     setStage((prevStage) => prevStage + 1);
   };
 
-<<<<<<< HEAD
   const handleLocationData = (locationData: Location) => {
-=======
   const handleLocationData = (locationData: LocationData) => {
     console.log("handleLocationData called with:", locationData);
->>>>>>> development
     setFormData((prevFormData) => ({
       ...prevFormData,
       locationData: [...prevFormData.locationData, locationData],
