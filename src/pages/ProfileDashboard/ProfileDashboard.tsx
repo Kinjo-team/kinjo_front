@@ -5,12 +5,12 @@ import DProfile from '../../components/DashboardCompos/DProfile/DProfile'
 import DKinjoViewer from '../../components/DashboardCompos/DKinjoViewer/DKinjoViewer'
 import DKinjoBookmarked from '../../components/DashboardCompos/DKinjoBookmarked/DKinjoBookmarked'
 import Footer from '../../components/Footer/Footer'
-
+import { userData } from '../../../globals'
 import './ProfileDashboard.scss'
 
 const ProfileDashboard = () => {
     const {currentUser} = useAuth()
-    const [userData, setUserData] = useState<any>({})
+    const [userData, setUserData] = useState<userData>({})
 
     useEffect(() => {
         fetchUserInfo();
@@ -28,7 +28,7 @@ const ProfileDashboard = () => {
         } catch (error) {
             console.error(error)
         }
-    }
+    };
 
     // function to fetch user followers
 
@@ -36,13 +36,11 @@ const ProfileDashboard = () => {
 
     // function to fetch user image
 
-
-
   return (
    <>
     <Navbar />
     <div className="profiledashboard--container">
-        <DProfile username={userData.username} email={userData.user_email} />
+        <DProfile username={userData.username ? userData.username : ""} email={userData.user_email ? userData.user_email : ""} />
         {/* OWN COMPONENT */}
         <div>PLACEHOLDER MAP</div>
         {/* OWN COMPONENT */}
@@ -52,6 +50,6 @@ const ProfileDashboard = () => {
     <Footer text='Kinjo' />
    </>
   )
-}
+};
 
-export default ProfileDashboard
+export default ProfileDashboard;

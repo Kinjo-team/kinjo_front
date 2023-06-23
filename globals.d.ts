@@ -34,6 +34,12 @@ export interface Location {
     image_urls: string[];
 }
 
+export interface userData {
+    user_id: number;
+    username: string;
+    user_email: string;
+}
+
 // Interface Definitions from the backend;
 
 export interface ItineraryData {
