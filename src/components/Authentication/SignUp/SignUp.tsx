@@ -47,13 +47,13 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
             setError("Failed to create an account")
         }
         setLoading(false)
-    }
+    };
 
     // FUNCTIONS
 
     function stopBubbling(e : any) {
         e.stopPropagation()
-    }
+    };
 
     async function postUser() {
         const uid = auth.currentUser?.uid
@@ -70,7 +70,7 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         })
         const data = await resp.json()
         console.log(data)
-    }
+    };
 
     async function checkIfUsernameExists() {
         try {
@@ -81,14 +81,13 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         } catch(error) {
             console.error(error)
         }
-    }
+    };
 
     function navigateToMain() {
         window.location.href = '/main'
-    }
+    };
 
-
-
+    
   return (
     <main onClick={toggleSignUp} className='signup--container'>
         <section onClick={stopBubbling} className='signup'>
@@ -119,6 +118,6 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
         </section>
     </main>
   )
-}
+};
 
-export default SignUp
+export default SignUp;
