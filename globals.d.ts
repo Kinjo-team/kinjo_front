@@ -15,15 +15,15 @@ export interface KinjoData {
     kinjoCoords: [number, number];
 }
 
-export interface LocationData {
-    loc_coords: [number, number];
-    location?: {
-        loc_coords: [number, number]
-    };
-    loc_name: string;
-    loc_descr_en: string;
-    loc_tags: string[];
-}
+// export interface LocationData {
+//     loc_coords: [number, number];
+//     location?: {
+//         loc_coords: [number, number]
+//     };
+//     loc_name: string;
+//     loc_descr_en: string;
+//     loc_tags: string[];
+// }
 
 export interface Location {
     id: number;
