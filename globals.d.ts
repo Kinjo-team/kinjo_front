@@ -28,6 +28,9 @@ export interface LocationData {
 export interface Location {
     id: number;
     loc_coords: [number, number];
+    location: {
+        loc_coords: [number, number];
+    }
     loc_name: string;
     loc_descr_en: string;
     loc_tags: string[];
@@ -57,20 +60,20 @@ export interface Itinerary {
 
 // Interface Definitions from the backend;
 
-export interface ItineraryData {
-    id? : number;
-    firebase_uuid: string;
-    itinerary_name: string;
-    itinerary_descr: string;
-    itinerary_tags: string;
-    kinjo_coords: [number, number];
-    locationData: any; //type: Location[]
-  }
+// export interface ItineraryData {
+//     id? : number;
+//     firebase_uuid: string;
+//     itinerary_name: string;
+//     itinerary_descr: string;
+//     itinerary_tags: string;
+//     kinjo_coords: [number, number];
+//     locationData: any; //type: Location[]
+//   }
   
-export interface VisitedMap {
-    firebase_uuid: string;
-    visited_coords: [number, number];
-    visited_name: string;
-    visited_descr: string;
-  }
+// export interface VisitedMap {
+//     firebase_uuid: string;
+//     visited_coords: [number, number];
+//     visited_name: string;
+//     visited_descr: string;
+//   }
   

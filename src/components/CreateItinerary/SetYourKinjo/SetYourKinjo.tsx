@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useKinjo } from "../../../contexts/KinjoContext";
 import { useAuth } from "../../../contexts/AuthContext";
 import Map from "../../Map/Map";
-import { LocationData, CreateItineraryData } from "../../../../globals"
+import { Location, CreateItineraryData } from "../../../../globals"
 import "./SetYourKinjo.scss";
 
 type KinjoProcessProps = {
@@ -102,7 +102,7 @@ const KinjoProcess = ({
     setStage((prevStage) => prevStage + 1);
   };
 
-  const handleLocationData = (locationData: LocationData) => {
+  const handleLocationData = (locationData: Location) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       locationData: [...prevFormData.locationData, locationData],

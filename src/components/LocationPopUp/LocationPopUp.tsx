@@ -1,5 +1,6 @@
 import React from "react";
 import "./LocationPopUp.scss";
+import { Location } from "../../../globals";
 
 type LocationPopUpProps = {
   location: any;

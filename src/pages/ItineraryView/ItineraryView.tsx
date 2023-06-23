@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
@@ -10,6 +9,7 @@ import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
 import i18n from "../../i18n";
 
 import "./ItineraryView.scss";
+import { Location } from "../../../globals";
 
 const ItineraryView = () => {
   const { currentUser } = useAuth();
@@ -48,7 +48,7 @@ const ItineraryView = () => {
   }
 
   // FUNCTIONS
-  function selectLocation(location: any) {
+  function selectLocation(location: Location) {
     setSelectedLocation(location);
   }
 
