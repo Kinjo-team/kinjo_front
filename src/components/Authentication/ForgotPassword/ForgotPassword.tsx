@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, MouseEvent } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
 import './ForgotPassword.scss'
 
@@ -16,7 +16,7 @@ const ForgotPassword = ({toggleForgotPassword, toggleLogin, toggleSignUp, closeA
     const [loading, setLoading] = useState<boolean>(false)
     const [message, setMessage] = useState<string>("")
 
-    async function handleSubmit(e : any) {
+    async function handleSubmit(e : React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         try {
             setMessage("")
@@ -32,7 +32,7 @@ const ForgotPassword = ({toggleForgotPassword, toggleLogin, toggleSignUp, closeA
         setLoading(false)
     }
 
-    function stopBubbling(e : any) {
+    function stopBubbling(e : MouseEvent<HTMLButtonElement>) {
         e.stopPropagation()
     }
     

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent} from "react";
 import { useRef, useState } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./LogIn.scss";
@@ -18,7 +18,7 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
     const [loading, setLoading] = useState<boolean>(false)
 
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (emailRef.current?.value !== undefined && passwordRef.current?.value !== undefined) {
     try {
@@ -33,7 +33,7 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
     setLoading(false);
   }
 
-  function stopBubbling(e: any) {
+  function stopBubbling(e: MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
   }
 
