@@ -5,7 +5,6 @@ import Modal from "./Modal";
 import UploadWidget from "../../UploadWidget/UploadWidget";
 
 import "./SetYourKinjo.scss";
-import { featureGroup } from "leaflet";
 
 interface LocationData {
   loc_coords: [number, number];
