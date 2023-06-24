@@ -11,11 +11,6 @@ const SubmitAndReview = () => {
   const itinerary = location.state.formData;
   const [selectLocation, setSelectLocation] = useState<any>(null);
 
-  useEffect(() => {
-    console.log("Itinerary", itinerary);
-    console.log("Locations", itinerary.locationData);
-  }, [itinerary]);
-
   const handleClosePopup = () => {
     setSelectLocation(null);
   };
@@ -38,7 +33,6 @@ const SubmitAndReview = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Successfully created itinerary:", data);
       } else {
         throw new Error("Failed to create itinerary");
       }

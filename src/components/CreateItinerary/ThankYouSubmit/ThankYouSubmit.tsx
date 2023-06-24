@@ -25,7 +25,7 @@ const ThankYouSubmit = ({toggleCreateItinerary, newKinjoId} : ThankYouSubmitProp
         <div onClick={(event) => event.stopPropagation()} className='thankyou--container'>
             <h1>Your Kinjo has been created!</h1>
             <p>You did it! Thank you for creating your Kinjo.</p>
-            <a href={`/itinerary/${newKinjoId}`}>Click Here to view it!</a>
+            <a href={`/kinjo/${newKinjoId}`}>Click Here to view it!</a>
             <button className='thankyou-close-btn' disabled={false} onClick={toggleCreateItinerary}>Close</button>
         </div>
         <Confetti width={containerDimensions.width} height={containerDimensions.height} />

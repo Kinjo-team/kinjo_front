@@ -109,7 +109,6 @@ const DMap: React.FC<MapProps> = ({ userData, visitedPlaces }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setNewLocationData(data);
       }
     } catch (error) {

@@ -22,8 +22,6 @@ const SearchItineraries = () => {
     });
       if (response.ok) {
         const searchData = await response.json();
-        console.log("This is the data from autocomplete:", searchData);
-
         const uniqueSearchData = Array.from(new Set(searchData));
 
         setAutocompleteResults(uniqueSearchData);
@@ -61,7 +59,6 @@ const SearchItineraries = () => {
         if (response.ok) {
           const searchData = await response.json();
           setSearchResults(searchData);
-          console.log("This is the data from handle search:", searchData);
           setShowResults(true);
         } else {
           console.error('Search request failed');

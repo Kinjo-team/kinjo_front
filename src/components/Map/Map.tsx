@@ -223,7 +223,7 @@ const Map: React.FC<MapProps> = ({
     const inputElement = searchInputRef.current;
     if (inputElement && inputElement.value) {
       const query = inputElement.value;
-      const apiKey = "0be542e0feab4cc9a51ccfc191f4dcc3";
+      const apiKey = process.env.REACT_APP_LEAFLET_API_KEY;
       try {
         const response = await fetch(
           `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(

@@ -17,8 +17,8 @@ const Footer = ({ text }: FooterProps) => {
       <section>
         <h3>Kinjo</h3>
         <ul>
-          <li>Privacy Policy</li>
-          <li>Terms of Service</li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/tos">Terms Of Service</a></li>
           <li>Jobs</li>
           <li>Contact Us</li>
         </ul>

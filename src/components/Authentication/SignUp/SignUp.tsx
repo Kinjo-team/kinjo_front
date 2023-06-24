@@ -17,10 +17,13 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
     const { signup } = useAuth()
     const [error, setError] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
+    const [checked, setChecked] = useState<boolean>(false);
 
     async function handleSubmit(e : any) {
         e.preventDefault()
-
+        if (!checked) {
+            return setError("Please accept the terms & conditions and privacy policy");
+          }        
         if (passwordConfirmRef.current?.value !== passwordRef.current?.value) {
             return setError("Passwords do not match")
         }
@@ -67,14 +70,12 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
                     })
         })
         const data = await resp.json()
-        console.log(data)
     }
 
     async function checkIfUsernameExists() {
         try {
             const res = await fetch(`http://localhost:8000/users/username/${usernameRef.current?.value}`)
             const data = await res.json()
-            console.log(data)
             return !data;
         } catch(error) {
             console.error(error)
@@ -90,6 +91,7 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
   return (
     <main onClick={toggleSignUp} className='signup--container'>
         <section onClick={stopBubbling} className='signup'>
+            <button onClick={toggleSignUp} className='close-btn'>X</button>
             <h2 className='signup--title'>Take the next step <br></br> in exploring Japan</h2>
             {error && <div className="error">{error}</div>}
             <form className='signup--form' onSubmit={handleSubmit}>
@@ -108,6 +110,18 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
                 <div>
                     <label htmlFor='confirmpassword'>CONFIRM PASSWORD</label>
                     <input id='confirmpassword' type="password" ref={passwordConfirmRef} required></input>
+                </div>
+                <div className='termsconditions-box'>
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        checked={checked}
+                        onChange={(e) => setChecked(e.target.checked)}
+                        required
+                    />
+                    <label htmlFor="terms">
+                        I have read the <a href='/tos'>terms &amp; conditions</a> <br/> and <a href='/privacy'>privacy policy</a>
+                    </label>
                 </div>
                 <button className='signup--form--submit-btn' type="submit" disabled={loading}>Sign Up</button>
             </form>

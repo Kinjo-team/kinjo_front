@@ -20,7 +20,6 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl, text, inser
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
-    // console.log("widget:", cloudinaryRef.current);
     widgetRef.current = cloudinaryRef.current.createUploadWidget(
       {
         cloudName: "dy6bhh9th",
@@ -28,7 +27,6 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl, text, inser
       },
       function (error: any, result: any) {
         if (!error && result && result.event === "success") {
-          console.log("Done! Here is the image info: ", result.info);
           insertNewImgUrl(result.info.secure_url);
           handleImageUrl(result.info.secure_url);
         }

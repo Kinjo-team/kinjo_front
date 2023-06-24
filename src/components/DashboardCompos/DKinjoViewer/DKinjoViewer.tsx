@@ -20,7 +20,6 @@ const DKinjoViewer = () => {
         try {
             const res = await fetch(`http://localhost:8000/itineraries/user/${currentUser?.uid}`)
             const data = await res.json()
-            console.log(data)
             setUserKinjos(data)
         } catch (error) {
             console.error(error)

@@ -41,7 +41,7 @@ const KinjoNearYou = () => {
       <h1>NEAR YOU</h1>
       {nearbyItineraries.length !== 0 ? nearbyItineraries.slice(0, 4).map((itinerary, index) => (
         <Link
-          to={`/itinerary/${itinerary.itinerary_id}`}
+          to={`/kinjo/${itinerary.itinerary_id}`}
           key={itinerary.itinerary_id}
         >
           <ItinPictureCard

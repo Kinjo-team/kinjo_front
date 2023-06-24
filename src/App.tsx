@@ -4,6 +4,8 @@ import Main from "./pages/Main/Main";
 import ItineraryView from "./pages/ItineraryView/ItineraryView";
 import ProfileDashboard from "./pages/ProfileDashboard/ProfileDashboard";
 import OtherUsersProfile from "./pages/OtherUsersProfile/OtherUsersProfile";
+import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
+import TermsOfService from "./pages/TOSPage/TOSPage";
 
 
 // Language use
@@ -54,7 +56,8 @@ const App = () => {
                   element={<PrivateWrapper>
                     <OtherUsersProfile />
                   </PrivateWrapper>} />
-              {/* <Route path="/submit" element={<SubmitAndReview />} /> */}
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/tos" element={<TermsOfService />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

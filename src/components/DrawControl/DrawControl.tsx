@@ -37,7 +37,6 @@ const DrawControl: React.FC<DrawControlProps> = ({
     layers.eachLayer((layer: any) => {
       deletedLayers.push(layer);
     });
-    console.log("DELETED LAYERS", deletedLayers);
     onShapeDeleted(deletedLayers);
   };
 

@@ -9,7 +9,6 @@ type LocationPopUpProps = {
 };
 
 const LocationPopUp = ({ location, onClose }: LocationPopUpProps) => {
-  console.log(location)
   const latitude = location.location.loc_coords[0];
   const longitude = location.location.loc_coords[1];
 

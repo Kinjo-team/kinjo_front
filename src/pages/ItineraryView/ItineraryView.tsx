@@ -33,11 +33,9 @@ const ItineraryView = () => {
           `${process.env.REACT_APP_BACKEND_URL}itineraries/id/${id}`
         );
         const data = await response.json();
-        console.log(data)
         setItinerary(data);
         await fetchAuthor(data.firebase_uuid);
         checkIfFollowing(data.firebase_uuid);
-        console.log(i18n.language);
       } catch (error) {
         console.error(error);
       }
@@ -108,7 +106,6 @@ const ItineraryView = () => {
         );
         const data = await response.json();
         setAuthor(data);
-        console.log(data)
     } catch (error) {
         console.error(error);
     }
@@ -130,7 +127,6 @@ const ItineraryView = () => {
       if (response.ok) {
           const data = await response.json();
           toggleBookmarkedModal();
-          console.log(data);
       }
     } catch (error) {
       console.error(error);

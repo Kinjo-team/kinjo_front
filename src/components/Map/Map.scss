@@ -191,6 +191,25 @@
       color: crimson;
     }
   }
+  .popup-edit-btn {
+    align-self: center;
+    padding: 0.5rem;
+    width: 50%;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #226132;
+    cursor: pointer;
+    border: solid 1px #226132;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    margin: 5px;
+
+    &:hover {
+      background-color: white;
+      color: #226132;
+    }
+  }
 }
 
 // LEAFLET STYLE

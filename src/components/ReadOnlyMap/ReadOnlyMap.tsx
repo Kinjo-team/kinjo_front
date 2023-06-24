@@ -1,6 +1,6 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { LatLngTuple, LatLngBounds } from "leaflet";
 import MapUpdater from "./MapUpdater";
 import "./ReadOnlyMap.scss";
@@ -23,7 +23,6 @@ const defaultPosition: [number, number] = [35.664035, 139.698212]; // this is To
 
 const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
   const { itinerary_locations } = locations;
-  //   console.log("Locations", itinerary_locations);
   const [activeLocation, setActiveLocation] = useState<Location | any>(null);
 
   const activeLocationRef = useRef<Location | null>(null);
@@ -40,13 +39,6 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
     activeLocationRef.current = location;
   };
 
-  //   console.logging activeLocation purposes
-  useEffect(() => {
-    if (activeLocation) {
-      console.log("Active Location:", activeLocation);
-    }
-  }, [activeLocation]);
-
   let avgLat = 0;
   let avgLng = 0;
 
@@ -60,7 +52,6 @@ const ReadOnlyMap: React.FC<MapProps> = ({ locations }) => {
     avgLng /= itinerary_locations.length;
   }
   const averagePosition: [number, number] = [avgLat, avgLng];
-  //   console.log("Average Position", averagePosition);
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
 
   return (

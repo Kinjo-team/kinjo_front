@@ -22,7 +22,6 @@ const Main = () => {
     const fetchItineraries = async () => {
       const response = await fetch(`http://localhost:8000/itineraries`);
       const data = await response.json();
-      console.log(data);
       setItineraries(data);
     };
 
@@ -84,7 +83,7 @@ const Main = () => {
           ) : (
             filteredItineraries.map((itinerary: any, index: number) => (
               <Link
-                to={`/itinerary/${itinerary.itinerary_id}`}
+                to={`/kinjo/${itinerary.itinerary_id}`}
                 key={itinerary.itinerary_id}
               >
                 <ItinPictureCard itinerary={itinerary} index={index} />

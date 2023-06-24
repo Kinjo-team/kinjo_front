@@ -35,7 +35,6 @@ const ProfileDashboard = () => {
         `http://localhost:8000/users/${currentUser?.uid}`
       );
       const data = await res.json();
-      console.log(data);
       setUserData(data);
     } catch (error) {
       console.error(error);
