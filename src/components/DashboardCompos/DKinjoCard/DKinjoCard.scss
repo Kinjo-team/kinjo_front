@@ -13,13 +13,35 @@
     &:hover {
         transform: scale(1.1);
     }
+
+    button {
+        position: absolute;
+        top: 0;
+        right: 3px;
+        font-weight: 600;
+        border: none;
+        background-color: transparent;
+        color: crimson;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+            scale: 1.5;
+        }
+        z-index: 99;
+    }
     
     .dkinjo-card-title {
-        font-size: clamp(0.6rem, 2vw, 0.9rem);
+        display: flex;
         text-align: center;
         color: white;
-        background-color: rgba($color: #000000, $alpha: 0.5 );
         border-radius: 5px;
+        h1 {
+            font-size: clamp(0.6rem, 2vw, 0.9rem);
+            text-align: center;
+            color: white;
+            background-color: rgba($color: #000000, $alpha: 0.5 );
+            border-radius: 5px;
+        }
     }
 
     .dkinjo-card-img {
@@ -35,6 +57,92 @@
             height: 100%;
             object-fit: cover;
             border-radius: 5px;
+        }
+    }
+}
+
+.delete-confirm--overlay {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba($color: #000000, $alpha: 0.5 );
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .delete-confirm--container {
+        position: relative;
+        display: flex;
+        gap: clamp(2rem, 1vw, 3rem);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 5px;
+        padding: clamp(1rem, 2vw, 3rem);
+        text-align: center;
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: clamp(0.8rem, 1vw, 1.2rem);
+            border: none;
+            background-color: transparent;
+            color: black;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            &:hover {
+                scale: 1.2;
+            }
+        }
+        p {
+            font-size: clamp(0.9rem, 1vw, 1.5rem);
+        }
+        i {
+            font-size: clamp(0.6rem, 1vw, 0.9rem);
+            color: crimson;
+        }
+
+        .btn-grp {
+            display: flex;
+            gap: clamp(1rem, 1vw, 2rem);
+            justify-content: center;
+            align-items: center;
+            button {
+                padding: clamp(0.5rem, 1vw, 1rem);
+                border: none;
+                border-radius: 5px;
+                font-size: clamp(0.8rem, 1vw, 1.2rem);
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+            .confirm {
+                background-color: crimson;
+                color: white;
+
+                &:hover {
+                    background-color: transparent;
+                    color: crimson;
+                    border: 1px solid crimson;
+                }
+            }
+            .cancel {
+                background-color: transparent;
+                color: black;
+                border: 1px solid black;
+
+                &:hover {
+                    background-color: black;
+                    color: white;
+                }
+            }
         }
     }
 
