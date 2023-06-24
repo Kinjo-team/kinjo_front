@@ -12,7 +12,7 @@ const ThankYouSubmit = ({toggleCreateItinerary, newKinjoId} : ThankYouSubmitProp
   const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    const containerElement = document.querySelector('.create-kinjo--container');
+    const containerElement = document.querySelector('.thankyousubmit--container');
     if (containerElement) {
       const { width, height } = containerElement.getBoundingClientRect();
       setContainerDimensions({ width, height });
