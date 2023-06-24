@@ -30,9 +30,9 @@ const UploadWidget: React.FC<UploadWidgetProps> = ({ handleImageUrl, text, inser
           insertNewImgUrl(result.info.secure_url);
           handleImageUrl(result.info.secure_url);
         }
-      }
+      },
     );
-  }, [handleImageUrl]);
+  }, []);
 
   return (
     <button
