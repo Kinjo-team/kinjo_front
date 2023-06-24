@@ -19,7 +19,6 @@ const OUKinjos = ({username} : OUKinjosProps) => {
             const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}itineraries/${username}`)
             const data = await res.json()
             setKinjos(data)
-            console.log(data)
         } catch (error) {
             console.error(error)
         }

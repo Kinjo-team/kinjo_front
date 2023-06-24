@@ -34,6 +34,7 @@ const ItineraryView = () => {
         );
         const data = await response.json();
         setItinerary(data);
+        console.log(data)
         await fetchAuthor(data.firebase_uuid);
         checkIfFollowing(data.firebase_uuid);
       } catch (error) {
@@ -102,7 +103,7 @@ const ItineraryView = () => {
   async function fetchAuthor(authorID : string) {
     try {
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}users/${authorID}`
+          `${process.env.REACT_APP_BACKEND_URL}users/noemail/${authorID}`
         );
         const data = await response.json();
         setAuthor(data);
