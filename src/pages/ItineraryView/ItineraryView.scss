@@ -93,6 +93,9 @@
                     padding: 0.3rem;
                     font-size: clamp(0.8rem, 2vw, 0.9rem);
                     word-break: break-word;
+                    overflow: auto;
+                    max-height: clamp(10rem, 20vw, 20rem);
+                   
                 }
             }
             .author-info {
