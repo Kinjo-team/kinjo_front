@@ -24,7 +24,7 @@
         align-self: center;
         min-width: clamp(10rem, 15vw, 18rem);
         max-width: 90%;
-        max-height: 85%;
+        max-height: 80%;
         min-height: clamp(10rem, 15vw, 18rem);
         height: 100%;
         border-radius: 5px;
@@ -94,6 +94,7 @@
         height: 100%;
         .card--image {
             max-width: 100%;
+            max-height: clamp(10rem, 15vw, 18rem);
             align-self: center;
         }
 
