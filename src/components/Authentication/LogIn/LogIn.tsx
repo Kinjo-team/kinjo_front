@@ -64,7 +64,6 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
     try {
         const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}users/username/${username}`)
         const data = await res.json()
-        console.log(data)
         return data;
     } catch(error) {
         console.error(error)
@@ -72,8 +71,9 @@ const LogIn = ({toggleLogin, toggleSignUp, toggleForgotPassword, closeAll} : Log
 } 
 
 async function postUser(username : string, email : string, uid : string) {
-  console.log(username, email, uid)
+
   const resp = await fetch(`${process.env.REACT_APP_BACKEND_URL}users`, {
+
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
@@ -85,7 +85,6 @@ async function postUser(username : string, email : string, uid : string) {
               })
   })
   const data = await resp.json()
-  console.log(data)
 }
 
   function stopBubbling(e: any) {
@@ -99,6 +98,7 @@ async function postUser(username : string, email : string, uid : string) {
     return (
     <main onClick={toggleLogin} className='login--container'>
         <section onClick={stopBubbling} className='login'>
+        <button onClick={toggleLogin} className='close-btn'>X</button>
             <button 
               className='login--form--google-btn' 
               type="button" 

@@ -7,6 +7,7 @@ import LocationPopUp from "../../components/LocationPopUp/LocationPopUp";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
+import BookmarkedModal from "./BookmarkedModal";
 import i18n from "../../i18n";
 import DisplayComments from "../../components/DisplayComments/DisplayComments";
 
@@ -22,6 +23,7 @@ const ItineraryView = () => {
   const [likesCount, setLikesCount] = useState<any>(0);
   const [dislikesCount, setDislikesCount] = useState<any>(0);
   const [isFollowing, setIsFollowing] = useState<any>(false);
+  const [showBookmarkedModal, setShowBookmarkedModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,11 +33,9 @@ const ItineraryView = () => {
           `${process.env.REACT_APP_BACKEND_URL}itineraries/id/${id}`
         );
         const data = await response.json();
-        console.log(data)
         setItinerary(data);
         await fetchAuthor(data.firebase_uuid);
         checkIfFollowing(data.firebase_uuid);
-        console.log(i18n.language);
       } catch (error) {
         console.error(error);
       }
@@ -106,7 +106,6 @@ const ItineraryView = () => {
         );
         const data = await response.json();
         setAuthor(data);
-        console.log(data)
     } catch (error) {
         console.error(error);
     }
@@ -127,7 +126,7 @@ const ItineraryView = () => {
       });
       if (response.ok) {
           const data = await response.json();
-          console.log(data);
+          toggleBookmarkedModal();
       }
     } catch (error) {
       console.error(error);
@@ -186,6 +185,10 @@ async function checkIfFollowing(authorId : string) {
     }
 }
 
+function toggleBookmarkedModal() {
+    setShowBookmarkedModal(!showBookmarkedModal);
+}
+
   return (
     <>
       <Navbar />
@@ -198,6 +201,7 @@ async function checkIfFollowing(authorId : string) {
                     <h1>{itinerary.itinerary_name}</h1>
                     <div className="kinjo-btn-grp">
                         <button onClick={bookmarkItinerary}><span className="material-symbols-outlined favourite-btn">star</span></button>
+                        {showBookmarkedModal && <BookmarkedModal text={`You favourited ${itinerary.itinerary_name}!`} toggleBookmarkedModal={toggleBookmarkedModal} />}
                     </div>
                 </div>
                 <div className="kinjo-desc">

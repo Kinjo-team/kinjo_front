@@ -26,9 +26,7 @@ const OtherUsersProfile = () => {
         const res = await fetch(
           `${process.env.REACT_APP_BACKEND_URL}users/username/${username}`
         );
-        console.log(res)
         const data = await res.json();
-        console.log(data);
         setUserData(data);
       } catch (error) {
         console.error(error);

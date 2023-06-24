@@ -20,7 +20,6 @@ const DUploadWidget = ({ text } : DUploadWidgetProps) => {
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
-    // console.log("widget:", cloudinaryRef.current);
     widgetRef.current = cloudinaryRef.current.createUploadWidget(
       {
         cloudName: "dy6bhh9th",
@@ -28,7 +27,6 @@ const DUploadWidget = ({ text } : DUploadWidgetProps) => {
       },
       function (error: any, result: any) {
         if (!error && result && result.event === "success") {
-          console.log("Done! Here is the image info: ", result.info);
           postNewUserImage(result.info.secure_url)
           window.location.reload();
         }
@@ -37,7 +35,6 @@ const DUploadWidget = ({ text } : DUploadWidgetProps) => {
   }, []);
 
   async function postNewUserImage(newImg : string) {
-    console.log("newImg", newImg, currentUser?.uid)
     try {
       const res = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}users/image`,
@@ -53,7 +50,6 @@ const DUploadWidget = ({ text } : DUploadWidgetProps) => {
         }
       );
       const data = await res.json();
-      console.log(data);
     } catch (error) {
       console.error(error);
     }

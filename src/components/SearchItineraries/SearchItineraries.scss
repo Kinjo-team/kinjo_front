@@ -1,4 +1,5 @@
 .search-itineraries {
+    position: relative;
     display: flex;
     position: relative;
     width: 85%;
@@ -13,6 +14,11 @@
         transition: all 0.3s ease-in-out;
         &:focus-within {
             scale: 1.1;
+            .autocomplete-results--container {
+                scale:1.1;
+                left: 11%;
+                width: 85%;
+            }
         }
 
         select {
@@ -44,40 +50,27 @@
             color: black;
             font-size: clamp(1rem, 2vw, 2rem);
         }
+        .autocomplete-results--container {
+            position: absolute;
+            bottom: 0;
+            left: 6.5%;
+            transform: translateY(99%);
+            display: flex;
+            width: 93.5%;
+            flex-direction: column;
+            background-color: white;
+            color: black;
+            z-index: 1;
+            border-radius: 5px;
 
+            .autocomplete-result {
+                cursor: pointer;
+                padding: clamp(0.5rem, 1vw, 1rem);
+                &:hover {
+                    background-color: rgba($color: #000000, $alpha: 0.5);
+                    color: white;
+                }
+            }
+        }
     }
 }
-
-// .dropdown-content {
-//     display: none;
-//     position: absolute;
-//     top: 100%;
-//     left: 0;
-//     z-index: 1;
-//     width: 100px;
-//     // border: 2px solid red;
-//     background-color: #fff;
-// }
-
-// .dropbtn {
-//     width: 100px;
-// }
-
-// .dropdown-section {
-//     display: flex;
-//     flex-direction: column;
-// }
-  
-// .dropdown-content.show {
-//     display: block;
-// }
-
-// .dropdown-content .search-option:hover {
-//     background-color: lightgrey;
-//     cursor: pointer;
-//   }
-
-// .dropdown-section:hover .dropdown-content {
-//     transform: scale(1);
-//     transition: transform 0.3s ease;
-//   }

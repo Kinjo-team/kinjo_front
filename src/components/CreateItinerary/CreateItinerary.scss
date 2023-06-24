@@ -37,6 +37,7 @@
         align-items: center;
         padding: clamp(1rem, 2vw, 2rem);
         animation: fade-in 0.5s ease-in-out;
+        gap: 0.1rem;
         h1 {
             font-size: clamp(1.5rem, 2.5vw, 3rem);
             align-self: center;
@@ -44,7 +45,7 @@
     
         p {
             margin: 5px;
-            font-size: clamp(1rem, 1.5vw, 1.5rem);
+            font-size: clamp(0.78rem, 1.5vw, 1.2rem);
             text-align: center;
             font-style: italic;
         }

@@ -12,6 +12,8 @@
     background-color: rgba($color: #000000, $alpha: 0.5);
 
     .login {
+        position: relative;
+        font-family: "Roboto", sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -22,7 +24,21 @@
         margin-bottom: clamp(6rem, 5vw, 10rem);
         gap: clamp(1rem, 2vw, 2rem);
         box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
-        
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.5rem;
+            border: none;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            cursor: pointer;
+            background-color: transparent;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                scale: 1.2;
+            }
+        }
         .login--form--google-btn {
             display: flex;
             align-items: center;
@@ -45,8 +61,8 @@
             }
         }
 
-        h2 {
-            font-size: clamp(1rem, 2vw, 1.5rem);
+        h2 {    
+            font-size: clamp(1rem, 2vw, 1.3rem);
         }
     }
 

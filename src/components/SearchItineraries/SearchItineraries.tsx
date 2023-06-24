@@ -24,8 +24,6 @@ const SearchItineraries = () => {
     });
       if (response.ok) {
         const searchData = await response.json();
-        console.log("This is the data from autocomplete:", searchData);
-
         const uniqueSearchData = Array.from(new Set(searchData));
 
         setAutocompleteResults(uniqueSearchData);
@@ -64,7 +62,6 @@ const SearchItineraries = () => {
         if (response.ok) {
           const searchData = await response.json();
           setSearchResults(searchData);
-          console.log("This is the data from handle search:", searchData);
           setShowResults(true);
         } else {
           console.error('Search request failed');
@@ -102,20 +99,20 @@ const SearchItineraries = () => {
                 <span className="material-symbols-outlined search-icon">
                   search
                 </span>
+                {autocompleteResults.length > 0 && (
+                      <div className="autocomplete-results--container">
+                        {autocompleteResults.map((result, index) => (
+                          <div key={index}
+                              className="autocomplete-result" 
+                              onClick={() => handleAutocompleteClick(result)}>
+                              {result}
+                          </div>
+                        ))}
+                      </div>
+                    )}
               </div>
             {showResults && <DisplayItineraries itineraries={searchResults} toggleShowResults={toggleShowResults} searchValue={searchValue} />}
           </form>
-          {autocompleteResults.length > 0 && (
-                  <div className="autocomplete-results">
-                    {autocompleteResults.map((result, index) => (
-                      <div key={index}
-                           className="autocomplete-result" 
-                           onClick={() => handleAutocompleteClick(result)}>
-                          {result}
-                      </div>
-                    ))}
-                  </div>
-                )}
         </>
       );
 };

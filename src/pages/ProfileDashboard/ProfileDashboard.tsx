@@ -35,7 +35,6 @@ const ProfileDashboard = () => {
         `${process.env.REACT_APP_BACKEND_URL}users/${currentUser?.uid}`
       );
       const data = await res.json();
-      console.log(data);
       setUserData(data);
     } catch (error) {
       console.error(error);

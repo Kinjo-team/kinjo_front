@@ -12,6 +12,8 @@
     background-color: rgba($color: #000000, $alpha: 0.5);
 
     .signup {
+        position: relative;
+        font-family: "Roboto", sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -24,7 +26,21 @@
         gap: clamp(1rem, 2vw, 2rem);
         box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
         
-        
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.5rem;
+            border: none;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            cursor: pointer;
+            background-color: transparent;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                scale: 1.2;
+            }
+        }
         .signup--title {
             text-align: center;
             font-size: clamp(1rem, 2vw, 1.7rem);
@@ -36,6 +52,7 @@
         display: flex;
         flex-direction: column;
         gap: clamp(1rem, 2vw, 2rem);
+
 
         div {
             position: relative;
@@ -79,6 +96,22 @@
                 color: crimson;
             }
         }
+        .termsconditions-box {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            label
+            {
+                position: relative;
+                font-size: clamp(0.5rem, 1.5vw, 0.8rem);
+                align-self: center;
+                text-align: center;
+            }
+            input {
+                margin-bottom: 1rem;
+            }
+        }
+        
     }
     .auth--link {
         cursor: pointer;

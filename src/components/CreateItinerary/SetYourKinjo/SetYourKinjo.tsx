@@ -145,7 +145,6 @@ const SetYourKinjo = ({
   };
 
   const handleLocationData = (locationData: LocationData) => {
-    console.log("handleLocationData called with:", locationData);
     setFormData((prevFormData) => ({
       ...prevFormData,
       locationData: [...prevFormData.locationData, locationData],
@@ -198,7 +197,6 @@ const SetYourKinjo = ({
     setIsModalOpen(true);
     setModalConfirmHandler(() => async () => {
       try {
-        console.log("FormData:", formData);
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}itineraries`, {
           method: "POST",
           headers: {
@@ -209,7 +207,6 @@ const SetYourKinjo = ({
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Successfully created itinerary:", data);
           // Reset the form data
           setFormData({
             firebase_uuid: "",
@@ -306,6 +303,7 @@ const SetYourKinjo = ({
                   value={formData.itinerary_name}
                   onChange={handleInputChange}
                   onKeyDown={handleEnterKey}
+                  maxLength={50}
                   required
                 />
               </section>

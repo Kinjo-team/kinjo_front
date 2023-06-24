@@ -157,7 +157,7 @@ Distributed under the MIT License.
 <!-- CONTACT -->
 ## The KINJO Team
 
-Terrance Chu - [@RatedYK](https://github.com/RatedYK) <br>
+Terrence Chu - [@RatedYK](https://github.com/RatedYK) <br>
 Evan Peterson - [@evan-desu](https://github.com/evan-desu)<br>
 Garrett Omi - [@garrettomi](https://github.com/garrettomi) <br>
 Alex Fisher - [@cuspofcreation] (https://github.com/cuspofcreation)

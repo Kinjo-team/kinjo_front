@@ -31,7 +31,8 @@ footer {
                     color: white;
                     transition: color 0.5s ease-in-out;
                     &:hover {
-                        color: #ffcc00;
+                        cursor: pointer;
+                        text-decoration: underline;
                     }
                 }
             }

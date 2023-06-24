@@ -20,7 +20,6 @@ const DKinjoViewer = () => {
         try {
             const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}itineraries/user/${currentUser?.uid}`)
             const data = await res.json()
-            console.log(data)
             setUserKinjos(data)
         } catch (error) {
             console.error(error)
@@ -41,7 +40,7 @@ const DKinjoViewer = () => {
             </div>
             <div className="dkinjo-cards--container">
                 {userKinjos.map((kinjo: any) => (
-                    <Link to={`/itinerary/${kinjo.itinerary_id}`} key={kinjo.itinerary_id}>
+                    <Link to={`/kinjo/${kinjo.itinerary_id}`} key={kinjo.itinerary_id}>
                         <DKinjoCard kinjo={kinjo} />
                     </Link>
                 ))}
