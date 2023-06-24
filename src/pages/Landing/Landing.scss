@@ -93,9 +93,10 @@
     font-family: 'Roboto', sans-serif;
     position: relative;
     padding-top: 7rem;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
 
     .info--section {
         display: flex;
@@ -105,18 +106,25 @@
         padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 20vw, 5rem);
         font-size: clamp(1rem, 2vw, 1.5rem);
         line-height: clamp(1.5rem, 2vw, 2rem);
-        h2 {
-            grid-area: landingtitle;
-            font-size: clamp(1.5rem, 2.5vw, 3rem);
-            font-style: italic;
+        p {
+           i {
+            color: crimson;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: bold;
+           }
+          font-size: clamp(0.7rem, 2vw, 1.1rem);
+          font-style: italic;
+          
         }
-    }
+        }
+        h2 {
+            font-size: clamp(1.5rem, 2.5vw, 3rem);
+        }
     .img--container {
         position: relative;
-        display: flex;
+        display: grid;
         justify-content: center;
         align-items: center;
-        padding: clamp(1rem, 2vw, 2rem);
 
         img {
             filter: grayscale(100%);
@@ -124,7 +132,7 @@
             width: 100%;
             height: 100%;
             white-space: nowrap;
-            object-fit: cover;
+            object-fit: contain;
             transition: all 0.3s ease-in-out;
             &:hover {
                 filter: grayscale(0%);
@@ -136,7 +144,9 @@
 
 @media screen and (max-width: 768px) {
     .landing--info--container {
+        display: flex;
         flex-direction: column;
+        height: 100%;
     }
     .info--section {
         margin-left: 0;

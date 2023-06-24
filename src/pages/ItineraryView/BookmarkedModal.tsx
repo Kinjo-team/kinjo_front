@@ -18,7 +18,7 @@ const BookmarkedModal = ({text, toggleBookmarkedModal} : BookmarkedModalProps) =
 
   return (
     <div className='bookmarkedpopup--container'>
-        <p>{text}</p> 
+        <p>You favourited <b>{text}</b>!</p> 
     </div>
   )
 }

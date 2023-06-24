@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
-import {Link} from 'react-router-dom'
 import DKinjoCard from '../DKinjoCard/DKinjoCard'
 import CreateItinerary from '../../CreateItinerary/CreateItinerary'
 
@@ -40,9 +39,7 @@ const DKinjoViewer = () => {
             </div>
             <div className="dkinjo-cards--container">
                 {userKinjos.map((kinjo: any) => (
-                    <Link to={`/kinjo/${kinjo.itinerary_id}`} key={kinjo.itinerary_id}>
                         <DKinjoCard kinjo={kinjo} />
-                    </Link>
                 ))}
             </div>
         </div>

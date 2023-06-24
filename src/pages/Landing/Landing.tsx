@@ -71,7 +71,7 @@ const Landing = () => {
         <p className="info--section">
           <h2>About Kinjo</h2>
           <p>
-            <i>Kinjo</i> (近所), meaning "neighborhood" in Japanese, is your
+            <i>Kinjo (近所)</i>, meaning "neighborhood" in Japanese, is your
             ultimate guide to discovering and sharing community gems of Japan.
             In a country known for its compact architecture and tourist
             hubspots, often times it's easy to overlook potential points of
@@ -85,6 +85,7 @@ const Landing = () => {
           </p>
         </p>
         <div className="img--container">
+          <img src={aboutInfoPic} alt="kinjo map" />
           <img src={landingInfoPic} alt="Places Collage" />
         </div>
       </main>
