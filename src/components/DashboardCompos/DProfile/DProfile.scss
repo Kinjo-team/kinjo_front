@@ -127,6 +127,8 @@
         }
 
         .follow-card-container {
+            overflow: auto;
+            max-height: clamp(200px, 40vw, 400px);
             .card {
                 box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.2);
                 border-radius: 10px;
