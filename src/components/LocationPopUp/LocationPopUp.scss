@@ -93,6 +93,7 @@
             max-width: clamp(200px, 50vw, 300px);
             object-fit: cover;
             border-radius: 5px;
+            justify-self: center;
         }
     }
 }
