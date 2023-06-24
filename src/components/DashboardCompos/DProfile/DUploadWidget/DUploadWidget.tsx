@@ -28,7 +28,6 @@ const DUploadWidget = ({ text } : DUploadWidgetProps) => {
       function (error: any, result: any) {
         if (!error && result && result.event === "success") {
           postNewUserImage(result.info.secure_url)
-          window.location.reload();
         }
       }
     );
@@ -50,6 +49,7 @@ const DUploadWidget = ({ text } : DUploadWidgetProps) => {
         }
       );
       const data = await res.json();
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
