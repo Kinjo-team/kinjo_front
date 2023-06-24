@@ -170,7 +170,7 @@
     .cards--container {
         grid-area: cards;
         display: grid;
-        grid-template-rows: repeat(auto-fit, clamp(100px, 1fr, 1fr));
+        grid-template-rows: 1fr; 
         padding: 1rem;
         gap: 1rem;
         border-radius: 5px;
