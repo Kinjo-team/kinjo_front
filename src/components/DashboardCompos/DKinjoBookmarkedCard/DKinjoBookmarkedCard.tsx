@@ -15,7 +15,7 @@ const DKinjoBookmarkedCard = ({kinjo, toggleDeleteBookmark} : DKinjoBookmarkedCa
   async function handleDeleteBookmark(event: any) {
     event.stopPropagation();
     try {
-      const resp = await fetch(`http://localhost:8000/bookmarks/`, {
+      const resp = await fetch(`${process.env.REACT_APP_BACKEND_URL}bookmarks/`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

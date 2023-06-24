@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent} from 'react';
+import { useState, FormEvent, ChangeEvent, useRef } from 'react';
 import './SearchItineraries.scss';
 import DisplayItineraries from '../DisplayItineraries/DisplayItineraries';
 import debounce from 'lodash/debounce';
@@ -10,12 +10,14 @@ const SearchItineraries = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [autocompleteResults, setAutocompleteResults] = useState<any[]>([]);
 
+  const inputRef: any = useRef(null);
+
   const handleSearchOption = (option: string) => {
     setSearchOption(option);
   };
 
   const autocomplete = async (searchValue: string) => {
-    const response = await fetch(`http://localhost:8000/autocomplete?option=${searchOption}&value=${searchValue}`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}autocomplete?option=${searchOption}&value=${searchValue}`, {
       headers: {
         'Accept': 'application/json'
       }
@@ -44,6 +46,7 @@ const SearchItineraries = () => {
   const handleAutocompleteClick = (term: string) => {
     setSearchValue(term);
     setAutocompleteResults([]);
+    inputRef.current.focus();
   }
 
   // encodeURIComponent
@@ -51,7 +54,7 @@ const SearchItineraries = () => {
     event.preventDefault();
     if (searchOption === 'Name' || searchOption === 'Tag' || searchOption === 'User') {
       try {
-        const response = await fetch(`http://localhost:8000/search?option=${searchOption}&value=${searchValue}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}search?option=${searchOption}&value=${searchValue}`, {
           headers: {
             'Accept': 'application/json'
           }
@@ -86,6 +89,7 @@ const SearchItineraries = () => {
                   <option value='User'>User</option>
                 </select>
                 <input
+                    ref={inputRef}
                     type="text"
                     placeholder="Search..."
                     onChange={handleSearchValue}

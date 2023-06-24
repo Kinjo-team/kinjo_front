@@ -26,7 +26,7 @@ const DisplayComments: FC<DisplayCommentsProps> = ({ firebase_uuid, itinerary_id
     // function to get comments from database
     useEffect(() => {
         const fetchComments = async () => {
-            const response = await fetch(`http://localhost:8000/comments/${itinerary_id}`);
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}comments/${itinerary_id}`);
             const data = await response.json();
             setComments(data);
         };
@@ -48,7 +48,7 @@ const DisplayComments: FC<DisplayCommentsProps> = ({ firebase_uuid, itinerary_id
         }
 
         try {
-            const response = await fetch("http://localhost:8000/comments", {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}comments`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

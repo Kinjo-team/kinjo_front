@@ -60,6 +60,7 @@ const initialLocation: Location = {
 const Map: React.FC<MapProps> = ({
   handleLocationData,
   handleCircleCreated,
+  circleCreated,
 }) => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [newLocationData, setNewLocationData] =
@@ -388,7 +389,7 @@ const Map: React.FC<MapProps> = ({
           handleCircleCreated={handleCircleCreated}
           onShapeCreated={setDrawnShape}
           onShapeDeleted={handleShapeDeleted}
-          circleCreated={false}
+          circleCreated={circleCreated}
         />
       </MapContainer>
     </div>

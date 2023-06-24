@@ -32,7 +32,7 @@ const ProfileDashboard = () => {
   async function fetchUserInfo() {
     try {
       const res = await fetch(
-        `http://localhost:8000/users/${currentUser?.uid}`
+        `${process.env.REACT_APP_BACKEND_URL}users/${currentUser?.uid}`
       );
       const data = await res.json();
       setUserData(data);
