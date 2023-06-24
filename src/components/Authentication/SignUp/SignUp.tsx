@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../../../contexts/AuthContext'
-import {auth } from '../../../auth/firebase'
+import {auth} from '../../../auth/firebase'
 import './SignUp.scss'
 
 type SignUpProps = {
