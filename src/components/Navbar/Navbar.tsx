@@ -68,7 +68,6 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
     try {
       const resp = await fetch(`${process.env.REACT_APP_BACKEND_URL}users/${currentUser?.uid}`);
       const data = await resp.json();
-      console.log(data);
       setUsername(data.username);
     } catch (error) {
       console.error(error);
@@ -105,12 +104,16 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
         />
       )}
       <nav>
-        <h1 className="title" onClick={navigateToLanding}>
-          K I N J O
-        </h1>
+        <div className="title" onClick={navigateToLanding}>
+          <div className="kanji">
+            <h1>近</h1>
+            <h1 className="kanji-bottom">所</h1>
+          </div>
+            <h1>K I N J O</h1>
+        </div>
         <LanguageToggle />
         <div className="btn-grp">
-          <a className="nav-btn" href="/">{t("landingPageHeaderHome")}</a>
+          <a className="nav-btn" href="/main">{t("landingPageHeaderHome")}</a>
           {currentUser ? (
             <UserDropDown username={username} />
           ) : (

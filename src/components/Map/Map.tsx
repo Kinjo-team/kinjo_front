@@ -22,12 +22,19 @@ interface Location {
   loc_name: string;
   loc_descr_en: string;
   loc_tags: string[];
-  image_urls: string[];
+  loc_image_url: string;
 }
 
 interface MapProps {
   handleLocationData: (locationData: Location) => void;
-  forwardTransition: () => void;
+  handleCircleCreated: (
+    latitude: number,
+    longitude: number,
+    radius: number,
+    layer: any,
+    featureGroup: any
+  ) => void;
+  circleCreated: boolean;
 }
 
 //default position for Tokyo
@@ -47,15 +54,21 @@ const initialLocation: Location = {
   loc_name: "",
   loc_descr_en: "",
   loc_tags: [],
-  image_urls: [],
+  loc_image_url: "",
 };
 
-const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
+const Map: React.FC<MapProps> = ({
+  handleLocationData,
+  handleCircleCreated,
+  circleCreated,
+}) => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [newLocationData, setNewLocationData] =
     useState<Location>(initialLocation);
   const [showPopup, setShowPopup] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const [imgUrl, setImgUrl] = useState<string>("");
 
   //useStates tied to FlyTo logic (centerPosition & zoomLevel)
   const [flyToPosition, setFlyToPosition] = useState<[number, number] | null>(
@@ -86,7 +99,10 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
   // Mapbox tile layer API token
   const mapboxTileUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoia2luam90ZWFtIiwiYSI6ImNsaXRlaGJ5ZDFsbmQzcW8xaHhyOHR5NXkifQ.r9gFkgZc8xpSvE1rID2lHg`;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // HANDLERS
+  const handleInputChange = <T extends HTMLInputElement | HTMLTextAreaElement>(
+    e: React.ChangeEvent<T>
+  ) => {
     const { name, value } = e.target;
     if (name === "loc_tags") {
       const tagsArray = value.split(" ").map((tag) => tag.trim());
@@ -104,52 +120,38 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { id, loc_coords, loc_name, loc_descr_en, loc_tags, image_urls } =
+    setImgUrl("");
+    const { id, loc_coords, loc_name, loc_descr_en, loc_tags, loc_image_url } =
       newLocationData;
 
-    if (loc_name.trim() !== "" || newLocationData.image_urls.length === 0) {
+    // Check if loc_name is not empty
+    if (loc_name.trim() !== "") {
       const newLocation: Location = {
         id,
         loc_coords,
         loc_name,
         loc_descr_en,
         loc_tags,
-        image_urls: [],
+        loc_image_url,
       };
-      setLocations((prevLocations) => [...prevLocations, newLocation]);
+      const existingLocationIndex = locations.findIndex((loc) => loc.id === id);
+
+      //Edit logic
+      if (existingLocationIndex > -1) {
+        setLocations((prevLocations) =>
+          prevLocations.map((loc, index) =>
+            index === existingLocationIndex ? newLocation : loc
+          )
+        );
+      } else {
+        setLocations((prevLocations) => [...prevLocations, newLocation]);
+      }
       resetNewLocationData(true);
       handleLocationData(newLocation);
     }
-    if (newLocationData.image_urls.length === 0) {
-      setLocations((prevLocations) => [...prevLocations, newLocationData]);
-      resetNewLocationData(true);
-      handleLocationData(newLocationData);
-    } else {
-      try {
-        const imageUrls = await Promise.all(
-          newLocationData.image_urls.map((image) =>
-            fetchCloudinaryImageUrl(image)
-          )
-        );
-        const newLocationWithUrls: Location = {
-          ...newLocationData,
-          image_urls: imageUrls,
-        };
-        setLocations((prevLocations) => [
-          ...prevLocations,
-          newLocationWithUrls,
-        ]);
-        resetNewLocationData(true);
-        handleLocationData(newLocationWithUrls);
-      } catch (error) {
-        console.error("Error fetching image URLs:", error);
-      }
-    }
   };
 
-  const fetchCloudinaryImageUrl = async (image: string): Promise<any> => {};
-
-  const resetNewLocationData = (formSubmitted: any) => {
+  const resetNewLocationData = (formSubmitted: boolean) => {
     if (!formSubmitted) {
       // Set newLocationData back to the initial state.
       setNewLocationData(initialLocation);
@@ -158,10 +160,9 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
   };
 
   // Add shapes & markers to map logic
+
   const isPointInShape = (point: L.LatLng, shape: L.Layer): boolean => {
-    if (shape instanceof L.Polygon) {
-      return shape.getBounds().contains(point);
-    } else if (shape instanceof L.Circle) {
+    if (shape instanceof L.Circle) {
       return shape.getLatLng().distanceTo(point) <= shape.getRadius();
     }
     return false;
@@ -178,13 +179,9 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
             id: newId,
             loc_coords: [e.latlng.lat, e.latlng.lng],
           }));
+          setImgUrl("");
           setShowPopup(true);
         }
-      },
-      locationfound: (e) => {
-        const { lat, lng } = e.latlng;
-        setFlyToPosition([lat, lng]);
-        setFlyToZoomLevel(13);
       },
     });
 
@@ -212,13 +209,22 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
     );
   };
 
+  //Edit markers logic
+  const handleEditMarker = (id: number) => {
+    const locationToEdit = locations.find((loc) => loc.id === id);
+    if (locationToEdit) {
+      setNewLocationData(locationToEdit);
+      setShowPopup(true);
+    }
+  };
+
   // Geocoding logic for searchbar
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     const inputElement = searchInputRef.current;
     if (inputElement && inputElement.value) {
       const query = inputElement.value;
-      const apiKey = "0be542e0feab4cc9a51ccfc191f4dcc3";
+      const apiKey = process.env.REACT_APP_LEAFLET_API_KEY;
       try {
         const response = await fetch(
           `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
@@ -227,7 +233,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
         );
         const data = await response.json();
         const { lat, lng } = data.results[0].geometry;
-        flyToLocation([lat, lng], 16);
+        flyToLocation([lat, lng], 15);
       } catch (error) {
         console.error("Error fetching geocoding data:", error);
       }
@@ -249,17 +255,25 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
     );
   };
 
+  // Sets new img
+  function insertNewImgUrl(url: string) {
+    setImgUrl(url);
+  }
+
   return (
     <div className="create-map-container">
       <form className="create-map-searchbar" onSubmit={handleSearch}>
         <input type="text" placeholder="Search location" ref={searchInputRef} />
         <button type="submit">Search</button>
-        <button type="button" onClick={handleUseMyLocation}>Use my location</button>
+        <button type="button" onClick={handleUseMyLocation}>
+          Use my location
+        </button>
       </form>
       <MapContainer
         center={defaultPosition}
         zoom={13}
-        style={{ height: "500px", width: "100%" }}
+        style={{height:"600px" ,  width: "100%" }}
+        className="create-map"
         maxBounds={japanBounds}
         minZoom={5}
       >
@@ -276,8 +290,21 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
                 <h3>{location.loc_name}</h3>
                 <p>{location.loc_descr_en}</p>
                 <p>Tags: {location.loc_tags.join(" ")}</p>
-                <p>Images: {location.image_urls.join(", ")}</p>
-                <button className="popup-delete-btn" onClick={() => handleDeleteMarker(location.id)}>
+                <img
+                  className="popup-img"
+                  src={location.loc_image_url}
+                  alt="location"
+                />
+                <button
+                  className="popup-edit-btn"
+                  onClick={() => handleEditMarker(location.id)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="popup-delete-btn"
+                  onClick={() => handleDeleteMarker(location.id)}
+                >
                   Delete
                 </button>
               </div>
@@ -301,9 +328,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
           >
             <form className="popup-form" onSubmit={handleSubmit}>
               <div className="popup-form-input">
-                <label htmlFor="loc_name">
-                  PLACE NAME
-                </label>
+                <label htmlFor="loc_name">PLACE NAME</label>
                 <input
                   type="text"
                   name="loc_name"
@@ -315,12 +340,11 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
                 />
               </div>
               <div className="popup-form-input">
-                <label htmlFor="loc_descr_en">
-                  PLACE DESCRIPTION
-                </label>
-                <input
+                <label htmlFor="loc_descr_en">PLACE DESCRIPTION</label>
+                <textarea
                   name="loc_descr_en"
                   id="loc_descr_en"
+                  rows={6}
                   placeholder="A cozy coffee shop with a great view of Mt. Fuji."
                   value={newLocationData.loc_descr_en}
                   onChange={handleInputChange}
@@ -328,9 +352,7 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
                 />
               </div>
               <div className="popup-form-input">
-                <label htmlFor="tags_input">
-                  PLACE TAGS
-                </label>
+                <label htmlFor="tags_input">PLACE TAGS</label>
                 <TagsInput
                   onTagsChange={(tags) => {
                     setNewLocationData((prevData) => ({
@@ -340,15 +362,23 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
                   }}
                 />
               </div>
+              {imgUrl !== "" && (
+                <img className="marker-img" src={imgUrl} alt="" />
+              )}
               <UploadWidget
+                insertNewImgUrl={insertNewImgUrl}
+                text="Upload Image"
                 handleImageUrl={(url) => {
+                  // handleImageUrl(url);
                   setNewLocationData((prevData) => ({
                     ...prevData,
-                    image_url: [url], // Should this be image_urls instead of image_url?
+                    loc_image_url: url,
                   }));
                 }}
               />
-              <button className="popup-submit-btn" type="submit">Add</button>
+              <button className="popup-submit-btn" type="submit">
+                Add
+              </button>
             </form>
           </Popup>
         )}
@@ -356,9 +386,10 @@ const Map: React.FC<MapProps> = ({ handleLocationData, forwardTransition }) => {
           <FlyTo position={flyToPosition} zoom={flyToZoomLevel} />
         )}
         <DrawControl
-          forwardTransition={forwardTransition}
+          handleCircleCreated={handleCircleCreated}
           onShapeCreated={setDrawnShape}
           onShapeDeleted={handleShapeDeleted}
+          circleCreated={circleCreated}
         />
       </MapContainer>
     </div>

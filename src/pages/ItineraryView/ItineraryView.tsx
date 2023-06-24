@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import LocationCard from "../../components/LocationCard/LocationCard";
@@ -7,7 +7,9 @@ import LocationPopUp from "../../components/LocationPopUp/LocationPopUp";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import ReadOnlyMap from "../../components/ReadOnlyMap/ReadOnlyMap";
+import BookmarkedModal from "./BookmarkedModal";
 import i18n from "../../i18n";
+import DisplayComments from "../../components/DisplayComments/DisplayComments";
 
 
 import "./ItineraryView.scss";
@@ -21,18 +23,22 @@ const ItineraryView = () => {
   const [likesCount, setLikesCount] = useState<any>(0);
   const [dislikesCount, setDislikesCount] = useState<any>(0);
   const [isFollowing, setIsFollowing] = useState<any>(false);
+  const [showBookmarkedModal, setShowBookmarkedModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchItinerary = async () => {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}itineraries/id/${id}`
-      );
-      const data = await response.json();
-      setItinerary(data);
-      fetchAuthor(data.firebase_uuid);
-      checkIfFollowing(data.firebase_uuid);
-      console.log(i18n.language);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}itineraries/id/${id}`
+        );
+        const data = await response.json();
+        setItinerary(data);
+        await fetchAuthor(data.firebase_uuid);
+        checkIfFollowing(data.firebase_uuid);
+      } catch (error) {
+        console.error(error);
+      }
     };
     fetchItinerary();
     fetchTotalLikesAndDislikes();
@@ -54,34 +60,42 @@ const ItineraryView = () => {
   }
 
   const handleLikeButtonClick = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}likes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firebase_uuid: currentUser?.uid,
-        itinerary_id: id,
-      }),
-    });
-    if (response.ok) {
-      setLikesCount(likesCount + 1);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}likes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firebase_uuid: currentUser?.uid,
+          itinerary_id: id,
+        }),
+      });
+      if (response.ok) {
+          fetchTotalLikesAndDislikes();
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
   const handleDislikeButtonClick = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}dislikes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firebase_uuid: currentUser?.uid,
-        itinerary_id: id,
-      }),
-    });
-    if (response.ok) {
-      setDislikesCount(dislikesCount + 1);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}dislikes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firebase_uuid: currentUser?.uid,
+          itinerary_id: id,
+        }),
+      });
+      if (response.ok) {
+        fetchTotalLikesAndDislikes();
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -92,7 +106,6 @@ const ItineraryView = () => {
         );
         const data = await response.json();
         setAuthor(data);
-        console.log(data)
     } catch (error) {
         console.error(error);
     }
@@ -100,19 +113,23 @@ const ItineraryView = () => {
 
 
   async function bookmarkItinerary() {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}bookmarks`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            },
-        body: JSON.stringify({
-            firebase_uuid: currentUser?.uid,
-            itinerary_id: itinerary.itinerary_id,
-        }),
-    });
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}bookmarks`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              },
+          body: JSON.stringify({
+              firebase_uuid: currentUser?.uid,
+              itinerary_id: itinerary.itinerary_id,
+          }),
+      });
+      if (response.ok) {
+          const data = await response.json();
+          toggleBookmarkedModal();
+      }
+    } catch (error) {
+      console.error(error);
     }
 }
 
@@ -120,17 +137,16 @@ const fetchTotalLikesAndDislikes = async () => {
     const responseLike = await fetch(`${process.env.REACT_APP_BACKEND_URL}likes/${id}`);
     const dataLike = await responseLike.json();
     const likes = Number(dataLike);
-    console.log(likes)
     setLikesCount(likes);
 
     const responseDislike = await fetch(`${process.env.REACT_APP_BACKEND_URL}dislikes/${id}`);
     const dataDislike = await responseDislike.json();
     const dislikes = Number(dataDislike);
-    console.log(dislikes)
     setDislikesCount(dislikes);
   };
 
 async function followAuthor() {
+  try {
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}followers`, {
         method: "POST",
         headers: {
@@ -144,6 +160,9 @@ async function followAuthor() {
     if (response.ok) {
         window.location.reload();
     }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function checkIfFollowing(authorId : string) {
@@ -166,6 +185,10 @@ async function checkIfFollowing(authorId : string) {
     }
 }
 
+function toggleBookmarkedModal() {
+    setShowBookmarkedModal(!showBookmarkedModal);
+}
+
   return (
     <>
       <Navbar />
@@ -178,12 +201,20 @@ async function checkIfFollowing(authorId : string) {
                     <h1>{itinerary.itinerary_name}</h1>
                     <div className="kinjo-btn-grp">
                         <button onClick={bookmarkItinerary}><span className="material-symbols-outlined favourite-btn">star</span></button>
+                        {showBookmarkedModal && <BookmarkedModal text={`${itinerary.itinerary_name}`} toggleBookmarkedModal={toggleBookmarkedModal} />}
                     </div>
                 </div>
-                <p className="kinjo-desc">{itinerary.itinerary_descr}</p>
+                <div className="kinjo-desc">
+                  <p>{itinerary.itinerary_descr}</p>
+                </div>
             </div>
             <div className="author-info">
-                <p>{author.username}</p>
+                <Link to={`/profile/${author.username}`}>
+                  <div className="author-link">
+                    <img className="author-img" src={author.user_img} alt="profile-pic" />
+                    <p>{author.username}</p>
+                  </div>
+                </Link>
                 {isFollowing ? 
                     <button disabled={true} className="following-btn">Following</button>    
                     : 
@@ -211,6 +242,12 @@ async function checkIfFollowing(authorId : string) {
           <LocationPopUp location={selectedLocation} onClose={closePopup} />
         )}
       </main>
+      {currentUser?.uid && itinerary.itinerary_id && ( // if user is logged in and itinerary has an id
+        <DisplayComments 
+          firebase_uuid={currentUser?.uid} 
+          itinerary_id={itinerary.itinerary_id}
+        />
+      )}
       <Footer text="Kinjo" />
     </>
   );

@@ -1,0 +1,32 @@
+.near--container {
+    font-family: 'Roboto', sans-serif;
+    grid-area: near;
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "title title"
+                         "cards cards";
+    animation: fade-in 1s ease-in-out;
+    align-self: self-start;
+    width: 100%;
+    padding: 1rem;
+    gap: 1rem;
+
+    h1 {
+        grid-area: title;
+        letter-spacing: 0.2rem;
+        text-align: center;
+        color: black;
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        margin-bottom: 0.5rem;
+    }
+
+    .no-kinjos-msg {
+        grid-area: cards;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        color: black;
+    }
+}

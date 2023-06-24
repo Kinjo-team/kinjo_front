@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: clamp(1rem, 2vw, 2rem);
     padding: clamp(1rem, 2vw, 2rem);
     border-radius: 5px;
     background-color: white;
@@ -10,6 +10,7 @@
     border: solid 1px lightgray;
 
     .dprofile-image {
+        margin-top: clamp(1rem, 2vw, 2rem);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -19,6 +20,7 @@
         background-color: #d3d3d3;
 
         img {
+            border-radius: 50%;
             height: 100%;
             width: 100%;
             object-fit: cover;
@@ -40,6 +42,23 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+
+            .follow-link {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                font-size: clamp(0.8rem, 2vw, 1.2rem);
+                padding: 0.5rem;
+                border-radius: 5px;
+                color: crimson;
+                border: none;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: lightgray;
+                }
+            }
         }
     }
 
@@ -58,12 +77,76 @@
         justify-content: center;
         font-size: medium;
         padding: clamp(0.5rem, 1vw, 1rem);
+        width: clamp(10rem, 20vw, 20rem);
         border-radius: 5px;
         background-color: #d3d3d3;
         border: none;
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
 
         &:hover {
             background-color: #b3b3b3;
+        }
+    }
+}
+
+.popup--overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($color: #000000, $alpha: 0.3);
+
+    .popup--container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: clamp(2rem, 5vw, 3rem);
+        border-radius: 5px;
+        background-color: white;
+        border: solid 1px lightgray;
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            scale: 1.2;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            &:hover {
+                scale: 1.6;
+            }
+        }
+
+        .follow-card-container {
+            .card {
+                box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.2);
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                gap: 5rem;
+                padding: 1rem;
+                a {
+                    text-decoration: none;
+                }
+                img {
+                    height: clamp(50px, 10vw, 75px);
+                    width: clamp(50px, 10vw, 75px);
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+                span {
+                    font-size: clamp(0.8rem, 2vw, 1.5rem);
+                }
+            }
         }
     }
 }

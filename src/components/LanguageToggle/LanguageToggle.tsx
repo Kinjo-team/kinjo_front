@@ -11,7 +11,7 @@ const LanguageToggle = () => {
   return (
     <div className="toggle--container">
       <button onClick={() => changeLanguage("en")}>EN</button>
-      <button onClick={() => changeLanguage("ja")}>JP</button>
+      <button onClick={() => changeLanguage("ja")}>JA</button>
     </div>
   );
 };

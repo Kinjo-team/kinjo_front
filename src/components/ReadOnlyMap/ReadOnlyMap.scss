@@ -1,0 +1,9 @@
+.readonly-map-container {
+    display: flex;
+    grid-area: map;
+    
+    .leaflet-container {
+        width: 100%;
+        height: 100%;
+    }
+}

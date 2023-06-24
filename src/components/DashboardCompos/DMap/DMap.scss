@@ -1,0 +1,81 @@
+.dmap--container {
+    grid-area: map;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    overflow-y: scroll;
+    transition: all 0.3s ease-in-out;
+
+    .dmap--searchbar {
+        display: flex;
+        position: absolute;
+        gap: 5px;
+        bottom: 20px;
+        left: 5px;
+        z-index: 1;
+        input {
+            border: none;
+            outline: none;
+            padding: 0.5rem;
+            font-size: clamp(0.7rem, 1vw, 1rem);
+            border-radius: 5px;
+        }
+        button {
+            padding: clamp(0.5rem, 1vw, 1rem);
+            font-size: clamp(0.5rem, 1vw, 1rem);
+            border: none;
+            outline: none;
+            color: white;
+            background-color: #213A5C;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    }
+    .popup-form {
+        display: flex;
+        flex-direction: column;
+        color: white;
+        background-color: #213A5C;
+
+        .popup-form-input {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            gap: 5px;
+            padding: 1rem;
+
+            label {
+                position: absolute;
+                top: 5px;
+                background-color: #213A5C;
+                letter-spacing: 0.05rem;
+                border-radius: 5px;
+            }
+            input {
+                border: none;
+                outline: none;
+                padding: 0.5rem;
+                border-radius: 5px;
+            }
+        }
+        .popup-submit-btn {
+            padding: 0.5rem;
+            border: none;
+            outline: none;
+            color: white;
+            background-color: crimson;
+            cursor: pointer;
+            border: solid 1px crimson;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+            margin: 5px;
+
+            &:hover {
+                background-color: white;
+                color: crimson;
+            }
+        }
+    }
+}

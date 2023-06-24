@@ -12,20 +12,38 @@
     background-color: rgba($color: #000000, $alpha: 0.5);
 
     .signup {
+        position: relative;
+        font-family: "Roboto", sans-serif;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         background-color: white;
-        padding: clamp(1rem, 2vw, 2rem);
+        padding: clamp(1rem, 10vw, 3rem);
         border-radius: 5px;
+        margin-top: clamp(1rem, 5vw, 10rem);
         margin-bottom: clamp(6rem, 5vw, 10rem);
         gap: clamp(1rem, 2vw, 2rem);
         box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
         
-        
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.5rem;
+            border: none;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            cursor: pointer;
+            background-color: transparent;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                scale: 1.2;
+            }
+        }
         .signup--title {
-            font-size: clamp(1.5rem, 2.5vw, 3rem);
+            text-align: center;
+            font-size: clamp(1rem, 2vw, 1.7rem);
             margin-bottom: 1rem;
         }
     }
@@ -34,6 +52,7 @@
         display: flex;
         flex-direction: column;
         gap: clamp(1rem, 2vw, 2rem);
+
 
         div {
             position: relative;
@@ -53,25 +72,46 @@
                 margin-top: 0.5rem;
                 font-size: clamp(1rem, 1.5vw, 1.5rem);
                 padding: 0.5rem;
-                border: 1px solid #426abd;
+                border: 1px solid #29424E;
                 border-radius: 5px;
+            }
+            input[type=password] {
+                font-size: clamp(0.6rem, 1.5vw, 1rem);
+                padding: 0.8rem;
             }
         }
         .signup--form--submit-btn {
             margin-top: 1rem;
             padding: 0.5rem;
-            border: 1px solid #426abd;
+            border: 1px solid crimson;
             border-radius: 0.5rem;
-            background-color: #426abd;
+            background-color: crimson;
             color: white;
             font-size: clamp(1rem, 1.5vw, 1.5rem);
             cursor: pointer;
+            transition: all 0.3s ease-in-out;
 
             &:hover {
                 background-color: white;
-                color: #426abd;
+                color: crimson;
             }
         }
+        .termsconditions-box {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            label
+            {
+                position: relative;
+                font-size: clamp(0.5rem, 1.5vw, 0.8rem);
+                align-self: center;
+                text-align: center;
+            }
+            input {
+                margin-bottom: 1rem;
+            }
+        }
+        
     }
     .auth--link {
         cursor: pointer;

@@ -1,0 +1,57 @@
+.comment-card--container {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: clamp(0.5rem, 1vw, 1rem);
+
+    header {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+
+        a {
+            text-decoration: none;
+        }
+
+        .comment-user {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin: 1rem;
+            .user-img {
+                width: clamp(40px, 10vw, 60px);
+                height: clamp(40px, 10vw, 60px);
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .username {
+                font-size: clamp(0.8rem, 2vw, 1.1rem);
+                font-weight: 600;
+                color: crimson;
+                
+            }
+        }
+        
+        section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            font-style: italic;
+            padding-bottom: 0.3rem;
+            
+            .date {
+                padding-right: 0.6rem;
+                border-right: 2.5px solid black;
+            }
+        }
+    }
+
+    .comment-text {
+        font-size: clamp(0.8rem, 2vw, 1rem);
+        padding: clamp(1rem, 3vw, 2rem);
+        border: 1px solid lightgray;
+        border-radius: 5px;
+    }
+}

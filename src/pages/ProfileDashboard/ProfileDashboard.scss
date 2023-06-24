@@ -1,6 +1,9 @@
 .profiledashboard--container {
-    padding: clamp(2.5rem, 5vw, 10rem);
-    height: 80vh;
+    font-family: 'Roboto', sans-serif;
+    padding: clamp(2rem, 2vw, 10rem);
+    padding-left: clamp(5rem, 10vw, 10rem);
+    padding-right: clamp(5rem, 10vw, 10rem);
+    height: 90vh;
     width: 100vw;
     display: grid;
     grid-template-rows: 1fr 1fr;
@@ -24,5 +27,8 @@
                              "itineraries"
                              "bookmarked";
         height: auto;
+
+        padding-left: clamp(1rem, 2vw, 2rem);
+        padding-right: clamp(1rem, 2vw, 2rem);
     }
 }

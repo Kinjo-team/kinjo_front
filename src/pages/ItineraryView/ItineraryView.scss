@@ -1,16 +1,21 @@
 .itineraryview--container {
+    font-family: 'Roboto', sans-serif;
     display: grid;
     height: 100vh;
     width: 100vw;
-    padding: clamp(1rem, 2vw, 2rem);
+    padding: 2rem 0;
     background-color: white;
     grid-template-rows: 50px 1fr;
     grid-template-columns: 1fr 1fr;;
-    grid-template-areas: "buttons1 buttons"
+    grid-template-areas: "buttons cards"
                          "info cards";
     gap: 1.5rem;
+    // SQUEEZING
+    padding-left: clamp(1rem, 13vw, 15rem);
+    padding-right: clamp(1rem, 13vw, 15rem);
 
     .back-btn {
+        grid-area: buttons;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -21,7 +26,6 @@
         color: white;
         border: none;
         cursor: pointer;
-        overflow-y: auto;
         &:hover {
             background-color: white;
             border: 1px solid crimson;
@@ -32,26 +36,34 @@
     .info--container {
         grid-area: info;
         display: grid;
-        grid-template-rows: auto auto;
+        grid-template-rows: auto 1fr;
+        grid-template-areas: "main"
+                             "map";
         gap: 1rem;
         padding: 1rem;
         border-radius: 5px;
-        background-color: #29424E;
+        background-color: white;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
         overflow-y: auto;
 
         .main-info {
+            grid-area: main;
             display: grid;
-            grid-template-columns: 5fr 1fr;
-            gap: clamp(1rem, 2vw, 2rem);
+            grid-template-columns: 3fr 1fr;
+            grid-template-areas: "kinjoinfo authorinfo";
             background-color: white;
-            padding: 1rem;
+            border-radius: 5px;
+            
 
             .kinjo-info {
+                grid-area: kinjoinfo;
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;
+                overflow: auto;
 
                 .kinjo-header {
+                    padding: 0.3rem;
                     display: flex;
                     justify-content: space-between;
                     h1 {
@@ -77,22 +89,48 @@
                     }
                 }
                 .kinjo-desc {
-                    font-size: clamp(0.9rem, 2vw, 1.1rem);
+                    display: flex;
+                    padding: 0.3rem;
+                    font-size: clamp(0.8rem, 2vw, 0.9rem);
+                    word-break: break-word;
                 }
             }
             .author-info {
                 display: flex;
                 flex-direction: column;
                 gap: clamp(1rem, 2vw, 2rem);
-                justify-content: center;
+                padding: 1rem;
+
+                a {
+                    text-decoration: none;
+                }
+                .author-link {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    align-items: center;
+                    .author-img {
+                        width: 100px;
+                        height: 100px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+                }
 
                 .follow-btn {
-                    background-color: orange;
+                    background-color: #213A5C;
+                    border: 1px solid #213A5C;
                     border: none;
                     padding: clamp(0.5rem, 1vw, 1rem);
-                    font-size: clamp(0.6rem, 2vw, 1.2rem);
+                    font-size: clamp(0.6rem, 2vw, 1rem);
                     border-radius: 5px;
                     color: white;
+                    cursor: pointer;
+                    transition: all 0.3s ease-in-out;
+                    &:hover {
+                        background-color: white;
+                        color: #213A5C;
+                    }
                 }
 
                 .following-btn {
@@ -108,14 +146,17 @@
                 .vote-container {
                     display: flex;
                     justify-content: space-between;
+                    gap: 0.3rem;
                     .upvote {
                         display: flex;
+                        gap: 0.2rem;
                         align-items: center;
                         color: darkcyan;
                         cursor: pointer;
                     }
                     .downvote {
                         display: flex;
+                        gap: 0.2rem;
                         align-items: center;
                         color: crimson;
                         cursor: pointer;
@@ -127,14 +168,26 @@
 
     .cards--container {
         grid-area: cards;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+        display: grid;
+        grid-template-rows: repeat(auto-fit, clamp(100px, 1fr, 1fr));
         padding: 1rem;
+        gap: 1rem;
         border-radius: 5px;
-        background-color: #29424E;
-        overflow: auto;
+        background-color: white;
+        overflow-y: scroll;
+        
+        &::-webkit-scrollbar {
+            width: 10px; /* For WebKit browsers */
+        }
+        &::-webkit-scrollbar-track {
+            background-color: lightgray; /* For WebKit browsers */
+          }
+        &::-webkit-scrollbar-thumb {
+            background-color: darkgray; /* For WebKit browsers */
+        }
     }
+
+  
 }
 
 @media screen and (max-width: 768px) {
@@ -145,5 +198,40 @@
         grid-template-areas: "buttons"
                              "info"
                              "cards";
+        padding-left: clamp(1rem, 8vw, 5rem);
+        padding-right: clamp(1rem, 8vw, 5rem);
+        
+     
+        .readonly-map-container {
+            height: 300px;
+        }
+
+        .cards--container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5rem;
+            &::-webkit-scrollbar {
+                width: 0px; /* For WebKit browsers */
+            }
+        }
     }
+    .displaycomments--container  {
+        padding-left: clamp(1rem, 8vw, 5rem);
+        padding-right: clamp(1rem, 8vw, 5rem);
+    }
+}
+
+.bookmarkedpopup--container {
+    color: black;
+    position: fixed;
+    text-align: center;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: white;
+    padding: clamp(1rem, 2vw, 2rem);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+    animation: flyin 0.5s ease-in-out;
 }

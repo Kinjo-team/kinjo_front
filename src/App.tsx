@@ -3,7 +3,9 @@ import Landing from "./pages/Landing/Landing";
 import Main from "./pages/Main/Main";
 import ItineraryView from "./pages/ItineraryView/ItineraryView";
 import ProfileDashboard from "./pages/ProfileDashboard/ProfileDashboard";
-import SubmitAndReview from "./pages/SubmitAndReview/SubmitAndReview";
+import OtherUsersProfile from "./pages/OtherUsersProfile/OtherUsersProfile";
+import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
+import TermsOfService from "./pages/TOSPage/TOSPage";
 
 
 // Language use
@@ -40,15 +42,22 @@ const App = () => {
                   </PrivateWrapper>
                 }
               />
-              <Route path="/itinerary/:id" element={<ItineraryView />} />
+              <Route path="/kinjo/:id" element={<ItineraryView />} />
               <Route 
                   path="/profile" 
                   element={
                     <PrivateWrapper>
                       <ProfileDashboard />
                     </PrivateWrapper>
-                  } />
-              <Route path="/submit" element={<SubmitAndReview />} />
+                  } 
+              />
+              <Route 
+                  path="/profile/:username" 
+                  element={<PrivateWrapper>
+                    <OtherUsersProfile />
+                  </PrivateWrapper>} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/tos" element={<TermsOfService />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

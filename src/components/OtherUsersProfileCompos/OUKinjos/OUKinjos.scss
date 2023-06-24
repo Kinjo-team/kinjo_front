@@ -1,0 +1,96 @@
+.oukinjos--container {
+    grid-area: kinjos;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: clamp(1rem, 2vw, 2rem);
+    gap: clamp(1rem, 2vw, 2rem);
+    transition: all 0.3s ease-in-out;
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    h1 {
+        font-size: clamp(1.5rem, 2vw, 2rem);
+    }
+    
+    .oukinjos--cards-container {
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        padding: clamp(0.5rem, 1vw, 1rem);
+
+        .oukinjos--card {
+            display: flex;
+            border-radius: 5px;
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            &:hover {
+                transform: scale(1.02);
+            }
+            .part1 {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: clamp(0.5rem, 1vw, 1rem);
+
+                h3 {
+                    font-size: clamp(0.9rem, 2vw, 1.3rem);
+                  }
+                  img {
+                    display: flex;
+                    max-width: clamp(80px, 20vw, 150px);
+                    max-height: clamp(80px, 20vw, 150px);
+                    min-width: clamp(80px, 20vw, 150px);
+                    min-height: clamp(80px, 20vw, 150px);
+                    object-fit: cover;
+                    border-radius: 5px;
+                    margin-right: 20px;
+                  }
+            }
+
+            .part2 {
+            display: flex;
+            flex-direction: column;
+            padding: clamp(0.5rem, 1vw, 2rem);
+            padding-left: clamp(0.5rem, 4vw, 3rem);
+            padding-right: clamp(0.5rem, 4vw, 3rem);
+            gap: 1rem;
+            p {
+                word-break: break-all;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* Number of lines to show */
+                -webkit-box-orient: vertical;
+                font-style: italic;
+                font-size: clamp(0.6rem, 2vw, 0.9rem);
+            }
+            .tags-container {
+                font-weight: bold;
+                margin-top: auto;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-wrap: wrap;
+                margin-bottom: 10px;
+                font-size: clamp(0.6rem, 2vw, 0.9rem);
+                gap: 0.2rem;
+                .tag {
+                font-size: clamp(0.5rem, 2vw, 0.7rem);
+                margin-bottom: 5px;
+                padding: clamp(0.2rem, 1vw, 0.5rem);
+                border-radius: 5px;
+                color: white;
+                background-color: crimson;
+                }
+            }
+        }
+    }
+}
+}

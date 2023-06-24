@@ -12,18 +12,23 @@
     flex-direction: column;
     justify-content: center;
     background-color: rgba($color: #000000, $alpha: 0.2);
-    padding: clamp(1rem, 5vw, 10rem);
+    padding: clamp(1rem, 5vw, 15rem) clamp(1rem, 10vw, 15rem);
     z-index: 999;
 }
 
 .create-kinjo--container {
+    font-family: 'Roboto', sans-serif;;
     position: relative;
     display: flex;
     flex-direction: column;
     background-color: white;
-    padding: clamp(1rem, 2vw, 2rem);
+    padding: 1rem 0;
+    padding-left: clamp(1rem, 2vw, 2rem);
+    padding-right: clamp(1rem, 2vw, 2rem);
     border-radius: 5px;
     overflow-y: scroll;
+    transition: all 0.3s ease-in-out;
+    overflow-x: hidden;
 
     .create-header {
         position: relative;
@@ -32,6 +37,7 @@
         align-items: center;
         padding: clamp(1rem, 2vw, 2rem);
         animation: fade-in 0.5s ease-in-out;
+        gap: 0.1rem;
         h1 {
             font-size: clamp(1.5rem, 2.5vw, 3rem);
             align-self: center;
@@ -39,7 +45,7 @@
     
         p {
             margin: 5px;
-            font-size: clamp(1rem, 1.5vw, 1.5rem);
+            font-size: clamp(0.78rem, 1.5vw, 1.2rem);
             text-align: center;
             font-style: italic;
         }
@@ -49,23 +55,23 @@
         margin-top: clamp(1rem, 2vw, 2rem);
     }
     .create-kinjo-close-btn {
+        scale: 1.6;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 5px;
+        right: 5px;
         padding: 0.5rem;
         cursor: pointer;
         background-color: transparent;
         border: none;
         &:hover {
-            background-color: black;
-            color: white;
+            scale: 1.9;
         }
     }
 }
 
 .submitkinjo--form {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     padding: clamp(1rem, 2vw, 2rem);
     gap: clamp(1rem, 1.5vw, 1.5rem);
     opacity: 0;
@@ -106,6 +112,25 @@
         }
     }
 
+    .upload-img-btn-grp {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .kinjo-cover-img {
+            min-width: clamp(10rem, 20vw, 20rem);
+            max-width: clamp(10rem, 20vw, 20rem);
+        }
+        .kinjo-cover-noimg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: clamp(10rem, 20vw, 20rem);
+            height: clamp(10rem, 20vw, 20rem);
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+    }
     .submitkinjo-btn-grp {
         display: flex;
         align-items: center;
@@ -123,19 +148,22 @@
         }
     
         .submitkinjo-submit-btn {
-            background-color: #47a570;
+            background-color: crimson;
             color: white;
+            border: 1px solid crimson;
             &:hover {
-                background-color: #5c6b77;
+                background-color: white;
+                color: crimson;
             }
         }
     
         .submitkinjo-cancel-btn {
-            background-color: #0e7eb9;
-            color: white;
+            background-color: white;
+            border: 1px solid black;
+            color: black;
             &:hover {
-                background-color: white;
-                color: black;
+                background-color: black;
+                color: white;
             }
         }
     }
@@ -146,11 +174,11 @@
     }
     .tag {
         margin-top: 10px;
-        background-color: rgba($color: #d45a0d, $alpha: 1);
+        background-color: rgba($color: #213A5C, $alpha: 1);
         color: white;
         font-weight: 550;
         border-radius: 10px;
-        box-shadow: 0 0 5px rgba($color: #d45a0d, $alpha: 1);
+        box-shadow: 0 0 5px rgba($color: #213A5C, $alpha: 1);
         padding: clamp(0.5rem, 1vw, 0.7rem);
         animation: fade-in 0.5s forwards ease-in-out;
     }        
@@ -162,8 +190,15 @@
 }
 
 @media screen and (max-width: 768px) {
+    .overlay--container {
+        padding: clamp(1rem, 2vw, 2rem);
+    }
     .createItinerary--container {
         grid-template-columns: 1fr;
         max-height: 85vh;
+    }
+    .submitkinjo--form {
+        display: flex;
+        flex-direction: column;
     }
 }

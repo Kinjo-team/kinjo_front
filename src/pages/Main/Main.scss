@@ -1,7 +1,10 @@
 .main--container {
     display: grid;
     grid-template-rows: 1fr 1fr;
-    height: 100vh;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "search search"
+                         "recommend near";
+    height: 100%;
     width: 100vw;
     justify-content: center;
     align-items: center;
@@ -11,7 +14,9 @@
     overflow: auto;
 
     .search--container {
-        margin-top: clamp(1rem, 2vw, 2rem);
+        font-family: 'Roboto', sans-serif;
+        grid-area: search;
+        margin-top: 1rem;
         margin-bottom: clamp(1rem, 2vw, 2rem);
         display: flex;
         flex-direction: column;
@@ -22,10 +27,12 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        padding: clamp(3rem, 5vw, 5rem);
+        padding: clamp(3rem, 10vw, 7rem);
+        padding-left: clamp(3rem, 10vw, 5rem);
+        padding-right: clamp(3rem, 10vw, 5rem);
         border-radius: 25px;
         width: 80vw;
-        gap: clamp(1rem, 2vw, 2rem);
+        gap: clamp(2rem, 2vw, 3rem);
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
         animation: fade-in 1s ease-in-out;
         animation: 75s ease 0s normal none infinite running zoomin;
@@ -34,6 +41,7 @@
             font-size: clamp(2.5rem, 5vw, 5rem);
             margin-bottom: 1rem;
             white-space: nowrap;
+            font-family: 'Roboto Flex', sans-serif;
         }
 
         .main--tag {
@@ -64,18 +72,54 @@
     }
 
     .recommend--container {
-        display: grid;
         align-self: self-start;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: clamp(1rem, 2vw, 2rem);
-        animation: fade-in 1s ease-in-out;;       
+        font-family: 'Roboto', sans-serif;
+        grid-area: recommend;
+        grid-template-rows: 50px 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "title title"
+                             "cards cards";
+        padding: clamp(1rem, 2vw, 2rem);
+        width: 100%;
+        gap: 1rem;
+        display: grid;
+        animation: fade-in 1s ease-in-out;
+        border-right: black solid 2px;      
+        h1 {
+            grid-area: title;
+            letter-spacing: 0.2rem;
+            text-align: center;
+            color: black;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            margin-bottom: 0.5rem;
+        }
+        .no-popular-msg {
+            grid-area: cards;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            color: black;
+        }
     }
 }
 
 @media screen and (max-width: 768px) {
     .main--container {
+        display: flex;
+        flex-direction: column;
         .search--container {
             animation: 75s ease 0s normal none infinite running mobile-zoomin;
+        }
+
+        .recommend--container {
+            grid-template-rows: 30px 1fr;
+            border-right: none;
+            margin-bottom: 1rem;
+        }
+        .near--container {
+            grid-template-rows: 30px 1fr;
+            border-left: none;
         }
     }
     

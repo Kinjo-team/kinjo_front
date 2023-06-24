@@ -12,6 +12,7 @@ type CreateItineraryProps = {
 
 
 const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
+  const [newKinjoId, setNewKinjoId] = useState<any>("");
 
   // LOGIC FOR CHANGING POPUPS
   const [pageTransition, setPageTransition] = useState<number>(1);
@@ -19,6 +20,10 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
   // FUNCTIONS
   function forwardTransitionPage() {
     setPageTransition((prevPageTransition) => prevPageTransition + 1);
+  }
+
+  function insertNewKinjoId(newKinjoId: any) {
+    setNewKinjoId(newKinjoId);
   }
 
   return (
@@ -29,10 +34,11 @@ const CreateItinerary = ({ toggleCreateItinerary }: CreateItineraryProps) => {
             <SetYourKinjo
               forwardTransitionPage={forwardTransitionPage}
               toggleCreateItinerary={toggleCreateItinerary}
+              insertNewKinjoId={insertNewKinjoId}
             />
           )}
           {pageTransition === 2 && (
-            <ThankYouSubmit toggleCreateItinerary={toggleCreateItinerary} />
+            <ThankYouSubmit newKinjoId={newKinjoId} toggleCreateItinerary={toggleCreateItinerary} />
           )}
         </KinjoProvider>
       </main>
