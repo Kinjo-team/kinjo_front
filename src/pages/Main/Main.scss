@@ -16,8 +16,9 @@
     .search--container {
         font-family: 'Roboto', sans-serif;
         grid-area: search;
-        margin-top: 1rem;
-        margin-bottom: clamp(1rem, 2vw, 2rem);
+        align-self: flex-start;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -110,7 +111,7 @@
         flex-direction: column;
         .search--container {
             animation: 75s ease 0s normal none infinite running mobile-zoomin;
-
+            align-self: center;
             .create-btn {
                 display: none;
             }

@@ -6,7 +6,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2rem;
+    padding: 1rem;
     color: white;
     z-index: 100;
     background-color: white;
@@ -22,6 +22,7 @@ nav {
         display: flex;
         justify-content: center;
         align-items: center;
+        padding-left: 1rem;
 
         .kanji {
             display: flex;
@@ -41,6 +42,7 @@ nav {
         justify-content: flex-end;
         gap: clamp(1rem, 2vw, 2rem);
         font-size: clamp(0.7rem, 2vw, 1.5rem);
+        padding-right: 1.5rem;
 
         
         .nav-btn {

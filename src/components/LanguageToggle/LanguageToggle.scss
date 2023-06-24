@@ -2,9 +2,10 @@
     // POSITIONING
     position: absolute;
     top: 0;
-    right: 2rem;
+    right: 5px;
     // POSITIONING
     display: flex;
+    flex-direction: column;
     gap: 1rem;
     margin-top: 0.5rem;
     color: crimson;
