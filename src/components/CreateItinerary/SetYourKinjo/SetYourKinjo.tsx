@@ -105,7 +105,7 @@ const SetYourKinjo = ({
   const handleEnterKey = (
     event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       const { name, value } = event.currentTarget;
 
@@ -312,6 +312,7 @@ const SetYourKinjo = ({
                   name="itinerary_descr"
                   id="itinerary_descr"
                   placeholder="Add description"
+                  rows={10}
                   value={formData.itinerary_descr}
                   onChange={handleInputChange}
                   onKeyDown={handleEnterKey}
