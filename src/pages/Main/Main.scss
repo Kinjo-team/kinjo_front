@@ -110,6 +110,10 @@
         flex-direction: column;
         .search--container {
             animation: 75s ease 0s normal none infinite running mobile-zoomin;
+
+            .create-btn {
+                display: none;
+            }
         }
 
         .recommend--container {
