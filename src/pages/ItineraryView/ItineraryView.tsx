@@ -201,7 +201,7 @@ function toggleBookmarkedModal() {
                     <h1>{itinerary.itinerary_name}</h1>
                     <div className="kinjo-btn-grp">
                         <button onClick={bookmarkItinerary}><span className="material-symbols-outlined favourite-btn">star</span></button>
-                        {showBookmarkedModal && <BookmarkedModal text={`You favourited ${itinerary.itinerary_name}!`} toggleBookmarkedModal={toggleBookmarkedModal} />}
+                        {showBookmarkedModal && <BookmarkedModal text={`${itinerary.itinerary_name}`} toggleBookmarkedModal={toggleBookmarkedModal} />}
                     </div>
                 </div>
                 <div className="kinjo-desc">
