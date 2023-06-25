@@ -54,7 +54,7 @@ const KinjoNearYou = () => {
       : 
       (
         <div className="no-kinjos-msg">
-          <p>There are no Kinjo's near you at this time.</p>
+          <p>There are no KINJO's near you at this time.</p>
         </div>
       )}
     </div>
