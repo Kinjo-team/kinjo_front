@@ -14,7 +14,7 @@ const PermissionsPopup: React.FC<PermissionsPopupProps> = ({
     <div className="permissions-popup--overlay">
       <div className="permissions-popup">
         <p>
-          In order to have the best Kinjo experience, we recommend updating your
+          In order to have the best KINJO experience, we recommend updating your
           browser settings to enable location access & acceptance of 3rd party
           cookies while using this site!
         </p>

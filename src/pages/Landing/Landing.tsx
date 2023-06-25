@@ -69,16 +69,16 @@ const Landing = () => {
       />
       <main className="landing--info--container">
         <p className="info--section">
-          <h2>About Kinjo</h2>
+          <h2>About KINJO</h2>
           <p>
-            <i>Kinjo (近所)</i>, meaning "neighborhood" in Japanese, is your
+            <i>KINJO (近所)</i>, meaning "neighborhood" in Japanese, is your
             ultimate guide to discovering and sharing community gems of Japan.
             In a country known for its compact architecture and tourist
             hubspots, often times it's easy to overlook potential points of
             interest hidden in plain sight. Whether you're a passionate local
             guide eager to showcase your neighborhood's hole-in-the-wall spots
             or an intrepid explorer seeking alternative destinations, from our{" "}
-            <i>kinjo</i> to yours, we invite you to join our community and
+            <i>KINJO</i> to yours, we invite you to join our community and
             embark on a journey of discovery, where what may be off-the-beaten
             path for some is an opportunity to uncover the true essence of Japan
             for others.

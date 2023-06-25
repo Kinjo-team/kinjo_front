@@ -72,7 +72,7 @@ const Main = () => {
           <h2 className="main--title">K I N J O</h2>
           <SearchItineraries />
           <button className="create-btn" onClick={toggleCreateItinerary}>
-            Create New Kinjo
+            Create New KINJO
           </button>
           <p className="main--tag">Exploration made for you, by you</p>
         </section>

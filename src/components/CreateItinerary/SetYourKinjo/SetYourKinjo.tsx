@@ -169,7 +169,7 @@ const SetYourKinjo = ({
       return;
     }
 
-    setModalMessage("Do you want to use these coordinates for your Kinjo?");
+    setModalMessage("Do you want to use these coordinates for your KINJO?");
     setCurrentLayer(layer);
     setCurrentFeatureGroup(featureGroup);
     setIsModalOpen(true);
@@ -244,9 +244,9 @@ const SetYourKinjo = ({
       {stage === 1 ? (
         <>
           <div className="create-header">
-            <h1>1. Set Your Kinjo</h1>
+            <h1>1. Set Your KINJO</h1>
             <p>
-              Create a circle which sets the area of your Kinjo coordinates!
+              Create a circle which sets the area of your KINJO coordinates!
             </p>
             <p>
               (click the circle in the right-hand corner of your map to get
@@ -258,13 +258,13 @@ const SetYourKinjo = ({
       ) : (
         <>
           <div className="create-header">
-            <h1>2. Populate your Kinjo!</h1>
+            <h1>2. Populate your KINJO!</h1>
             <p>
-              Now that you've set your Kinjo area, click anywhere in the blue
+              Now that you've set your KINJO area, click anywhere in the blue
               circle to add markers & locations.
             </p>
             <p>
-              (once you're all done populating your Kinjo, scroll down for Step
+              (once you're all done populating your KINJO, scroll down for Step
               3)
             </p>
           </div>
@@ -284,7 +284,7 @@ const SetYourKinjo = ({
             <h1>3. Add information</h1>
             <p>
               You're almost there! fill in the information below to describe
-              your Kinjo!
+              your KINJO!
             </p>
           </div>
           <form

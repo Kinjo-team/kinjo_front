@@ -84,7 +84,7 @@ const SearchItineraries = () => {
                         id='search-option' 
                         defaultValue="Itinerary" 
                         onChange={(event) => handleSearchOption(event.target.value)}>
-                  <option value='Name'>Kinjo</option>
+                  <option value='Name'>KINJO</option>
                   <option value='Tag'>Tag</option>
                   <option value='User'>User</option>
                 </select>
