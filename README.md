@@ -13,7 +13,7 @@
     <a href="https://github.com/Kinjo-team/kinjo_front"><strong>Take a look under the hood »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Kinjo-team/kinjo_front">See it in action</a>
+    <a href="https://www.kinjo-japan.com/">See it in action</a>
     ·
     <a href="https://github.com/Kinjo-team/kinjo_front/issues">Report Bug</a>
     ·
