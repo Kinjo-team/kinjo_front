@@ -34,7 +34,7 @@ const DKinjoViewer = () => {
         {showCreateItinerary && <CreateItinerary toggleCreateItinerary={toggleCreateItinerary} />}
         <div className="dkinjoviewer--container">
             <div className="dkinjo--header">
-                <h1>My Kinjos</h1>
+                <h1>My KINJOs</h1>
                 <button className="dkinjo-create-btn" onClick={toggleCreateItinerary} type="button">+</button>
             </div>
             <div className="dkinjo-cards--container">

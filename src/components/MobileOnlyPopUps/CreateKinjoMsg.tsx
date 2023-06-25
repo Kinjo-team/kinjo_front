@@ -27,7 +27,7 @@ const CreateKinjoMsg = () => {
     <div>
       {showPopup && (
         <div className="mobilepopup--container">
-          <p>To create a your own Kinjo, <br /> please check out the desktop version!</p>
+          <p>To create a your own KINJO, <br /> please check out the desktop version!</p>
         </div>
       )}
     </div>

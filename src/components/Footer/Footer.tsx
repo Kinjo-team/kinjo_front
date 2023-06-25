@@ -11,11 +11,11 @@ const Footer = ({ text }: FooterProps) => {
         <p>
           Made in Tokyo, Japan
           <br></br>
-          ©2023 Kinjo
+          ©2023 KINJO
         </p>
       </section>
       <section>
-        <h3>Kinjo</h3>
+        <h3>KINJO</h3>
         <ul>
           <li><a href="/privacy">Privacy Policy</a></li>
           <li><a href="/tos">Terms Of Service</a></li>
