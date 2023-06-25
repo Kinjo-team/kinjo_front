@@ -34,7 +34,6 @@ const ItineraryView = () => {
         );
         const data = await response.json();
         setItinerary(data);
-        console.log(data)
         await fetchAuthor(data.firebase_uuid);
         checkIfFollowing(data.firebase_uuid);
       } catch (error) {

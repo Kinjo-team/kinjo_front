@@ -47,7 +47,7 @@ const DKinjoEditUsername = ({toggleShowEditUsername} : DKinjoEditUsernameProps) 
             <h1>Enter new username</h1>
             <p>{error}</p>
             <form onSubmit={handleSubmit}>
-                <input ref={usernameRef} type="text" />
+                <input ref={usernameRef} minLength={3} maxLength={16} type="text" />
                 <button type='submit'>Change Username</button>
             </form>
         </div>

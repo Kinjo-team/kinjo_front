@@ -97,7 +97,7 @@ const SignUp = ({toggleSignUp, toggleLogin} : SignUpProps) => {
             <form className='signup--form' onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor='username'>USERNAME</label>
-                    <input type="text" id="username" minLength={3} ref={usernameRef} required />
+                    <input type="text" id="username" minLength={3} maxLength={16} ref={usernameRef} placeholder='e.g. John (max 16 characters)' required />
                 </div>
                 <div>
                     <label htmlFor='email'>EMAIL ADDRESS</label>
