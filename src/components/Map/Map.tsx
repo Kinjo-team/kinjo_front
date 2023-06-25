@@ -134,18 +134,16 @@ const Map: React.FC<MapProps> = ({
         loc_tags,
         loc_image_url,
       };
-      const existingLocationIndex = locations.findIndex((loc) => loc.id === id);
 
-      //Edit logic
-      if (existingLocationIndex > -1) {
-        setLocations((prevLocations) =>
-          prevLocations.map((loc, index) =>
-            index === existingLocationIndex ? newLocation : loc
-          )
-        );
-      } else {
-        setLocations((prevLocations) => [...prevLocations, newLocation]);
-      }
+      // Remove the previous version of the edited location from the locations state
+      const updatedLocations = locations.filter((loc) => loc.id !== id);
+
+      // Add the new location to the updated locations array
+      updatedLocations.push(newLocation);
+
+      // Update the locations state with the updated locations array
+      setLocations(updatedLocations);
+
       resetNewLocationData(true);
       handleLocationData(newLocation);
     }
@@ -224,7 +222,7 @@ const Map: React.FC<MapProps> = ({
     const inputElement = searchInputRef.current;
     if (inputElement && inputElement.value) {
       const query = inputElement.value;
-      const apiKey = process.env.REACT_APP_LEAFLET_API_KEY;
+      const apiKey = "0be542e0feab4cc9a51ccfc191f4dcc3";
       try {
         const response = await fetch(
           `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
@@ -272,7 +270,7 @@ const Map: React.FC<MapProps> = ({
       <MapContainer
         center={defaultPosition}
         zoom={13}
-        style={{height:"600px" ,  width: "100%" }}
+        style={{ height: "500px", width: "100%" }}
         className="create-map"
         maxBounds={japanBounds}
         minZoom={5}
@@ -334,7 +332,6 @@ const Map: React.FC<MapProps> = ({
                   name="loc_name"
                   id="loc_name"
                   placeholder="Tanaka's Coffee"
-                  maxLength={30}
                   value={newLocationData.loc_name}
                   onChange={handleInputChange}
                   required

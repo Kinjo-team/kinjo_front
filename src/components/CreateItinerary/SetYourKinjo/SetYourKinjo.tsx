@@ -144,12 +144,29 @@ const SetYourKinjo = ({
   };
 
   const handleLocationData = (locationData: LocationData) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      locationData: [...prevFormData.locationData, locationData],
-    }));
-  };
+    setFormData((prevFormData) => {
+      const existingLocationIndex = prevFormData.locationData.findIndex(
+        (loc) =>
+          loc.loc_coords[0] === locationData.loc_coords[0] &&
+          loc.loc_coords[1] === locationData.loc_coords[1]
+      );
 
+      let updatedLocationData = [...prevFormData.locationData];
+
+      if (existingLocationIndex > -1) {
+        // Update the existing location data
+        updatedLocationData[existingLocationIndex] = locationData;
+      } else {
+        // Add the new location data
+        updatedLocationData.push(locationData);
+      }
+
+      return {
+        ...prevFormData,
+        locationData: updatedLocationData,
+      };
+    });
+  };
   const handleCircleCreated = (
     latitude: number,
     longitude: number,
@@ -196,13 +213,16 @@ const SetYourKinjo = ({
     setIsModalOpen(true);
     setModalConfirmHandler(() => async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}itineraries`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}itineraries`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
