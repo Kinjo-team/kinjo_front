@@ -5,6 +5,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import SearchItineraries from "../../components/SearchItineraries/SearchItineraries";
 import KinjoNearYou from "../../components/KinjoNearYou/KinjoNearYou";
 import PermissionsPopup from "../../components/PermissionsPopup/PermissionsPopup";
+import CreateKinjoMsg from "../../components/MobileOnlyPopUps/CreateKinjoMsg";
 import Footer from "../../components/Footer/Footer";
 import { getRandomItineraries } from "./helperFunctions";
 import { useState, useEffect } from "react";
@@ -64,6 +65,7 @@ const Main = () => {
       {showCreateItinerary && (
         <CreateItinerary toggleCreateItinerary={toggleCreateItinerary} />
       )}
+      <CreateKinjoMsg />
       <Navbar />
       <main className="main--container">
         <section className="search--container">
