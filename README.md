@@ -13,7 +13,7 @@
     <a href="https://github.com/Kinjo-team/kinjo_front"><strong>Take a look under the hood »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Kinjo-team/kinjo_front">See it in action</a>
+    <a href="https://www.kinjo-japan.com/">See it in action</a>
     ·
     <a href="https://github.com/Kinjo-team/kinjo_front/issues">Report Bug</a>
     ·
@@ -117,8 +117,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Future Development Roadmap
 
-- [ ] Edit itineraries
-- [ ] Group itineraries
+- [ ] Edit Kinjos
+- [ ] Collaborative Kinjos
 
 <!--- [ ] Feature 3
     - [ ] Nested Feature-->
@@ -160,7 +160,7 @@ Distributed under the MIT License.
 Terrence Chu - [@RatedYK](https://github.com/RatedYK) <br>
 Evan Peterson - [@evan-desu](https://github.com/evan-desu)<br>
 Garrett Omi - [@garrettomi](https://github.com/garrettomi) <br>
-Alex Fisher - [@cuspofcreation] (https://github.com/cuspofcreation)
+Alex Fisher - [@cuspofcreation](https://github.com/cuspofcreation)
 
 KINJO Backend: [KINJO Frontend](https://github.com/Kinjo-team/kinjo_back/)
 

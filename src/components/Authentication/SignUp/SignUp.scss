@@ -19,10 +19,10 @@
         align-items: center;
         justify-content: center;
         background-color: white;
-        padding: clamp(1rem, 10vw, 3rem);
+        padding: clamp(1rem, 10vw, 2rem);
         border-radius: 5px;
         margin-top: clamp(1rem, 5vw, 10rem);
-        margin-bottom: clamp(6rem, 5vw, 10rem);
+        margin-bottom: clamp(1rem, 5vw, 10rem);
         gap: clamp(1rem, 2vw, 2rem);
         box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
         
@@ -33,6 +33,7 @@
             padding: 0.5rem;
             border: none;
             font-size: clamp(1rem, 2vw, 1.5rem);
+            color: black;
             cursor: pointer;
             background-color: transparent;
             transition: all 0.3s ease-in-out;
@@ -43,7 +44,7 @@
         }
         .signup--title {
             text-align: center;
-            font-size: clamp(1rem, 2vw, 1.7rem);
+            font-size: clamp(1rem, 2vw, 1.5rem);
             margin-bottom: 1rem;
         }
     }
@@ -70,7 +71,7 @@
 
             input {
                 margin-top: 0.5rem;
-                font-size: clamp(1rem, 1.5vw, 1.5rem);
+                font-size: clamp(1rem, 1.5vw, 1.1rem);
                 padding: 0.5rem;
                 border: 1px solid #29424E;
                 border-radius: 5px;

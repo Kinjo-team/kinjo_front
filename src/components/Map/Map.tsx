@@ -334,6 +334,7 @@ const Map: React.FC<MapProps> = ({
                   name="loc_name"
                   id="loc_name"
                   placeholder="Tanaka's Coffee"
+                  maxLength={30}
                   value={newLocationData.loc_name}
                   onChange={handleInputChange}
                   required

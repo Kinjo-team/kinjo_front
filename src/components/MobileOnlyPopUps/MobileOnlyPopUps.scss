@@ -1,0 +1,13 @@
+.mobilepopup--container {
+    font-family: "Roboto", sans-serif;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    position: fixed;
+    background-color: black;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    padding: clamp(1rem, 2vw, 3rem);
+    z-index: 9999;
+}
