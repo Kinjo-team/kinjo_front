@@ -134,18 +134,16 @@ const Map: React.FC<MapProps> = ({
         loc_tags,
         loc_image_url,
       };
-      const existingLocationIndex = locations.findIndex((loc) => loc.id === id);
 
-      //Edit logic
-      if (existingLocationIndex > -1) {
-        setLocations((prevLocations) =>
-          prevLocations.map((loc, index) =>
-            index === existingLocationIndex ? newLocation : loc
-          )
-        );
-      } else {
-        setLocations((prevLocations) => [...prevLocations, newLocation]);
-      }
+      // Remove the previous version of the edited location from the locations state
+      const updatedLocations = locations.filter((loc) => loc.id !== id);
+
+      // Add the new location to the updated locations array
+      updatedLocations.push(newLocation);
+
+      // Update the locations state with the updated locations array
+      setLocations(updatedLocations);
+
       resetNewLocationData(true);
       handleLocationData(newLocation);
     }
@@ -272,7 +270,7 @@ const Map: React.FC<MapProps> = ({
       <MapContainer
         center={defaultPosition}
         zoom={13}
-        style={{height:"600px" ,  width: "100%" }}
+        style={{ height: "600px", width: "100%" }}
         className="create-map"
         maxBounds={japanBounds}
         minZoom={5}
