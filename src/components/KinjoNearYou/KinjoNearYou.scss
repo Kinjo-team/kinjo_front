@@ -2,7 +2,7 @@
     font-family: 'Roboto', sans-serif;
     grid-area: near;
     display: grid;
-    grid-template-rows: 50px 1fr;
+    grid-template-rows: auto 1fr;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "title title"
                          "cards cards";
