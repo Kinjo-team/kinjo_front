@@ -63,7 +63,7 @@
             padding-right: clamp(0.5rem, 4vw, 3rem);
             gap: 1rem;
             p {
-                word-break: break-all;
+                word-break: break-word;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
