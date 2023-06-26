@@ -1,5 +1,6 @@
 .add-img-btn {
-    padding: 0.5rem;
+    padding: clamp(0.5rem, 1vw, 1rem);
+    width: clamp(5rem, 10vw, 10rem);
     border: none;
     outline: none;
     color: white;

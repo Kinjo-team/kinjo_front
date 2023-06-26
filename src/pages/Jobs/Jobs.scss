@@ -1,0 +1,19 @@
+.jobs--container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    width: 100vw;
+    font-family: 'Roboto', sans-serif;
+
+    h1 {
+        padding: clamp(3rem, 2vw, 5rem);
+        b {
+            color: crimson;
+        }
+        font-size: clamp(1rem, 5vw, 3rem);
+        text-align: center;
+        line-height: clamp(2rem, 5vw, 6rem);
+    }
+}

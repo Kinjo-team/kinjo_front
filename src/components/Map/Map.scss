@@ -69,6 +69,11 @@
       .tags-input-container {
         display: flex;
         flex-direction: column;
+        .tags-input {
+          &::placeholder {
+            font-size: 0.7rem;
+          }
+        }
         .tag-items {
           display: flex;
           gap: 7px;

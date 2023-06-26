@@ -129,6 +129,9 @@
         }
 
         .follow-card-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
             overflow: auto;
             max-height: clamp(200px, 40vw, 400px);
             padding: 1rem;
