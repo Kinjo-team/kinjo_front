@@ -6,6 +6,8 @@ import ProfileDashboard from "./pages/ProfileDashboard/ProfileDashboard";
 import OtherUsersProfile from "./pages/OtherUsersProfile/OtherUsersProfile";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsOfService from "./pages/TOSPage/TOSPage";
+import Jobs from "./pages/Jobs/Jobs";
+import ContactUs from "./pages/Contact Us/ContactUs";
 
 
 // Language use
@@ -58,6 +60,8 @@ const App = () => {
                   </PrivateWrapper>} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/tos" element={<TermsOfService />} />
+              <Route path="/jobs" element={<Jobs />} />
+              <Route path="/contact" element={<ContactUs />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

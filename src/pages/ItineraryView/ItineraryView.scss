@@ -5,7 +5,7 @@
     width: 100vw;
     padding: 2rem 0;
     background-color: white;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 50px 1fr;
     grid-template-columns: 1fr 1fr;;
     grid-template-areas: "buttons cards"
                          "info cards";
@@ -197,7 +197,7 @@
 @media screen and (max-width: 868px) {
     .itineraryview--container {
         height: 100%;
-        grid-template-rows: auto auto auto;
+        grid-template-rows: 30px auto auto;
         grid-template-columns: 1fr;
         grid-template-areas: "buttons"
                              "info"

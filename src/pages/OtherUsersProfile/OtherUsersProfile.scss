@@ -4,7 +4,7 @@
     height: 90vh;
     width: 100vw;
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 50px 1fr;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "button1 kinjos"
                          "profile kinjos";
@@ -37,7 +37,7 @@
 
 @media screen and (max-width: 868px) {
     .otherusersprofile--container {
-        grid-template-rows: auto auto 1fr;
+        grid-template-rows: 30px auto 1fr;
         grid-template-columns: 1fr;
         grid-template-areas: "button1"
                              "profile"

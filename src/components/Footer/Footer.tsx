@@ -19,8 +19,8 @@ const Footer = ({ text }: FooterProps) => {
         <ul>
           <li><a href="/privacy">Privacy Policy</a></li>
           <li><a href="/tos">Terms Of Service</a></li>
-          <li>Jobs</li>
-          <li>Contact Us</li>
+          <li><a href="/jobs">Jobs</a></li>
+          <li><a href="/contact">Contact Us</a></li>
         </ul>
       </section>
       <section>
