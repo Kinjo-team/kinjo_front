@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import LanguageToggle from "../../components/LanguageToggle/LanguageToggle";
+// import LanguageToggle from "../../components/LanguageToggle/LanguageToggle";
 
 import "./Landing.scss";
 // VIDEO
@@ -35,7 +35,7 @@ const Landing = () => {
 
   return (
     <>
-      <LanguageToggle />
+      {/* <LanguageToggle /> */}
       <main className="landing--container">
         <Parallax pages={1}>
           <ParallaxLayer offset={0} speed={2}>
