@@ -18,6 +18,14 @@ button {
     font-family: "Roboto", sans-serif;
 }
 
+.material-symbols-outlined.fill {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
 // ANIMATIONS
 
 @keyframes fade-in {

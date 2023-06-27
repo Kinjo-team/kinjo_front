@@ -36,7 +36,7 @@ const DKinjoBookmarkedCard = ({kinjo, toggleDeleteBookmark} : DKinjoBookmarkedCa
 
   return (
     <div className='dkinjobookmarked-card--container' onClick={(event) => event.stopPropagation()}>
-      <span className='favourite-icon' onClick={handleDeleteBookmark}>⭐</span>
+      <span className='material-symbols-outlined fill favourite-icon' onClick={handleDeleteBookmark}>star</span>
       <a href={`/kinjo/${kinjo.itinerary.itinerary_id}`}>
         <h1 className='dkinjobookmarked-card-title'>{kinjo.itinerary.itinerary_name}</h1>
       </a>
