@@ -5,7 +5,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import LogIn from "../Authentication/LogIn/LogIn";
 import SignUp from "../Authentication/SignUp/SignUp";
 import ForgotPassword from "../Authentication/ForgotPassword/ForgotPassword";
-import LanguageToggle from "../LanguageToggle/LanguageToggle";
 import UserDropDown from "../UserDropDown/UserDropDown";
 
 type NavbarProps = {
@@ -111,7 +110,7 @@ const Navbar = ({landingShowLogin, landingToggleLogin} : NavbarProps) => {
           </div>
             <h1>K I N J O</h1>
         </div>
-        <LanguageToggle />
+        {/* <LanguageToggle /> */}
         <div className="btn-grp">
           <a className="nav-btn" href="/main">{t("landingPageHeaderHome")}</a>
           {currentUser ? (
