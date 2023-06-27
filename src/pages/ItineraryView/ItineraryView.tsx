@@ -13,6 +13,7 @@ import DisplayComments from "../../components/DisplayComments/DisplayComments";
 
 
 import "./ItineraryView.scss";
+import { set } from "lodash";
 
 const ItineraryView = () => {
   const { currentUser } = useAuth();
@@ -24,6 +25,9 @@ const ItineraryView = () => {
   const [dislikesCount, setDislikesCount] = useState<any>(0);
   const [isFollowing, setIsFollowing] = useState<any>(false);
   const [showBookmarkedModal, setShowBookmarkedModal] = useState(false);
+  const [isLiked, setIsLiked] = useState<any>(false);
+  const [isDisliked, setIsDisliked] = useState<any>(false);
+  const [isBookmarked, setIsBookmarked] = useState<any>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,6 +77,8 @@ const ItineraryView = () => {
       });
       if (response.ok) {
           fetchTotalLikesAndDislikes();
+          setIsLiked(true);
+          setIsDisliked(false);
       }
     } catch (error) {
       console.error(error);
@@ -93,6 +99,8 @@ const ItineraryView = () => {
       });
       if (response.ok) {
         fetchTotalLikesAndDislikes();
+        setIsLiked(false);
+        setIsDisliked(true);
       }
     } catch (error) {
       console.error(error);
@@ -127,6 +135,7 @@ const ItineraryView = () => {
       if (response.ok) {
           const data = await response.json();
           toggleBookmarkedModal();
+          setIsBookmarked(true);
       }
     } catch (error) {
       console.error(error);
@@ -200,7 +209,7 @@ function toggleBookmarkedModal() {
                 <div className="kinjo-header">
                     <h1>{itinerary.itinerary_name}</h1>
                     <div className="kinjo-btn-grp">
-                        <button onClick={bookmarkItinerary}><span className="material-symbols-outlined favourite-btn">star</span></button>
+                        <button onClick={bookmarkItinerary}><span className={isBookmarked ? "material-symbols-outlined favourite-btn fill" : "material-symbols-outlined favourite-btn"}>star</span></button>
                         {showBookmarkedModal && <BookmarkedModal text={`${itinerary.itinerary_name}`} toggleBookmarkedModal={toggleBookmarkedModal} />}
                     </div>
                 </div>
@@ -221,8 +230,8 @@ function toggleBookmarkedModal() {
                     <button className="follow-btn" onClick={followAuthor}>Follow</button>
                 }
                 <div className="vote-container">
-                    <p className="upvote" onClick={handleLikeButtonClick}><span className="material-symbols-outlined">thumb_up</span>{likesCount}</p>
-                    <p className="downvote" onClick={handleDislikeButtonClick} ><span className="material-symbols-outlined">thumb_down</span>{dislikesCount}</p>
+                    <p className="upvote" onClick={handleLikeButtonClick}><span className={isLiked ? "material-symbols-outlined fill" : "material-symbols-outlined"}>thumb_up</span>{likesCount}</p>
+                    <p className="downvote" onClick={handleDislikeButtonClick} ><span className={isDisliked ? "material-symbols-outlined fill" : "material-symbols-outlined"}>thumb_down</span>{dislikesCount}</p>
                 </div>
             </div>
           </article>
