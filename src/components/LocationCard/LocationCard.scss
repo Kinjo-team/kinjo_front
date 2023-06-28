@@ -99,9 +99,9 @@
         overflow: auto;
         .card--image {
             max-width: 100%;
-            min-width: clamp(10rem, 15vw, 18rem);
-            min-height: clamp(10rem, 15vw, 18rem);
-            max-height: clamp(10rem, 20vw, 20rem);
+            min-width: clamp(8rem, 15vw, 18rem);
+            min-height: clamp(8rem, 15vw, 18rem);
+            max-height: clamp(8rem, 15vw, 20rem);
             align-self: center;
         }
 
