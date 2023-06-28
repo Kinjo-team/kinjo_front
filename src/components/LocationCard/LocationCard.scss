@@ -39,7 +39,7 @@
         .location-info {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.5rem;
             overflow: auto;
             word-break: break-word;
             overflow: auto;
@@ -95,13 +95,11 @@
         justify-content: center;
         gap: clamp(1rem, 2vw, 2rem);
         height: 100%;
-        padding-bottom: 2.2rem;
+        padding-bottom: 2rem;
         overflow: auto;
         .card--image {
             max-width: 100%;
-            min-width: clamp(8rem, 15vw, 18rem);
-            min-height: clamp(8rem, 15vw, 18rem);
-            max-height: clamp(8rem, 15vw, 20rem);
+            max-height: clamp(10rem, 20vw, 20rem);
             align-self: center;
         }
 
@@ -110,8 +108,9 @@
         }
 
         .link-google {
-            left: clamp(2rem, 2vw, 2.5rem);
-            bottom: 1rem;
+            left: auto;
+            right: clamp(2rem, 2vw, 2.5rem);
+            bottom: 0.8rem;
             font-size: 0.5rem;
 
             .icon-google {
