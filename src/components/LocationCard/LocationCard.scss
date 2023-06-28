@@ -95,7 +95,7 @@
         justify-content: center;
         gap: clamp(1rem, 2vw, 2rem);
         height: 100%;
-        padding-bottom: 2rem;
+        padding-bottom: 2.3rem;
         overflow: auto;
         .card--image {
             max-width: 100%;
@@ -109,8 +109,8 @@
 
         .link-google {
             left: auto;
-            right: clamp(2rem, 2vw, 2.5rem);
-            bottom: 0.8rem;
+            right: clamp(1.5rem, 2vw, 2.5rem);
+            bottom: 0.3rem;
             font-size: 0.5rem;
 
             .icon-google {
