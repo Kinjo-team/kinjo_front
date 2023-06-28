@@ -95,10 +95,11 @@
         justify-content: center;
         gap: clamp(1rem, 2vw, 2rem);
         height: 100%;
-        padding-bottom: 2rem;
+        padding-bottom: 2.3rem;
+        overflow: auto;
         .card--image {
             max-width: 100%;
-            max-height: clamp(10rem, 15vw, 18rem);
+            max-height: 80%;
             align-self: center;
         }
 
