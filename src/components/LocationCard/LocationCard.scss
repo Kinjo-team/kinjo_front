@@ -89,12 +89,13 @@
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 868px) {
     .card--container {
         flex-direction: column;
         justify-content: center;
         gap: clamp(1rem, 2vw, 2rem);
         height: 100%;
+        padding-bottom: 2rem;
         .card--image {
             max-width: 100%;
             max-height: clamp(10rem, 15vw, 18rem);
