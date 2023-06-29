@@ -224,11 +224,16 @@ function toggleBookmarkedModal() {
                     <p>{author.username}</p>
                   </div>
                 </Link>
-                {isFollowing ? 
+                {currentUser && isFollowing ? 
                     <button disabled={true} className="following-btn">Following</button>    
                     : 
                     <button className="follow-btn" onClick={followAuthor}>Follow</button>
                 }
+                {/* {isFollowing ? 
+                    <button disabled={true} className="following-btn">Following</button>    
+                    : 
+                    <button className="follow-btn" onClick={followAuthor}>Follow</button>
+                } */}
                 <div className="vote-container">
                     <p className="upvote" onClick={handleLikeButtonClick}><span className={isLiked ? "material-symbols-outlined fill" : "material-symbols-outlined"}>thumb_up</span>{likesCount}</p>
                     <p className="downvote" onClick={handleDislikeButtonClick} ><span className={isDisliked ? "material-symbols-outlined fill" : "material-symbols-outlined"}>thumb_down</span>{dislikesCount}</p>
